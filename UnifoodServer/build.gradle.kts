@@ -13,11 +13,13 @@ group = "com.unifood"
 version = "0.0.1-SNAPSHOT"
 java.sourceCompatibility = JavaVersion.VERSION_17
 
+
 repositories {
 	mavenCentral()
 }
 
 dependencies {
+	implementation ("mysql:mysql-connector-java:8.0.32")
 	implementation("io.ktor:ktor-server-auth:2.2.4")
 	implementation("io.ktor:ktor-server-auth-jwt:2.2.4")
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
