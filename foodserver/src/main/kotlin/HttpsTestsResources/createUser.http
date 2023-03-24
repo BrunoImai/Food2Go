@@ -1,0 +1,10 @@
+POST https://localhost:8080/foodserver/api/costumers
+Content-Type: application/json
+
+{
+  "id": 0,
+  "name": "Joaozinh0",
+  "mobilePhone": "",
+  "email": "string@sda.com",
+  "password": "string"
+}

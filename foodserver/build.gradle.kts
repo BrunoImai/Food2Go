@@ -26,6 +26,7 @@ dependencies {
 	runtimeOnly("com.mysql:mysql-connector-j")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testImplementation("io.mockk:mockk:1.13.4")
+	implementation("org.codehaus.jackson:jackson-mapper-asl:1.9.13")
 	testImplementation("io.kotest:kotest-assertions-core:5.5.5")
 }
 
