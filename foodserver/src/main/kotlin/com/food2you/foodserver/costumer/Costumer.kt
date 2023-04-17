@@ -1,11 +1,11 @@
 package com.food2you.foodserver.costumer
 
-import jakarta.persistence.Entity
-import jakarta.persistence.GeneratedValue
-import jakarta.persistence.Id
+import com.food2you.foodserver.orders.Order
+import jakarta.persistence.*
 import jakarta.validation.constraints.Email
 import jakarta.validation.constraints.NotBlank
 import jakarta.validation.constraints.NotNull
+import org.hibernate.validator.constraints.UniqueElements
 
 @Entity
 data class Costumer(
@@ -19,7 +19,14 @@ data class Costumer(
     val mobilePhone: String = "",
 
     @Email
+    @Column(unique=true)
     val email: String,
 
-    val password: String
+    val password: String,
+
+    @OneToMany(mappedBy = "costumer", cascade = [CascadeType.ALL], orphanRemoval = true)
+    val orders: MutableList<Order>,
+
+    @ElementCollection
+    val roles: MutableList<String>
 )

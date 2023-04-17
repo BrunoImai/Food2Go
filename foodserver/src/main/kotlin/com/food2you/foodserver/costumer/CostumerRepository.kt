@@ -1,5 +1,6 @@
 package com.food2you.foodserver.costumer
 
+import jakarta.persistence.criteria.Order
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.Query
 import org.springframework.stereotype.Repository
@@ -10,5 +11,7 @@ interface CostumerRepository : JpaRepository<Costumer, Long> {
 
     @Query("select c from Costumer c")
     override fun findAll() : MutableList<Costumer>
+
+    fun findByEmail(email : String) : Costumer
 
 }

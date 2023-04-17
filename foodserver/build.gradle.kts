@@ -6,6 +6,7 @@ plugins {
 	kotlin("jvm") version "1.7.22"
 	kotlin("plugin.spring") version "1.7.22"
 	kotlin("plugin.jpa") version "1.7.22"
+
 }
 
 group = "com.food2you"
@@ -27,6 +28,12 @@ dependencies {
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testImplementation("io.mockk:mockk:1.13.4")
 	implementation("org.codehaus.jackson:jackson-mapper-asl:1.9.13")
+
+	implementation ("io.jsonwebtoken:jjwt-api:0.11.2")
+	implementation("org.springframework.boot:spring-boot-starter-security")
+	testImplementation("org.springframework.security:spring-security-test")
+	implementation("io.jsonwebtoken:jjwt-impl:0.11.2")
+	implementation("io.jsonwebtoken:jjwt-jackson:0.11.2")
 	testImplementation("io.kotest:kotest-assertions-core:5.5.5")
 }
 
