@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/Food2Go.iml" filepath="$PROJECT_DIR$/.idea/Food2Go.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/foodserver.main.iml" filepath="$PROJECT_DIR$/.idea/modules/foodserver.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/foodserver.test.iml" filepath="$PROJECT_DIR$/.idea/modules/foodserver.test.iml" />
     </modules>
   </component>
 </project>
