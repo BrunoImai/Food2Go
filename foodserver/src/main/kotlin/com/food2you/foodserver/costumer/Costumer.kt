@@ -28,5 +28,5 @@ data class Costumer(
     val orders: MutableList<Order>,
 
     @ElementCollection
-    val roles: MutableList<String>
+    val roles: MutableSet<String>
 )

@@ -9,8 +9,4 @@ data class OrderService(
     val repository: OrderRepository,
     val costumerRepository: CostumerRepository
 ) {
-    fun createOrder(order : Order) {
-        repository.save(order)
-
-    }
 }

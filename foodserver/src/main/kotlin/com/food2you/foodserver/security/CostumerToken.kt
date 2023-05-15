@@ -4,6 +4,6 @@ data class CostumerToken(
     val id: Long,
     val email: String,
     val nome: String,
-    val roles: MutableList<String>
+    val roles: MutableSet<String>
 
 )
