@@ -35,7 +35,7 @@ class CostumerService(
             email = costumer.email,
             password = costumer.password,
             orders = mutableListOf<Order>(),
-            roles = mutableListOf<String>()
+            roles = mutableSetOf<String>()
         )
 
         return costumerRepository.save(costumer)
@@ -49,7 +49,7 @@ class CostumerService(
             email = costumer.email,
             password = costumer.password,
             orders = mutableListOf(),
-            roles = mutableListOf<String>()
+            roles = mutableSetOf<String>()
         )
 
         val saved = costumerRepository.save(costumer)

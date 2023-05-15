@@ -2,6 +2,7 @@ package com.food2you.foodserver.restaurant
 
 import com.food2you.foodserver.menus.Menu
 import com.food2you.foodserver.orders.Order
+import com.food2you.foodserver.product.Product
 import jakarta.persistence.*
 import jakarta.validation.constraints.NotBlank
 
@@ -13,15 +14,18 @@ data class Restaurant (
     var id: Long?,
 
     @NotBlank
-    open val name: String,
+    val name: String,
 
     @NotBlank
-    open val status: String,
+    val status: String,
 
     @OneToMany(mappedBy = "restaurant", cascade = [CascadeType.ALL], orphanRemoval = true)
     val orders : MutableList<Order>,
 
-    @OneToMany(mappedBy = "restaurantMenu", cascade = [CascadeType.ALL], orphanRemoval = true)
-    val menus : MutableList<Menu>
+    @OneToMany(mappedBy = "restaurant", cascade = [CascadeType.ALL], orphanRemoval = true)
+    val menus : MutableList<Menu>,
+
+    @OneToMany(mappedBy = "restaurant", cascade = [CascadeType.ALL], orphanRemoval = true)
+    val products : MutableList<Product>
 
 )

@@ -1,18 +1,23 @@
 package com.food2you.foodserver.menus
 
+import com.food2you.foodserver.product.Product
 import jakarta.persistence.*
 import jakarta.validation.constraints.NotBlank
 
 @Entity
 @Table(name = "menu")
-open class Menu(
+class Menu(
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    open var id: Long?,
+    var id: Long?,
 
     @NotBlank
-    open var name: String,
+    var name: String,
 
     @NotBlank
-    open var restaurantMenu : Long
-    )
+    var restaurant : Long,
+
+    @ManyToMany
+    @JoinTable(name = "menu_products", joinColumns = [JoinColumn(name = "menu_id")], inverseJoinColumns = [JoinColumn(name = "product_id")])
+    var products: MutableSet<Product>?
+)
