@@ -1,0 +1,40 @@
+
+nav
+{
+    width: 100%;
+    padding: 20px 50px;
+    background-color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+nav a
+{
+    text-decoration: none;
+    color: #FF8227;
+    font-size: 30px;
+    font-weight: 500;
+}	
+nav ul
+{
+    font-weight: bold;
+    display: flex;
+}
+
+nav ul li a
+{
+    margin-left: 20px;
+    font-size: 20px;
+    font-weight: 500;
+    color: black;
+    padding: 5px 10px;
+}
+
+nav ul li a:hover
+{
+    background-color: rgba(255, 182, 46, 0.74) ;
+    color: #000;
+    border-radius: 5px;
+    transition: all ease 0.5s;
+}
+
