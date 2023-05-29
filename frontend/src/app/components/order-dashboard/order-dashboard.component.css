@@ -33,6 +33,15 @@ mat-sidenav-container {
   padding: 24px;
 }
 
+
+.avatar {
+  margin-top: 16px;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+}
+
+
 .menu-button {
   width: 100%;
   display: flex;

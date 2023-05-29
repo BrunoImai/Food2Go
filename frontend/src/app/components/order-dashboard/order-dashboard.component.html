@@ -12,7 +12,10 @@
 
 <mat-sidenav-container>
   <mat-sidenav #sidenav="matSidenav" class="mat-elevation-z8">
-
+      <img
+        class="avatar mat-elevation-z8"
+        src="https://cdn3.f-cdn.com//files/download/148197353/Photo_1625137656071.png?fit=crop"
+      />  
     <h4 class="name">Restaurante</h4>
     <mat-divider></mat-divider>
 
@@ -27,13 +30,13 @@
 
     <mat-divider></mat-divider>
 
-    <button mat-button class="menu-button" routerLink="/deliveries">
-      <mat-icon mat-list-icon>local_shipping</mat-icon>
-      <span>Entregas</span>
+    <button mat-button class="menu-button" routerLink="order-table">
+      <mat-icon mat-list-icon>food_bank</mat-icon>
+      <span>Pedidos</span>
     </button>
     <mat-divider></mat-divider>
     <button mat-button class="menu-button" routerLink="/home">
-      <mat-icon mat-list-icon>exit</mat-icon>
+      <mat-icon mat-list-icon>exit_to_app</mat-icon>
       <span>Sair</span>
     </button>
   </mat-sidenav>
