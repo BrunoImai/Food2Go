@@ -16,9 +16,14 @@
             <a class="nav-link" routerLink="login-register">Registrar</a>
           </li>
           <li class="nav-item" *ngIf="isAuthenticated">
-            <a class="nav-link" href="#">Painel de pedidos</a>
+            <a class="nav-link" routerLink="order-dashboard">Painel de pedidos</a>
           </li> 
         </ul>
+        <span class="navbar-text" *ngIf="isAuthenticated">
+          NomeRestaurante
+          <img src="https://via.placeholder.com/40" alt="NomeRestaurante" class="rounded-circle">
+          <a class="exit">Sair</a>
+        </span>
       </div>
     </div>
   </nav>
