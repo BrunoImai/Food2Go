@@ -1,5 +1,6 @@
 package com.food2you.foodserver.product
 
+import com.food2you.foodserver.combo.Combo
 import com.food2you.foodserver.menus.Menu
 import com.food2you.foodserver.orders.Order
 import com.food2you.foodserver.restaurant.Restaurant
@@ -29,7 +30,10 @@ open class Product(
     var restaurant: Long,
 
     @ManyToMany(mappedBy = "products")
-    var menusIncluded : MutableSet<Menu>?
+    var menusIncluded : MutableSet<Menu>?,
+
+    @ManyToMany(mappedBy = "products")
+    var combosIncluded : MutableSet<Combo>?
 )
 
 

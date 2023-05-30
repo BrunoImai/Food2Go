@@ -21,7 +21,7 @@ data class RestaurantResource(
     @PostMapping("/{restaurantId}/menu")
     fun createMenu(@RequestBody @Valid menu: NewMenu, @PathVariable restaurantId: Long) = status(HttpStatus.CREATED).body(restaurantService.createMenu(menu,restaurantId))
 
-    @PostMapping("/{restaurantId}/product}")
+    @PostMapping("/{restaurantId}/product")
     fun addProductToRestaurant(@RequestBody @Valid product: Product, @PathVariable restaurantId: Long) = status(HttpStatus.CREATED).body(restaurantService.addProduct(product, restaurantId))
 
     @PostMapping("/{restaurantId}/{menuId}/{productId}")
@@ -32,6 +32,9 @@ data class RestaurantResource(
 
     @GetMapping("/{restaurantId}/orders")
     fun getAllOrders(@PathVariable @Valid restaurantId: Long) = status(HttpStatus.OK).body(restaurantService.getAllOrders(restaurantId))
+
+    @GetMapping("/{restaurantId}/{orderId}/products")
+    fun getAllOrdersProducts( @PathVariable orderId: Long) = status(HttpStatus.OK).body(restaurantService.getAllProductsFromOrder(orderId))
 
     @GetMapping
     fun getAllRestaurants() = status(HttpStatus.OK).body(restaurantService.findAllRestaurants())

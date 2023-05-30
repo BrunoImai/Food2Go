@@ -1,5 +1,6 @@
 package com.food2you.foodserver.restaurant
 
+import com.food2you.foodserver.combo.Combo
 import com.food2you.foodserver.costumer.Costumer
 import com.food2you.foodserver.menus.Menu
 import com.food2you.foodserver.menus.MenuRepository
@@ -29,7 +30,8 @@ data class RestaurantService (
             status = "Open",
             orders = mutableListOf<Order>(),
             menus = mutableListOf<Menu>(),
-            products = mutableListOf<Product>()
+            products = mutableListOf<Product>(),
+            combos = mutableListOf<Combo>()
         )
 
         restaurantRepository.save(restaurant)
@@ -75,6 +77,6 @@ data class RestaurantService (
 
     fun getAllProducts(restaurantId: Long) : MutableList<Product> = productRepository.findAllByRestaurant(restaurantId)
 
-
+    fun getAllProductsFromOrder(orderId : Long) : MutableList<Product> = orderRepository.findById(orderId).get().products
 
 }

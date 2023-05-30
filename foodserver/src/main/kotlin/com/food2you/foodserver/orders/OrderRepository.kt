@@ -10,4 +10,6 @@ interface OrderRepository : JpaRepository<Order, Long> {
     fun findAllByCostumer (id: Long) : MutableList<Order>
 
     fun findAllByRestaurant (id: Long) : MutableList<Order>
+
+
 }

@@ -1,5 +1,6 @@
 package com.food2you.foodserver.restaurant
 
+import com.food2you.foodserver.combo.Combo
 import com.food2you.foodserver.menus.Menu
 import com.food2you.foodserver.orders.Order
 import com.food2you.foodserver.product.Product
@@ -26,6 +27,9 @@ data class Restaurant (
     val menus : MutableList<Menu>,
 
     @OneToMany(mappedBy = "restaurant", cascade = [CascadeType.ALL], orphanRemoval = true)
-    val products : MutableList<Product>
+    val products : MutableList<Product>,
+
+    @OneToMany(mappedBy = "restaurant", cascade = [CascadeType.ALL], orphanRemoval = true)
+    val combos : MutableList<Combo>
 
 )

@@ -1,5 +1,6 @@
 package com.food2you.foodserver.orders
 
+import com.food2you.foodserver.product.Product
 import jakarta.persistence.*
 import jakarta.validation.constraints.NotBlank
 
@@ -19,7 +20,10 @@ open class  Order   (
 
     var costumer : Long,
 
-    var restaurant : Long
+    var restaurant : Long,
+
+    @OneToMany
+    var products : MutableList<Product>
 
 )
 
