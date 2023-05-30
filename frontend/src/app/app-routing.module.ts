@@ -4,6 +4,10 @@ import { HomeComponent } from './components/home/home.component';
 import { LoginRegisterComponent } from './components/login-register/login-register.component';
 import { OrderDashboardComponent } from './components/order-dashboard/order-dashboard.component';
 import { OrderTableComponent } from './components/order-table/order-table.component';	
+import { MenuComponent } from './components/menu/menu.component';
+import { HomeDashboardComponent } from './components/home-dashboard/home-dashboard.component';
+
+
 
 const routes: Routes = [
   { path: '', component: HomeComponent},
@@ -13,6 +17,8 @@ const routes: Routes = [
   { path: 'order-dashboard', component: OrderDashboardComponent, 
   children: [
     { path: 'order-table', component: OrderTableComponent},
+    { path: 'menu', component: MenuComponent},
+    { path: 'home-dashboard', component: HomeDashboardComponent},
   ]},
   { path: 'home/order-dashboard', component: OrderDashboardComponent},
   
