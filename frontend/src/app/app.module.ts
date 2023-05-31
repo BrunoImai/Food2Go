@@ -9,6 +9,8 @@ import { LoginRegisterComponent } from './components/login-register/login-regist
 import { OrderTableComponent } from './components/order-table/order-table.component';
 import { OrderDashboardComponent } from './components/order-dashboard/order-dashboard.component';
 
+
+
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
@@ -23,6 +25,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSortModule } from '@angular/material/sort';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';	
 
 @NgModule({
   declarations: [		
@@ -51,6 +54,7 @@ import { FormsModule } from '@angular/forms';
     ReactiveFormsModule,
     MatInputModule,
     FormsModule,
+    HttpClientModule
       ],
   providers: [],
   bootstrap: [AppComponent]
