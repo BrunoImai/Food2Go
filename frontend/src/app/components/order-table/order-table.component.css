@@ -1,7 +1,48 @@
 table {
-    width: 100%;
-  }
-  
-  th.mat-sort-header-sorted {
-    color: black;
-  }
+  width: 100%;
+}
+
+tr.example-detail-row {
+  height: 0;
+}
+
+tr.example-element-row:not(.example-expanded-row):hover {
+  background: whitesmoke;
+}
+
+tr.example-element-row:not(.example-expanded-row):active {
+  background: #efefef;
+}
+
+.example-element-row td {
+  border-bottom-width: 0;
+}
+
+.order-detail {
+  overflow: hidden;
+  display: flex;
+}
+
+.order-list {
+  min-width: 80px;
+  border: 2px solid black;
+  padding: 8px;
+  font-weight: lighter;
+  margin: 8px 0;
+  height: 104px;
+}
+
+.order-status {
+  font-weight: bold;
+  line-height: normal;
+  padding-bottom: 3px;
+  padding-top: 3px;
+}
+
+.order-products {
+  padding: 16px;
+}
+
+.order-products-spacing {
+  opacity: 0.5;
+}
