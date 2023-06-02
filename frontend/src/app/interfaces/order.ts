@@ -1,7 +1,9 @@
 import { Customer } from "./customer";
 
 export interface Order {
-    id: number;
-    products: [];
-    customer: Customer;
+    id: string;
+    name: string;
+    customer: string;
+    products: any[]; 
+    [key: string]: any;  
 }
