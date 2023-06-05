@@ -41,6 +41,7 @@ tr.example-element-row:not(.example-expanded-row):active {
 
 .order-products {
   padding: 16px;
+  text-align: end;
 }
 
 .order-products-spacing {

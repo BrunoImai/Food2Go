@@ -14,29 +14,43 @@ export class MenuFormComponent implements OnInit {
   constructor(private formBuilder:FormBuilder, private menu: MenuService) {}
   productForm = this.formBuilder.group({
     name: '',
-    price: '',
-    qtt: '',
+    price: null,
+    qtt: null,
     description: '',
     menusIncluded: [],
     restaurant: 2,
     combosIncluded: []
   });
   
+  
   ngOnInit(): void {}
 
   saveForm(){
     console.log('Form data: ', this.productForm.value);
   }
-  // submit() {
-  //   this.menu.addProduct(this.productForm.value).subscribe((result) => {
-  //     console.warn(result);
-  //     if (result) {
-  //       this.addProductMessage = 'Product is added successfully';
-  //     }
-  //   });
-
-  //   setTimeout(() => {
-  //     this.addProductMessage=undefined
-  //   }, 3000);
-  // }
+  submit() {
+    if (this.productForm.valid) {
+      const formValue = this.productForm.value;
+      
+      const product: Product = {
+        name: formValue.name || '', 
+        price: formValue.price || 0, 
+        qtt: formValue.qtt || 0, 
+        description: formValue.description || '',
+        menusIncluded: formValue.menusIncluded || [],
+        combosIncluded: formValue.combosIncluded || []
+      };
+  
+      this.menu.addProduct(product).subscribe((result) => {
+        console.warn(result);
+        if (result) {
+          this.addProductMessage = 'Product is added successfully';
+  
+          setTimeout(() => {
+            this.addProductMessage = undefined;
+          }, 3000);
+        }
+      });
+    }
+  }
 }
