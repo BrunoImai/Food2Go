@@ -8,9 +8,11 @@ import { HomeComponent } from './components/home/home.component';
 import { LoginRegisterComponent } from './components/login-register/login-register.component';
 import { OrderTableComponent } from './components/order-table/order-table.component';
 import { OrderDashboardComponent } from './components/order-dashboard/order-dashboard.component';
+import { MenuFormComponent } from './components/menu-form/menu-form.component';
+import { MenuTableComponent } from './components/menu-table/menu-table.component';
 
-
-
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatDialogModule } from '@angular/material/dialog';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
@@ -19,6 +21,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableModule } from '@angular/material/table';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -36,6 +39,8 @@ import { HttpClientModule } from '@angular/common/http';
       LoginRegisterComponent,
       OrderDashboardComponent,
       OrderTableComponent,
+      MenuFormComponent,
+      MenuTableComponent,
    ],
   imports: [
     BrowserModule,
@@ -54,7 +59,11 @@ import { HttpClientModule } from '@angular/common/http';
     ReactiveFormsModule,
     MatInputModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    ReactiveFormsModule,
+    MatPaginatorModule,
+    MatDialogModule,
+    MatCheckboxModule,
       ],
   providers: [],
   bootstrap: [AppComponent]

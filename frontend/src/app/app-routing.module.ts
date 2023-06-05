@@ -6,6 +6,7 @@ import { OrderDashboardComponent } from './components/order-dashboard/order-dash
 import { OrderTableComponent } from './components/order-table/order-table.component';	
 import { MenuComponent } from './components/menu/menu.component';
 import { HomeDashboardComponent } from './components/home-dashboard/home-dashboard.component';
+import { MenuFormComponent } from './components/menu-form/menu-form.component';
 
 
 
@@ -19,6 +20,7 @@ const routes: Routes = [
     { path: 'order-table', component: OrderTableComponent},
     { path: 'menu', component: MenuComponent},
     { path: 'home-dashboard', component: HomeDashboardComponent},
+    { path: 'menu-form', component: MenuFormComponent},
   ]},
   { path: 'home/order-dashboard', component: OrderDashboardComponent},
   
