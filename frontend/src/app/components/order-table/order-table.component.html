@@ -3,10 +3,10 @@
        class="mat-elevation-z8">
   <ng-container matColumnDef="{{column}}" *ngFor="let column of nameColumns;let i=index">
     <th mat-header-cell *matHeaderCellDef> {{displayColumns[i]}} </th>
-    <ng-container *ngIf="column !== 'products'">    
+    <ng-container *ngIf="column !== 'products'">
       <td mat-cell *matCellDef="let order"> {{order[column]}} </td>
     </ng-container>
-    <ng-container *ngIf="column == 'products'">    
+    <ng-container *ngIf="column == 'products'">
       <td mat-cell *matCellDef="let order"> {{order[column][0].name}} </td>
       </ng-container>
   </ng-container>
@@ -28,13 +28,13 @@
         <div class="order-list">
           <div class="order-id"> id do pedido: {{order.id}} </div>
           <div class="order-status"> status do pedido: {{order.name}} </div>
-          <div class="order-customer"> nome do cliente: {{order.costumer}} </div>
+          <div class="order-customer"> nome do cliente: {{order.costumer.name}} </div>
         </div>
         <div class="order-products">
           <span class="order-products-spacing"> - Produtos: </span>
           <tr *ngFor="let product of order.products">
-            <td> • {{product.name}}</td>
-          </tr>        
+            <td>⠀• {{product.name}}</td>
+          </tr>
         </div>
       </div>
     </td>

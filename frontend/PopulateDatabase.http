@@ -1,0 +1,82 @@
+POST http://localhost:8080/foodserver/api/restaurant
+Content-Type: application/json
+
+{
+  "name": "Cantina"
+}
+
+###
+POST http://localhost:8080/foodserver/api/restaurant/1/product
+Content-Type: application/json
+
+{
+  "name": "x queijo",
+  "price": 16.90,
+  "description": "pao carne queijo",
+  "menusIncluded": null,
+  "combosIncluded": null
+}
+
+###
+POST http://localhost:8080/foodserver/api/restaurant/1/product
+Content-Type: application/json
+
+{
+  "name": "x linguiça",
+  "price": 14.90,
+
+  "description": "pao linguiça queijo",
+  "menusIncluded": null,
+"combosIncluded": null
+}
+
+###
+POST http://localhost:8080/foodserver/api/restaurant/1/product
+Content-Type: application/json
+
+{
+  "name": "pao com bolinho",
+  "price": 14.90,
+  "quantity": 50,
+  "description": "pao quibe queijo tomate",
+  "menusIncluded": null,
+"combosIncluded": null
+}
+###
+POST http://localhost:8080/foodserver/api/costumers
+Content-Type: application/json
+
+{
+  "name": "bruno",
+  "mobilePhone": "459999999",
+  "email": "bruno.imai@pucpr.edu.br",
+  "password": "123",
+  "orders": [],
+  "roles": []
+}
+
+###
+POST http://localhost:8080/foodserver/api/costumers/order
+Content-Type: application/json
+
+{
+  "id": 1,
+  "name": "Entregue",
+  "costumer": 1,
+  "restaurant": 1,
+  "products": [
+    {
+      "id": 1,
+      "name": "pao com bolinho",
+      "price": 14.90,
+      "qtt": 1,
+      "description": "string",
+      "restaurant": 2,
+      "menusIncluded": [],
+      "combosIncluded": []
+    }
+  ]
+}
+###
+GET http://localhost:8080/foodserver/api/restaurant/1/products
+Accept: application/json

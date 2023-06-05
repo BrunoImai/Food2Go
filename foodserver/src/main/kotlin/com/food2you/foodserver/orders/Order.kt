@@ -1,5 +1,6 @@
 package com.food2you.foodserver.orders
 
+import com.food2you.foodserver.costumer.Costumer
 import com.food2you.foodserver.product.Product
 import jakarta.persistence.*
 import jakarta.validation.constraints.NotBlank
@@ -8,8 +9,7 @@ import jakarta.validation.constraints.NotBlank
 
 @Entity
 @Table(name="Orders")
-
-open class  Order   (
+class  Order   (
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -18,7 +18,8 @@ open class  Order   (
     @NotBlank
     var name: String,
 
-    var costumer : Long,
+    @ManyToOne
+    var costumer : Costumer?,
 
     var restaurant : Long,
 
