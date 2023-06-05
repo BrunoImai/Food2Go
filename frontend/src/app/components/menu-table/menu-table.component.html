@@ -1,8 +1,4 @@
 <article class="table-header">
-  <!-- <button class="button-remove-rows" mat-button (click)="removeSelectedRows()">
-    Remove Rows
-  </button> -->
-  <button class="button-add-row" mat-button (click)="addRow()">Add Row</button>
 </article>
 <table mat-table [dataSource]="dataSource">
   <ng-container [matColumnDef]="col.key" *ngFor="let col of columnsSchema">
