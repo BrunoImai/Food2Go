@@ -89,7 +89,8 @@ class CostumerService(
                 id = it.id!!,
                 status = it.name,
                 costumerName = it.costumer!!.name,
-                products = it.products
+                products = it.products,
+                customerMobilePhone = it.costumer!!.mobilePhone,
             )
         }
         return ordersResponse;

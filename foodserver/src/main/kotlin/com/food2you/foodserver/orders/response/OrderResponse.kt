@@ -10,6 +10,7 @@ data class OrderResponse(
 
     var costumerName : String,
 
-    var products : MutableList<Product>
+    var products : MutableList<Product>,
 
+    val customerMobilePhone: String
 )
