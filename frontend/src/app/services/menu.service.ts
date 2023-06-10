@@ -24,7 +24,7 @@ constructor(private http:HttpClient) {  }
 
   addProduct(product : Product): Observable<any>
   {
-    return this.http.post(`${this.url}/restaurant/2/orders`, product);
+    return this.http.post(`${this.url}/restaurant/1/product`, product);
   }
 
   // TODO

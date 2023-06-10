@@ -28,9 +28,14 @@ class SecurityConfig(private val jwtTokenFilter: JwtTokenFilter) {
             .authorizeHttpRequests { requests ->
                 requests
                     .requestMatchers(HttpMethod.GET).permitAll()
+                    .requestMatchers(HttpMethod.POST).permitAll()
+                    .requestMatchers(HttpMethod.DELETE).permitAll()
+                    .requestMatchers(HttpMethod.PUT).permitAll()
                     .requestMatchers("/error/**").permitAll()
-                    .requestMatchers(HttpMethod.POST, "/costumers/**").permitAll()
-                    .requestMatchers(HttpMethod.POST, "/restaurant/**").permitAll()
+//                    .requestMatchers(HttpMethod.POST, "/costumers/**").permitAll()
+//                    .requestMatchers(HttpMethod.PUT, "/costumers/**").permitAll()
+//                    .requestMatchers(HttpMethod.POST, "/restaurant/**").permitAll()
+//                    .requestMatchers(HttpMethod.PUT, "/restaurant/**").permitAll()
                     .anyRequest().authenticated()
             }
             .headers { headers -> headers.frameOptions().disable() }

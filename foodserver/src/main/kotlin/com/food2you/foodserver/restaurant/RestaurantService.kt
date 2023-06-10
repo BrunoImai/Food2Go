@@ -13,6 +13,7 @@ import com.food2you.foodserver.restaurant.requests.NewRestaurant
 import org.slf4j.LoggerFactory
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
+import java.util.*
 
 @Service
 data class RestaurantService (
@@ -79,4 +80,17 @@ data class RestaurantService (
 
     fun getAllProductsFromOrder(orderId : Long) : MutableList<Product> = orderRepository.findById(orderId).get().products
 
+    fun deleteProduct(productId: Long) = productRepository.deleteById(productId)
+
+    fun getProductById(productId: Long) : Product? = productRepository.findByIdOrNull(productId)
+
+    fun updateProduct(productId: Long, product: Product) {
+        var deletedProduct = getProductById(productId)
+        deleteProduct(productId)
+        if (deletedProduct != null) {
+            addProduct(product, deletedProduct.restaurant)
+        } else {
+            println("PRODUCT NOT FOUND")
+        }
+    }
 }

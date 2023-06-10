@@ -77,6 +77,24 @@ Content-Type: application/json
     }
   ]
 }
+
+
 ###
 GET http://localhost:8080/foodserver/api/restaurant/1/products
 Accept: application/json
+
+###
+PUT http://localhost:8080/foodserver/api/costumers/1
+Content-Type: application/json
+
+{
+  "name": "Bruno Imai",
+  "mobilePhone": "459999999",
+  "email": "bruno.imai@pucpr.edu.br",
+  "password": "123",
+  "orders": [],
+  "roles": []
+}
+
+###
+DELETE http://localhost:8080/foodserver/api/costumers/1
