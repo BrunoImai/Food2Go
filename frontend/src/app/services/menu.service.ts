@@ -24,7 +24,11 @@ constructor(private http:HttpClient) {  }
 
   addProduct(product : Product): Observable<any>
   {
+<<<<<<< Updated upstream
     return this.http.post(`${this.url}/restaurant/1/product`, product);
+=======
+    return this.http.post(`${this.url}/restaurant/2/product`, product);
+>>>>>>> Stashed changes
   }
 
   // TODO
