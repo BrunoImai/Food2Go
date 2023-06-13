@@ -17,13 +17,13 @@
           <button mat-button (click)="element.isEdit = !element.isEdit">
             Edit
           </button>
-          <!-- <button
+           <button
             mat-button
             class="button-remove"
             (click)="removeRow(element.id)"
           >
             Delete
-          </button> -->
+          </button> 
         </div>
         <span *ngSwitchDefault>
           {{ element[col.key] }}
@@ -32,7 +32,7 @@
       <div [ngSwitch]="col.type" *ngIf="element.isEdit">
         <div *ngSwitchCase="'isSelected'"></div>
         <div class="btn-edit" *ngSwitchCase="'isEdit'">
-          <button mat-button (click)="element.isEdit = !element.isEdit">
+          <button mat-button (click)="editRow(element)">
             Done
           </button>
         </div>
@@ -45,36 +45,3 @@
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
   <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
 </table>
-<!-- 
-<article class="table-header">
-  <button class="button-add-row" mat-button (click)="addRow()">Add Row</button>
-</article>
-<table mat-table [dataSource]="dataSource">
-  <ng-container [matColumnDef]="col.key" *ngFor="let col of columnsSchema">
-    <th mat-header-cell *matHeaderCellDef>
-      {{ col.label }}
-    </th>
-    <td mat-cell *matCellDef="let element">
-      <div [ngSwitch]="col.type" *ngIf="!element.isEdit">
-        <div class="btn-edit" *ngSwitchCase="'isEdit'">
-          <button mat-button (click)="element.isEdit = !element.isEdit">
-            Edit
-          </button>
-        </div>
-        <span *ngSwitchDefault>
-          {{ element[col.key] }}
-        </span>
-      </div>
-      <div [ngSwitch]="col.type" *ngIf="element.isEdit">
-        <div class="btn-edit" *ngSwitchCase="'isEdit'">
-          <button mat-button (click)="element.isEdit = !element.isEdit">Done</button>
-        </div>
-        <mat-form-field *ngSwitchDefault>
-          <input [type]="col.type" matInput [(ngModel)]="element[col.key]" />
-        </mat-form-field>
-      </div>
-    </td>
-  </ng-container>
-  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-  <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-</table> -->
