@@ -4,9 +4,12 @@ import com.food2you.foodserver.costumer.requests.LoginRequest
 import com.food2you.foodserver.costumer.response.LoginResponse
 import com.food2you.foodserver.orders.Order
 import com.food2you.foodserver.orders.OrderRepository
+import com.food2you.foodserver.orders.response.OrderResponse
+import com.food2you.foodserver.product.Product
 import com.food2you.foodserver.restaurant.RestaurantRepository
 import com.food2you.foodserver.security.JWT
 import org.slf4j.LoggerFactory
+import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import java.util.*
 
@@ -65,20 +68,32 @@ class CostumerService(
    }
 
 
-    fun getCustomerById(id : Long) : Optional<Costumer> {
-        val costumer = costumerRepository.findById(id)
+    fun getCustomerById(id : Long) : Costumer? {
+        val costumer = costumerRepository.findByIdOrNull(id)
         logger.info("Costumer with ID: $id")
         logger.info(costumer.toString())
         return costumer
     }
 
     fun createOrder(customerId: Long, order: Order, restaurantId : Long): Order {
-
-        order.costumer = customerId
+        val custumer = getCustomerById(customerId)
+        order.costumer = custumer
         order.restaurant = restaurantId
         return orderRepository.save(order)
     }
 
-    fun findAllOrders(costumerId: Long) : MutableList<Order> = orderRepository.findAllByCostumer(costumerId)
+    fun findAllOrders(costumerId: Long) : List<OrderResponse> {
+        val orders = orderRepository.findAllByCostumer(costumerId)
+        val ordersResponse = orders.map {
+            OrderResponse(
+                id = it.id!!,
+                status = it.name,
+                costumerName = it.costumer!!.name,
+                products = it.products,
+                customerMobilePhone = it.costumer!!.mobilePhone,
+            )
+        }
+        return ordersResponse;
+    }
 
 }

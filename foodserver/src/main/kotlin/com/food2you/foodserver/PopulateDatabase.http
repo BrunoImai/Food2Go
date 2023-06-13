@@ -62,7 +62,7 @@ Content-Type: application/json
 {
   "id": 1,
   "name": "Entregue",
-  "costumer": 2,
+  "costumer": 1,
   "restaurant": 1,
   "products": [
     {

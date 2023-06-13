@@ -41,4 +41,10 @@ data class RestaurantResource(
 
     @GetMapping("/{restaurantId}")
     fun getAllMenus(@PathVariable @Valid restaurantId: Long) = status(HttpStatus.OK).body(restaurantService.getAllMenus(restaurantId))
+
+    @DeleteMapping("/{restaurantId}/products/{productId}")
+    fun deleteProduct(@PathVariable @Valid productId : Long) = status(HttpStatus.OK).body(restaurantService.deleteProduct(productId))
+
+    @PutMapping("/{restaurantId}/products/{productId}")
+    fun updateProduct(@PathVariable @Valid productId : Long, @RequestBody @Valid product: Product) = status(HttpStatus.OK).body(restaurantService.updateProduct(productId, product))
 }

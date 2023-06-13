@@ -27,7 +27,7 @@ export class OrderTableComponent implements AfterViewInit {
   expandedOrder!: Order | null;
   order!: Order;
   customer!: Customer;
-  
+
 
   constructor(private orderService: OrderService) {}
 
@@ -37,6 +37,7 @@ export class OrderTableComponent implements AfterViewInit {
   ngAfterViewInit() {
     this.orderService.getOrders().subscribe((data: any)=>{
       this.dataSource = data;
+
     });
   }
 }

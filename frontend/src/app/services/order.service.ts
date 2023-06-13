@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';	
+import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 
@@ -9,24 +9,24 @@ import { Observable } from 'rxjs';
 export class OrderService {
   url = 'http://localhost:8080/foodserver/api'
 
-constructor(private http:HttpClient) {  } 
+constructor(private http:HttpClient) {  }
 
   getOrders(): Observable<any>
   {
-    return this.http.get(`${this.url}/restaurant/2/orders`);
+    return this.http.get(`${this.url}/restaurant/1/orders`);
   }
 
-  getCustomers(): Observable<any> 
+  getCustomers(): Observable<any>
   {
     return this.http.get(`${this.url}/costumers`);
   }
 
-  getCustomerById(id: number): Observable<any> 
+  getCustomerById(id: number): Observable<any>
   {
     return this.http.get(`${this.url}/costumers/${id}`);
   }
- 
-  getProductById(restaurantId: number, orderId: number): Observable<any> 
+
+  getProductById(restaurantId: number, orderId: number): Observable<any>
   {
     return this.http.get(`${this.url}/${restaurantId}/${orderId}/products`);
   }
