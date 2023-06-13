@@ -10,6 +10,7 @@ import { OrderTableComponent } from './components/order-table/order-table.compon
 import { OrderDashboardComponent } from './components/order-dashboard/order-dashboard.component';
 import { MenuFormComponent } from './components/menu-form/menu-form.component';
 import { MenuTableComponent } from './components/menu-table/menu-table.component';
+import { HomeDashboardComponent } from './components/home-dashboard/home-dashboard.component';
 
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatDialogModule } from '@angular/material/dialog';
@@ -41,6 +42,7 @@ import { HttpClientModule } from '@angular/common/http';
       OrderTableComponent,
       MenuFormComponent,
       MenuTableComponent,
+      HomeDashboardComponent,
    ],
   imports: [
     BrowserModule,
