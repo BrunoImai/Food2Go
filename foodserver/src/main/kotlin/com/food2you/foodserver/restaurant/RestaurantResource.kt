@@ -21,7 +21,7 @@ data class RestaurantResource(
     @PostMapping("/{restaurantId}/menu")
     fun createMenu(@RequestBody @Valid menu: NewMenu, @PathVariable restaurantId: Long) = status(HttpStatus.CREATED).body(restaurantService.createMenu(menu,restaurantId))
 
-    @PostMapping("/{restaurantId}/product")
+    @PostMapping("/{restaurantId}/products")
     fun addProductToRestaurant(@RequestBody @Valid product: Product, @PathVariable restaurantId: Long) = status(HttpStatus.CREATED).body(restaurantService.addProduct(product, restaurantId))
 
     @PostMapping("/{restaurantId}/{menuId}/{productId}")
@@ -43,7 +43,7 @@ data class RestaurantResource(
     fun getAllMenus(@PathVariable @Valid restaurantId: Long) = status(HttpStatus.OK).body(restaurantService.getAllMenus(restaurantId))
 
     @DeleteMapping("/{restaurantId}/products/{productId}")
-    fun deleteProduct(@PathVariable @Valid productId : Long) = status(HttpStatus.OK).body(restaurantService.deleteProduct(productId))
+    fun deleteProduct(@PathVariable @Valid productId : Long, @PathVariable restaurantId: String) = status(HttpStatus.OK).body(restaurantService.deleteProduct(productId))
 
     @PutMapping("/{restaurantId}/products/{productId}")
     fun updateProduct(@PathVariable @Valid productId : Long, @RequestBody @Valid product: Product) = status(HttpStatus.OK).body(restaurantService.updateProduct(productId, product))

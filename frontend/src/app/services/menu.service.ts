@@ -27,15 +27,16 @@ constructor(private http:HttpClient) {  }
 
   addProduct(product : Product): Observable<any>
   {
-    return this.http.post(`${this.url}/restaurant/2/product`, product);
+    return this.http.post(`${this.url}/restaurant/1/products`, product);
   }
 
-  updateProduct(product : Product): Observable<any>{
-    return this.http.put(`${this.url}/restaurant/1/product/${product.id}`, product);
+  updateProduct(product : Product): Observable<any>
+  {
+    return this.http.put(`${this.url}/restaurant/1/products/${product.id}`, product);
   }
 
   deleteProduct(id: number): Observable<any>{
-    return this.http.delete(`${this.url}/restaurant/1/product/${id}`);
+    return this.http.delete(`${this.url}/restaurant/1/products/${id}`);
   }
 
   getDataSource() {
