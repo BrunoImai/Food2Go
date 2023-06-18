@@ -1,7 +1,10 @@
 package com.food2you.foodserver.security
 
-import com.food2you.foodserver.costumer.Costumer
+import com.food2you.foodserver.restaurant.Restaurant
+import com.food2you.foodserver.security.tokens.CostumerToken
+import com.food2you.foodserver.security.tokens.RestaurantToken
 import io.jsonwebtoken.Jwts
+import io.jsonwebtoken.SignatureAlgorithm
 import io.jsonwebtoken.jackson.io.JacksonDeserializer
 import io.jsonwebtoken.jackson.io.JacksonSerializer
 import io.jsonwebtoken.security.Keys
@@ -12,18 +15,24 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication
 import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.stereotype.Component
+import java.nio.charset.StandardCharsets
+import java.security.MessageDigest
+import java.security.SecureRandom
 
 import java.time.LocalDate
 import java.time.ZoneOffset
 import java.util.*
+import javax.crypto.KeyGenerator
+import javax.crypto.SecretKey
+import javax.crypto.spec.SecretKeySpec
 
 @Component
 data class JWT (
 
     private val prefix: String = "Bearer",
-    private val issuer: String = "PUCPR Server",
-    private val secret: String = "8y/B?E(H+MbQeThWmZq3t6w9zC&F)J@",
-    private val costumer: String = "costumer",
+    private val issuer: String = "Food2GoServer",
+    private val secret: String = "Senhateste",
+    private val restaurant: String = "restaurant",
     private val days: Int = 2
 
 ) {
@@ -31,23 +40,30 @@ data class JWT (
         return Date.from(date.atStartOfDay(ZoneOffset.UTC).toInstant())
     }
 
-    fun createToken(costumer: Costumer): String {
+    fun createToken(restaurant: Restaurant): String {
         val now = LocalDate.now()
-        val costumerToken = CostumerToken(
-            costumer.id!!,
-            costumer.email,
-            costumer.name,
-            costumer.roles
+        val restaurantToken = RestaurantToken(
+            restaurant.id!!,
+            restaurant.email,
+            restaurant.name,
+            restaurant.roles
         )
 
+
+        fun createHMACKeyFromString(keyString: String): SecretKey {
+            val messageDigest = MessageDigest.getInstance("SHA-256")
+            val keyBytes = messageDigest.digest(keyString.toByteArray(StandardCharsets.UTF_8))
+            return SecretKeySpec(keyBytes, "HmacSHA256")
+        }
+
         return Jwts.builder()
-            .signWith(Keys.hmacShaKeyFor(secret.toByteArray()))
+            .signWith(createHMACKeyFromString(secret))
             .serializeToJsonWith(JacksonSerializer())
             .setIssuedAt(toDate(now))
             .setExpiration(toDate(now.plusDays(days.toLong())))
             .setIssuer(issuer)
-            .setSubject(costumer.id.toString())
-            .addClaims(mutableMapOf("customerId" to costumer.id, "customerToken" to costumerToken))
+            .setSubject(restaurant.id.toString())
+            .addClaims(mutableMapOf("restaurantId" to restaurant.id, "restaurantToken" to restaurantToken))
             .compact()
     }
 
@@ -59,16 +75,16 @@ data class JWT (
 
         val claims = Jwts.parserBuilder()
             .setSigningKey(secret.toByteArray())
-            .deserializeJsonWith(JacksonDeserializer(mapOf(costumer to CostumerToken::class.java)))
+            .deserializeJsonWith(JacksonDeserializer(mapOf(restaurant to RestaurantToken::class.java)))
             .build()
             .parseClaimsJws(token)
             .body
 
         if (issuer != claims.issuer) return null
 
-        val costumer = claims[costumer, CostumerToken::class.java] ?: return null
-        val authorities = costumer.roles.map { SimpleGrantedAuthority("ROLE_$it") }
-        return UsernamePasswordAuthenticationToken(costumer, costumer.id, authorities)
+        val restaurant = claims[restaurant, RestaurantToken::class.java] ?: return null
+        val authorities = restaurant.roles.map { SimpleGrantedAuthority("ROLE_$it") }
+        return UsernamePasswordAuthenticationToken(restaurant, restaurant.id, authorities)
     }
 }
 

@@ -1,9 +1,8 @@
-package com.food2you.foodserver.security
+package com.food2you.foodserver.security.tokens
 
-data class CostumerToken(
+data class RestaurantToken(
     val id: Long,
     val email: String,
     val nome: String,
     val roles: MutableSet<String>
-
 )

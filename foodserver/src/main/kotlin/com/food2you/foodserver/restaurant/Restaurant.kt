@@ -18,7 +18,16 @@ data class Restaurant (
     val name: String,
 
     @NotBlank
+    val email: String,
+
+    @NotBlank
+    val password: String,
+
+    @NotBlank
     val status: String,
+
+    @ElementCollection
+    val roles: MutableSet<String>,
 
     @OneToMany(mappedBy = "restaurant", cascade = [CascadeType.ALL], orphanRemoval = true)
     val orders : MutableList<Order>,
@@ -31,5 +40,6 @@ data class Restaurant (
 
     @OneToMany(mappedBy = "restaurant", cascade = [CascadeType.ALL], orphanRemoval = true)
     val combos : MutableList<Combo>
+
 
 )
