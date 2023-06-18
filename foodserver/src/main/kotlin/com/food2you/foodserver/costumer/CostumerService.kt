@@ -5,13 +5,11 @@ import com.food2you.foodserver.costumer.response.LoginResponse
 import com.food2you.foodserver.orders.Order
 import com.food2you.foodserver.orders.OrderRepository
 import com.food2you.foodserver.orders.response.OrderResponse
-import com.food2you.foodserver.product.Product
 import com.food2you.foodserver.restaurant.RestaurantRepository
 import com.food2you.foodserver.security.JWT
 import org.slf4j.LoggerFactory
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
-import java.util.*
 
 @Service
 class CostumerService(
@@ -21,13 +19,13 @@ class CostumerService(
 ) {
     private val logger = LoggerFactory.getLogger(Costumer::class.java)
 
-    fun login(credentials: LoginRequest) : LoginResponse? {
-        val costumer = costumerRepository.findByEmail(credentials.email)
-        if (costumer.password == credentials.senha) return null
-
-        val token = jwt.createToken(costumer)
-        return LoginResponse(token, costumer)
-    }
+//    fun login(credentials: LoginRequest) : LoginResponse? {
+//        val costumer = costumerRepository.findByEmail(credentials.email)
+//        if (costumer.password == credentials.senha) return null
+//
+//        val token = jwt.createToken(costumer)
+//        return LoginResponse(token, costumer)
+//    }
     fun deleteCostumerById(id : Long) = logger.info("Deleted Costumer:" + costumerRepository.deleteById(id))
 
     fun createUser(costumer: Costumer): Costumer {

@@ -2,6 +2,7 @@ package com.food2you.foodserver.restaurant
 
 import com.food2you.foodserver.combo.Combo
 import com.food2you.foodserver.costumer.Costumer
+import com.food2you.foodserver.costumer.response.LoginResponse
 import com.food2you.foodserver.menus.Menu
 import com.food2you.foodserver.menus.MenuRepository
 import com.food2you.foodserver.menus.requests.NewMenu
@@ -10,17 +11,20 @@ import com.food2you.foodserver.orders.OrderRepository
 import com.food2you.foodserver.product.Product
 import com.food2you.foodserver.product.ProductRepository
 import com.food2you.foodserver.restaurant.requests.NewRestaurant
+import com.food2you.foodserver.restaurant.requests.RestaurantLoginRequest
+import com.food2you.foodserver.restaurant.response.RestaurantLoginResponse
+import com.food2you.foodserver.security.JWT
 import org.slf4j.LoggerFactory
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
-import java.util.*
 
 @Service
 data class RestaurantService (
     val restaurantRepository: RestaurantRepository,
     val orderRepository: OrderRepository,
     val menuRepository: MenuRepository,
-    val productRepository: ProductRepository
+    val productRepository: ProductRepository,
+    val jwt : JWT
 ) {
     private val logger = LoggerFactory.getLogger(Costumer::class.java)
 
@@ -28,16 +32,30 @@ data class RestaurantService (
         val restaurant = Restaurant(
             id = null,
             name = restaurant.name,
+            email = restaurant.email,
+            password = restaurant.password,
             status = "Open",
             orders = mutableListOf<Order>(),
             menus = mutableListOf<Menu>(),
             products = mutableListOf<Product>(),
-            combos = mutableListOf<Combo>()
+            combos = mutableListOf<Combo>(),
+            roles = mutableSetOf<String>()
         )
 
         restaurantRepository.save(restaurant)
     }
 
+    fun restaurantLogin(credentials: RestaurantLoginRequest) : RestaurantLoginResponse? {
+        val restaurant = restaurantRepository.findRestaurantByEmail(credentials.email) ?: return null
+        if (restaurant.password != credentials.password) return null
+        val loginResponse = RestaurantLoginResponse(
+            token = jwt.createToken(restaurant),
+            restaurant = restaurant
+        )
+
+        logger.info(loginResponse.toString())
+        return loginResponse
+    }
 
 
     fun findAllRestaurants() = restaurantRepository.findAll()
@@ -90,7 +108,7 @@ data class RestaurantService (
         if (deletedProduct != null) {
             addProduct(product, deletedProduct.restaurant)
         } else {
-            println("PRODUCT NOT FOUND")
+            logger.info("PRODUCT NOT FOUND")
         }
     }
 }

@@ -18,6 +18,7 @@ repositories {
 }
 
 dependencies {
+
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 	implementation("org.springframework.boot:spring-boot-starter-validation")
 	implementation("org.springframework.boot:spring-boot-starter-web")
@@ -28,6 +29,7 @@ dependencies {
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testImplementation("io.mockk:mockk:1.13.4")
 	implementation("org.codehaus.jackson:jackson-mapper-asl:1.9.13")
+	implementation("org.springframework.boot:spring-boot-configuration-processor:3.1.0")
 
 	implementation ("io.jsonwebtoken:jjwt-api:0.11.2")
 	implementation("org.springframework.boot:spring-boot-starter-security")
