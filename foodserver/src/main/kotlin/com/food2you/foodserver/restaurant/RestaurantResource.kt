@@ -26,50 +26,51 @@ data class RestaurantResource(
     private val orderService: OrderService
 ) {
     @Operation(
-        summary = "Realiza o Login",
+        summary = "Make a login request",
     )
     @ApiResponses(
-        ApiResponse(responseCode = "200", description = "Login bem sucedido"),
-        ApiResponse(responseCode = "400", description = "Credenciais invalidas")
+        ApiResponse(responseCode = "200", description = "Successful login "),
+        ApiResponse(responseCode = "400", description = "Invalid credentials"),
+        ApiResponse(responseCode = "404", description = "Email not found")
     )
     @PostMapping("/login")
-    fun loginRestaurant(@RequestBody @Valid @Schema(example = "{\"email\": \"emailRestaurante@email.com\",\n \"password\": \"minhaSenha\"}") restaurant : RestaurantLoginRequest) {
+    fun loginRestaurant(@RequestBody @Valid @Schema(example = "{\"email\": \"emailRestaurante@email.com\",\n \"password\": \"MyPassword123\"}") restaurant : RestaurantLoginRequest) {
         status(HttpStatus.OK).body(restaurantService.restaurantLogin(restaurant))
     }
 
     @Operation(
-        summary = "Cria um novo restaurante",
+        summary = "Create a new Restaurant",
     )
     @ApiResponses(
-        ApiResponse(responseCode = "200", description = "Restaurante Criado"),
-        ApiResponse(responseCode = "400", description = "Dados incorretos")
+        ApiResponse(responseCode = "200", description = "Restaurant created"),
+        ApiResponse(responseCode = "400", description = "Incorrect Body"),
     )
 
     @PostMapping
-    fun createRestaurant(@RequestBody @Valid @Schema(example = "{\"name\": \"MeuRestaurante\",\n \"email\": \"emailRestaurante@email.com\",\n \"password\": \"minhaSenha\"}") restaurant : NewRestaurant) = status(HttpStatus.CREATED).body(restaurantService.createRestaurant(restaurant))
+    fun createRestaurant(@RequestBody @Valid @Schema(example = "{\"name\": \"MyRestaurant\",\n \"email\": \"emailRestaurant@email.com\",\n \"password\": \"MyPassword123\"}") restaurant : NewRestaurant) = status(HttpStatus.CREATED).body(restaurantService.createRestaurant(restaurant))
 
     @Operation(
-        summary = "Cria um novo Menu",
+        summary = "Create a new Menu",
         parameters = [
             Parameter(
                 name = "restaurantId",
-                description = "O ID do restaurante criador do produto",
+                description = "Restaurant Identifier",
             )
         ]
     )
     @ApiResponses(
-        ApiResponse(responseCode = "200", description = "Menu Criado"),
-        ApiResponse(responseCode = "400", description = "Dados incorretos")
+        ApiResponse(responseCode = "200", description = "Menu created"),
+        ApiResponse(responseCode = "400", description = "Incorrect Body"),
     )
     @PostMapping("/{restaurantId}/menu")
-    fun createMenu(@RequestBody @Valid @Schema(example = "{\"name\": \"CardapioEspecial\"}") menu: NewMenu, @PathVariable restaurantId: Long) = status(HttpStatus.CREATED).body(restaurantService.createMenu(menu,restaurantId))
+    fun createMenu(@RequestBody @Valid @Schema(example = "{\"name\": \"Special Menu\"}") menu: NewMenu, @PathVariable restaurantId: Long) = status(HttpStatus.CREATED).body(restaurantService.createMenu(menu,restaurantId))
 
     @Operation(
-        summary = "Adiciona um novo produto ao restaurante",
+        summary = "Add a new Product to Restaurant",
         parameters = [
             Parameter(
                 name = "restaurantId",
-                description = "O ID do restaurante criador do produto",
+                description = "Restaurant Identifier",
             )
         ]
     )
@@ -88,134 +89,139 @@ data class RestaurantResource(
                     ]
                 )
             ]
-        )
+        ),
+        ApiResponse(responseCode = "404", description = "Restaurant not Found")
     )
     @PostMapping("/{restaurantId}/products")
     fun addProductToRestaurant(@RequestBody @Valid @Schema(example = "{\"name\": \"Burger\", \"price\": 9.99, \"qtt\": 1, \"description\": \"Delicious burger\"}") product: Product, @PathVariable restaurantId: Long) = status(HttpStatus.CREATED).body(restaurantService.addProduct(product, restaurantId))
 
     @Operation(
-        summary = "Adiciona um produto ao Menu",
+        summary = "Add a product to Menu",
         parameters = [
             Parameter(
                 name = "productId",
-                description = "O ID do produto a ser adicionado ao Menu",
+                description = "Product Identifier to be linked to Menu",
             ),
             Parameter(
                 name = "menuId",
-                description = "O ID do Menu",
+                description = "Menu Identifier",
             )
         ]
     )
     @ApiResponses(
-        ApiResponse(responseCode = "200", description = "Produto Adicionado"),
-        ApiResponse(responseCode = "400", description = "Dados incorretos")
+        ApiResponse(responseCode = "200", description = "Product Data"),
+        ApiResponse(responseCode = "400", description = "Incorrect Body"),
+        ApiResponse(responseCode = "404", description = "Product or Menu not Found")
     )
     @PostMapping("/{restaurantId}/{menuId}/{productId}")
     fun addProductToMenu(@PathVariable productId: Long, @PathVariable menuId: Long) = status(HttpStatus.CREATED).body(restaurantService.addProductToMenu (productId, menuId))
 
     @Operation(
-        summary = "Retorna todos os produtos vinculados a um restaurante",
+        summary = "Returns all products linked to a restaurant\n",
         parameters = [
             Parameter(
                 name = "restaurantId",
-                description = "ID do Restaurante",
+                description = "Restaurant Identifier",
             ),
         ]
     )
     @ApiResponses(
-        ApiResponse(responseCode = "200", description = "Produto Retornados"),
-        ApiResponse(responseCode = "400", description = "Dados incorretos")
+        ApiResponse(responseCode = "200", description = "Product founded"),
+        ApiResponse(responseCode = "400", description = "Incorrect Body"),
     )
     @GetMapping("/{restaurantId}/products")
     fun getAllProducts(@PathVariable restaurantId: Long) = status(HttpStatus.CREATED).body(restaurantService.getAllProducts (restaurantId))
 
     @Operation(
-        summary = "Retorna todos os pedidos vinculados a um restaurante",
+        summary = "Returns all orders linked to a restaurant\n",
         parameters = [
             Parameter(
                 name = "restaurantId",
-                description = "ID do Restaurante",
+                description = "Restaurant Identifier",
             ),
         ]
     )
     @ApiResponses(
-        ApiResponse(responseCode = "200", description = "Pedidos Retornados"),
-        ApiResponse(responseCode = "400", description = "Dados incorretos")
+        ApiResponse(responseCode = "200", description = "Orders founded"),
+        ApiResponse(responseCode = "400", description = "Incorrect Body"),
     )
     @GetMapping("/{restaurantId}/orders")
     fun getAllOrders(@PathVariable @Valid restaurantId: Long) = status(HttpStatus.OK).body(restaurantService.getAllOrders(restaurantId))
 
     @Operation(
-        summary = "Retorna todos os produtos vinculados a um pedido",
+        summary = "Returns all products linked to an order",
         parameters = [
             Parameter(
                 name = "orderId",
-                description = "ID do Pedido",
+                description = "Order Identifier",
             ),
         ]
     )
     @ApiResponses(
-        ApiResponse(responseCode = "200", description = "Produtos Retornados"),
-        ApiResponse(responseCode = "400", description = "Dados incorretos")
+        ApiResponse(responseCode = "200", description = "Product found"),
+        ApiResponse(responseCode = "400", description = "Incorrect Body"),
     )
     @GetMapping("/{restaurantId}/{orderId}/products")
     fun getAllOrdersProducts( @PathVariable orderId: Long) = status(HttpStatus.OK).body(restaurantService.getAllProductsFromOrder(orderId))
 
     @Operation(
-        summary = "Retorna todos os restaurantes registrados",
+        summary = "Returns all registered restaurants",
     )
     @ApiResponses(
-        ApiResponse(responseCode = "200", description = "Restaurantes Retornados"),
-        ApiResponse(responseCode = "400", description = "Dados incorretos")
+        ApiResponse(responseCode = "200", description = "Restaurants founded"),
+        ApiResponse(responseCode = "400", description = "Incorrect Body"),
     )
     @GetMapping
     fun getAllRestaurants() = status(HttpStatus.OK).body(restaurantService.findAllRestaurants())
 
     @Operation(
-        summary = "Retorna todos os menus vinculados a um restaurante",
+        summary = "Returns all menus linked to a restaurant",
         parameters = [
             Parameter(
                 name = "restaurantId",
-                description = "ID do Restaurante",
+                description = "Restaurant Identifier",
             ),
         ]
     )
     @ApiResponses(
-        ApiResponse(responseCode = "200", description = "menus Retornados"),
-        ApiResponse(responseCode = "400", description = "Dados incorretos")
+        ApiResponse(responseCode = "200", description = "Menu founded"),
+        ApiResponse(responseCode = "400", description = "Incorrect Body"),
     )
     @GetMapping("/{restaurantId}")
     fun getAllMenus(@PathVariable @Valid restaurantId: Long) = status(HttpStatus.OK).body(restaurantService.getAllMenus(restaurantId))
 
     @Operation(
-        summary = "Exclui um produto especifico",
+        summary = "Excludes a specific product",
         parameters = [
             Parameter(
                 name = "restaurantId",
-                description = "ID do Restaurante",
+                description = "Restaurant Identifier",
             ),
         ]
     )
     @ApiResponses(
-        ApiResponse(responseCode = "200", description = "Produto Excluido"),
-        ApiResponse(responseCode = "400", description = "Dados incorretos")
+        ApiResponse(responseCode = "200", description = "Successfully deleted product"),
+        ApiResponse(responseCode = "400", description = "Incorrect Body"),
+        ApiResponse(responseCode = "404", description = "Product not Found")
+
     )
     @DeleteMapping("/{restaurantId}/products/{productId}")
     fun deleteProduct(@PathVariable @Valid productId : Long, @PathVariable restaurantId: String) = status(HttpStatus.OK).body(restaurantService.deleteProduct(productId))
 
 
     @Operation(
-        summary = "Atualiza os dados de um determinado produto",
+        summary = "Update data for a particular product",
         parameters = [
             Parameter(
                 name = "productId",
-                description = "O ID do produto a ser adicionado ao Menu",
+                description = "Product dentifier to be updated",
             ),
         ]
     )
     @ApiResponses(
-        ApiResponse(responseCode = "200", description = "Produto Atualizado"),
-        ApiResponse(responseCode = "400", description = "Dados incorretos")
+        ApiResponse(responseCode = "200", description = "Product updated"),
+        ApiResponse(responseCode = "400", description = "Incorrect Body"),
+        ApiResponse(responseCode = "404", description = "Product not Found")
     )
     @PutMapping("/{restaurantId}/products/{productId}")
     fun updateProduct(@PathVariable @Valid productId : Long, @RequestBody @Valid @Schema(example = "{\"name\": \"Burger\", \"price\": 9.99, \"qtt\": 1, \"description\": \"Delicious burger\"}") product: Product) = status(HttpStatus.OK).body(restaurantService.updateProduct(productId, product))

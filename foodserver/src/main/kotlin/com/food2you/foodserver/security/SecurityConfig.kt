@@ -31,6 +31,7 @@ class SecurityConfig(private val jwtTokenFilter: JwtTokenFilter) {
                     .requestMatchers(HttpMethod.POST).permitAll()
                     .requestMatchers(HttpMethod.DELETE).permitAll()
                     .requestMatchers(HttpMethod.PUT).permitAll()
+                    .requestMatchers(HttpMethod.GET, "/error/**").permitAll()
                     .requestMatchers("/error/**").permitAll()
 //                    .requestMatchers(HttpMethod.POST, "/costumers/**").permitAll()
 //                    .requestMatchers(HttpMethod.PUT, "/costumers/**").permitAll()
@@ -38,7 +39,7 @@ class SecurityConfig(private val jwtTokenFilter: JwtTokenFilter) {
 //                    .requestMatchers(HttpMethod.PUT, "/restaurant/**").permitAll()
                     .anyRequest().authenticated()
             }
-            .headers { headers -> headers.frameOptions().disable() }
+            .headers {  it.frameOptions().disable() }
             .addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter::class.java)
             .build()
     }
