@@ -12,6 +12,7 @@ export class LoginRegisterComponent implements OnInit {
   submitted:boolean = false;
   registerForm!:FormGroup;
 
+
   constructor(private fireStorage: AngularFireStorage, private formBuilder: FormBuilder) {
     this.loginForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
@@ -21,13 +22,36 @@ export class LoginRegisterComponent implements OnInit {
       nameRegister: ['', Validators.required],
       emailRegister: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required],
-      repeatPassword: ['', [Validators.required, this.matchPassword.bind(this)]]
-    });
+      confirmPassword: ['', Validators.required]
+    }, { validators: this.passwordMatchValidator });
+  }
+
+  passwordMatchValidator(formGroup: FormGroup) {
+    const passwordControl = formGroup.get('password');
+    const confirmPasswordControl = formGroup.get('repeatPassword');
+  
+    if (passwordControl && confirmPasswordControl && passwordControl.value !== confirmPasswordControl.value) {
+      confirmPasswordControl.setErrors({ passwordMismatch: true });
+    } else {
+      if (confirmPasswordControl) {
+        confirmPasswordControl.setErrors(null);
+      }
+    }
   }
 
   ngOnInit() {
   }
 
+  matchPassword(control: AbstractControl): { [key: string]: boolean } | null {
+    const password = this.registerForm.get('password')?.value;
+    const repeatPassword = control.value;
+
+    if (password !== repeatPassword) {
+      return { 'passwordMismatch': true };
+    }
+
+    return null;
+  }
 
   submitLoginForm() {
     this.submitted = true;
@@ -61,15 +85,5 @@ export class LoginRegisterComponent implements OnInit {
     }
   }
   
-  matchPassword(control: AbstractControl): { [key: string]: boolean } | null {
-    const password = this.registerForm.get('password')?.value;
-    const repeatPassword = control.value;
-
-    if (password !== repeatPassword) {
-      return { 'passwordMismatch': true };
-    }
-
-    return null;
-  }
   
 }
