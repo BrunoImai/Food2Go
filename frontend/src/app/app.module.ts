@@ -30,6 +30,9 @@ import { MatSortModule } from '@angular/material/sort';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';	
+import { AngularFireModule } from '@angular/fire/compat';
+import { AngularFireStorageModule } from '@angular/fire/compat/storage';
+import { environment } from 'src/environments/environment';
 
 @NgModule({
   declarations: [		
@@ -66,6 +69,8 @@ import { HttpClientModule } from '@angular/common/http';
     MatPaginatorModule,
     MatDialogModule,
     MatCheckboxModule,
+    AngularFireModule.initializeApp(environment.firebaseConfig),
+    AngularFireStorageModule,
       ],
   providers: [],
   bootstrap: [AppComponent]

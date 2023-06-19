@@ -43,6 +43,10 @@
                   <input type="email" class="form-control border" id="inputEmailRestaurante" aria-describedby="emailHelp">
               </div>
               <div class="mb-3">
+                <label for="inputEmailRestaurante" class="form-label">Imagem do restaurante</label>
+                <input type="file" (change)="onFileChange($event)">
+            </div>
+              <div class="mb-3">
                   <label for="inputPassword" class="form-label">Senha</label>
                   <input type="password" class="form-control border" id="inputPassword">
               </div>
