@@ -8,7 +8,7 @@ O Uni2Go é um aplicativo que surgiu em resposta a um problema comum em restaura
 
 Esse repositório é usado para versionamento de código, documentação, Wiki e outros recursos do GitHub. 
 
-O projeto foi criado para a disciplina de Experiência Criativa: Projetando Sistemas de Informação, ministrada pelos professores Cleverson Adelino e Vinicius Godoy, pela universidade Pontifícia Universidade Católica do Paraná.
+O projeto foi criado para a disciplina de Experiência Criativa: Projetando Sistemas de Informação, ministrada pelos professores Cleverson Avelino e Vinicius Godoy, pela Pontifícia Universidade Católica do Paraná.
 
 ### Tecnologias usadas 
 <p display="inline-block">
