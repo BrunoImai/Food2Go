@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Product } from 'src/app/models/product';
 import { MenuService } from 'src/app/services/menu.service';
-import { FormBuilder, NgForm } from '@angular/forms';
+import { FormBuilder, NgForm, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-menu-form',
@@ -12,13 +12,13 @@ export class MenuFormComponent implements OnInit {
   addProductMessage: string | undefined;
   constructor(private formBuilder:FormBuilder, private menu: MenuService) {}
   productForm = this.formBuilder.group({
-    name: '',
-    price: null,
-    qtt: null,
-    description: '',
-    menusIncluded: [],
-    restaurant: 2,
-    combosIncluded: []
+    name: ['', Validators.required],
+    price: [null, Validators.required],
+    qtt: [null, Validators.required],
+    description: ['', Validators.required],
+    menusIncluded: [[]],
+    restaurant: [2],
+    combosIncluded: [[]]
   });
   
   
@@ -33,9 +33,9 @@ export class MenuFormComponent implements OnInit {
       
       
       const product: Product = {
-        name: formValue.name || '', 
-        price: formValue.price || 0, 
-        qtt: formValue.qtt || 0, 
+        name: formValue.name || '',
+        price: formValue.price || 0,
+        qtt: formValue.qtt || 0,
         description: formValue.description || '',
         menusIncluded: formValue.menusIncluded || [],
         combosIncluded: formValue.combosIncluded || []
