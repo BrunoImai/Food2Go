@@ -3,7 +3,9 @@ footer a
     text-decoration: none;
     font-weight: 20;
 }
-
+footer{
+    padding-top: 20px;
+}
 li{
     margin: 20px;
     text-align: center;

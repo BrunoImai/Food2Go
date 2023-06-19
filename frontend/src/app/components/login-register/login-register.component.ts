@@ -11,6 +11,8 @@ export class LoginRegisterComponent implements OnInit {
   loginForm!:FormGroup;
   submitted:boolean = false;
   registerForm!:FormGroup;
+  imageUrl: string | null = null;
+
 
   constructor(private fireStorage: AngularFireStorage, private formBuilder: FormBuilder) {
     this.loginForm = this.formBuilder.group({
@@ -21,13 +23,36 @@ export class LoginRegisterComponent implements OnInit {
       nameRegister: ['', Validators.required],
       emailRegister: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required],
-      repeatPassword: ['', [Validators.required, this.matchPassword.bind(this)]]
-    });
+      confirmPassword: ['', Validators.required]
+    }, { validators: this.passwordMatchValidator });
+  }
+
+  passwordMatchValidator(formGroup: FormGroup) {
+    const passwordControl = formGroup.get('password');
+    const confirmPasswordControl = formGroup.get('repeatPassword');
+  
+    if (passwordControl && confirmPasswordControl && passwordControl.value !== confirmPasswordControl.value) {
+      confirmPasswordControl.setErrors({ passwordMismatch: true });
+    } else {
+      if (confirmPasswordControl) {
+        confirmPasswordControl.setErrors(null);
+      }
+    }
   }
 
   ngOnInit() {
   }
 
+  matchPassword(control: AbstractControl): { [key: string]: boolean } | null {
+    const password = this.registerForm.get('password')?.value;
+    const repeatPassword = control.value;
+
+    if (password !== repeatPassword) {
+      return { 'passwordMismatch': true };
+    }
+
+    return null;
+  }
 
   submitLoginForm() {
     this.submitted = true;
@@ -57,19 +82,10 @@ export class LoginRegisterComponent implements OnInit {
       const path = `img/${file.name}`;
       const uploadTask = await this.fireStorage.upload(path, file);
       const url = await uploadTask.ref.getDownloadURL();
+      this.imageUrl = url;
       console.log(url);
     }
   }
   
-  matchPassword(control: AbstractControl): { [key: string]: boolean } | null {
-    const password = this.registerForm.get('password')?.value;
-    const repeatPassword = control.value;
-
-    if (password !== repeatPassword) {
-      return { 'passwordMismatch': true };
-    }
-
-    return null;
-  }
   
 }

@@ -1,0 +1,11 @@
+
+  
+  .fixed-size-image {
+    padding: 10px;
+    align-items: center;
+    object-fit: cover;
+    object-position: center center;
+    width: 100px;
+    height: 100px;
+  }
+  
