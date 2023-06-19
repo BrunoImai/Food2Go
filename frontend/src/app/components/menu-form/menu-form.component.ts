@@ -9,7 +9,6 @@ import { FormBuilder, NgForm } from '@angular/forms';
   styleUrls: ['./menu-form.component.css']
 })
 export class MenuFormComponent implements OnInit {
-
   addProductMessage: string | undefined;
   constructor(private formBuilder:FormBuilder, private menu: MenuService) {}
   productForm = this.formBuilder.group({
@@ -32,6 +31,7 @@ export class MenuFormComponent implements OnInit {
     if (this.productForm.valid) {
       const formValue = this.productForm.value;
       
+      
       const product: Product = {
         name: formValue.name || '', 
         price: formValue.price || 0, 
@@ -42,6 +42,7 @@ export class MenuFormComponent implements OnInit {
       };
   
       this.menu.addProduct(product).subscribe((result) => {
+        window.location.reload();
         console.warn(result);
         if (result) {
           this.addProductMessage = 'Product is added successfully';

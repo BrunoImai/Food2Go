@@ -2,7 +2,9 @@ POST http://localhost:8080/foodserver/api/restaurant
 Content-Type: application/json
 
 {
-  "name": "Cantina"
+  "name": "Batata quente",
+  "email": "batata@email",
+  "password": "senha12345678"
 }
 
 ###
@@ -97,4 +99,14 @@ Content-Type: application/json
 }
 
 ###
-DELETE http://localhost:8080/foodserver/api/costumers/1
+DELETE http://localhost:8080/foodserver/api/restaurant/1/102
+/restaurant/{restaurantId}/products/{productId}
+
+###
+POST http://localhost:8080/foodserver/api/restaurant/login
+Content-Type: application/json
+
+{
+  "email": "batata@email",
+  "password": "senha12345678"
+}

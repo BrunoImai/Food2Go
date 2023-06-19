@@ -15,11 +15,11 @@ class CostumerResource(
     private val costumerService: CostumerService,
     private val orderService: OrderService
 ) {
-    @PostMapping("/login")
-    fun login(@RequestBody loginRequest: LoginRequest) {
-        val login = costumerService.login(loginRequest)
-        if(login == null) status(HttpStatus.UNAUTHORIZED).body(loginRequest) else status(HttpStatus.OK)
-    }
+//    @PostMapping("/login")
+//    fun login(@RequestBody loginRequest: LoginRequest) {
+//        val login = costumerService.login(loginRequest)
+//        if(login == null) status(HttpStatus.UNAUTHORIZED).body(loginRequest) else status(HttpStatus.OK)
+//    }
 
     @PostMapping
     fun create(@RequestBody @Valid costumer: Costumer) =

@@ -27,14 +27,19 @@ export class MenuTableComponent {
   }
 
   editRow(row: Product) {
-    if (row.id === 0) {
-      this.menuService.addProduct(row).subscribe((newProduct: Product) => {
-        row.id = newProduct.id
-        row.isEdit = false
-      })
+    if (!row.isEdit) {
+      row.isEdit = true; 
     } else {
-      // TODO: update product
-      // this.menuService.updateProduct(row).subscribe(() => (row.isEdit = false))
+      if (row.id === 0) {
+        this.menuService.addProduct(row).subscribe((newProduct: Product) => {
+          row.id = newProduct.id;
+          row.isEdit = false;
+        });
+      } else {
+        this.menuService.updateProduct(row).subscribe(() => {
+          row.isEdit = false;
+        });
+      }
     }
   }
 
@@ -48,13 +53,13 @@ export class MenuTableComponent {
     this.dataSource.data = [newRow, ...this.dataSource.data]
   }
 
-  // removeRow(id: number) {
-  //   this.menuService.deleteProduct(id).subscribe(() => {
-  //     this.dataSource.data = this.dataSource.data.filter(
-  //       (u: Product) => u.id !== id,
-  //     )
-  //   })
-  // }
+  removeRow(id: number) {
+    this.menuService.deleteProduct(id).subscribe(() => {
+      this.dataSource.data = this.dataSource.data.filter(
+        (u: Product) => u.id !== id,
+      )
+    })
+  }
 
   // removeSelectedRows() {
   //   const users = this.dataSource.data.filter((u: Product) => u.isSelected)
