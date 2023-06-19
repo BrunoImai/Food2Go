@@ -11,20 +11,26 @@
     <div class="vh-100 d-flex justify-content-center align-items-center">
       <div class="col-md-4 p-5 shadow-sm border rounded-3">
           <h2 class="text-center mb-4 text-primary">Entrar</h2>
-          <form>
-              <div class="mb-3">
-                  <label for="exampleInputEmail1" class="form-label">Email</label>
-                  <input type="email" class="form-control border" id="exampleInputEmail1" aria-describedby="emailHelp">
+          <form [formGroup]="loginForm" (ngSubmit)="submitLoginForm()">
+            <div class="mb-3">
+              <label for="exampleInputEmail1" class="form-label">Email</label>
+              <input type="email" class="form-control border" id="exampleInputEmail1" aria-describedby="emailHelp" formControlName="email">
+              <div *ngIf="submitted && loginForm.get('email')?.invalid">
+                <div *ngIf="loginForm.get('email')?.hasError('required')" class="text-danger">Email é necessário</div>
+                <div *ngIf="loginForm.get('email')?.hasError('email')" class="text-danger">Formato de email inválido</div>
               </div>
-              <div class="mb-3">
-                  <label for="exampleInputPassword1" class="form-label">Senha</label>
-                  <input type="password" class="form-control border" id="exampleInputPassword1">
-              </div>
-              <p class="small"><a class="" href="forget-password.html">Esqueceu sua senha?</a></p>
-              <div class="d-grid">
-                  <button class="btn btn-primary" type="submit">Entrar</button>
-              </div>
+            </div>
+            <div class="mb-3">
+              <label for="exampleInputPassword1" class="form-label">Senha</label>
+              <input type="password" class="form-control border" id="exampleInputPassword1" formControlName="password">
+              <div *ngIf="submitted && loginForm.get('password')?.invalid" class="text-danger">Senha é necessária</div>
+            </div>
+            <p class="small"><a class="" href="forget-password.html">Esqueceu sua senha?</a></p>
+            <div class="d-grid">
+              <button class="btn btn-primary" type="submit">Entrar</button>
+            </div>
           </form>
+          
       </div>
     </div>
 
@@ -33,31 +39,37 @@
     <div class="vh-100 d-flex mb-5 justify-content-center align-items-center">
       <div class="col-md-6 mt-5 pt-5 p-5 shadow-sm border rounded-3">
           <h2 class="text-center mb-4 text-primary">Cadastre seu restaurante</h2>
-          <form> 
-              <div class="mb-3">
-                <label for="inputNomeRestaurante" class="form-label">Nome do restaurante</label>
-                <input type="email" class="form-control border" id="inputNomeRestaurante" aria-describedby="emailHelp">
-              </div>
-              <div class="mb-3">
-                  <label for="inputEmailRestaurante" class="form-label">Email do restaurante</label>
-                  <input type="email" class="form-control border" id="inputEmailRestaurante" aria-describedby="emailHelp">
-              </div>
-              <div class="mb-3">
-                <label for="inputEmailRestaurante" class="form-label">Imagem do restaurante</label> <br>
-                <input type="file" (change)="onFileChange($event)">
+          <form [formGroup]="registerForm" (ngSubmit)="submitRegisterForm()">
+            <div class="mb-3">
+              <label for="inputNomeRestaurante" class="form-label">Nome do restaurante</label>
+              <input type="text" class="form-control border" id="inputNomeRestaurante" formControlName="nomeRestaurante">
+              <div *ngIf="submitted && registerForm.get('nameRegister')?.invalid" class="text-danger">Nome do restaurante é obrigatório</div>
             </div>
-              <div class="mb-3">
-                  <label for="inputPassword" class="form-label">Senha</label>
-                  <input type="password" class="form-control border" id="inputPassword">
-              </div>
-              <div class="mb-3">
-                <label for="inputRepeatPassword" class="form-label">Repita a senha</label>
-                <input type="password" class="form-control" id="inputRepeatPassword1">
+            <div class="mb-3">
+              <label for="inputEmailRestaurante" class="form-label">Email do restaurante</label>
+              <input type="email" class="form-control border" id="inputEmailRestaurante" formControlName="emailRestaurante">
+              <div *ngIf="submitted && registerForm.get('emailRegister')?.invalid" class="text-danger">Email do restaurante inválido</div>
             </div>
-              <div class="d-grid">
-                  <button class="btn btn-primary" type="submit">Cadastrar</button>
-              </div>
+            <div class="mb-3">
+              <label for="inputImagemRestaurante" class="form-label">Imagem do restaurante</label>
+              <br>
+              <input type="file" (change)="onFileChange($event)">
+            </div>
+            <div class="mb-3">
+              <label for="inputPassword" class="form-label">Senha</label>
+              <input type="password" class="form-control border" id="inputPassword" formControlName="password">
+              <div *ngIf="submitted && registerForm.get('password')?.invalid" class="text-danger">Senha é obrigatória</div>
+            </div>
+            <div class="mb-3">
+              <label for="inputRepeatPassword" class="form-label">Repita a senha</label>
+              <input type="password" class="form-control" id="inputRepeatPassword" formControlName="repeatPassword">
+              <div *ngIf="submitted && registerForm.get('repeatPassword')?.hasError('passwordMismatch')" class="text-danger">As senhas não coincidem</div>
+            </div>            
+            <div class="d-grid">
+              <button class="btn btn-primary" type="submit">Cadastrar</button>
+            </div>
           </form>
+          
       </div>
     </div>
   </div>

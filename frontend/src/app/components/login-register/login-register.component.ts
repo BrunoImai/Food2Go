@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
+import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/forms';
 
 @Component({
   selector: 'app-login-register',
@@ -7,12 +8,47 @@ import { AngularFireStorage } from '@angular/fire/compat/storage';
   styleUrls: ['./login-register.component.css']
 })
 export class LoginRegisterComponent implements OnInit {
+  loginForm!:FormGroup;
+  submitted:boolean = false;
+  registerForm!:FormGroup;
 
-  constructor(private fireStorage: AngularFireStorage) { 
-    
+  constructor(private fireStorage: AngularFireStorage, private formBuilder: FormBuilder) {
+    this.loginForm = this.formBuilder.group({
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', Validators.required]
+    });
+    this.registerForm = this.formBuilder.group({
+      nameRegister: ['', Validators.required],
+      emailRegister: ['', [Validators.required, Validators.email]],
+      password: ['', Validators.required],
+      repeatPassword: ['', [Validators.required, this.matchPassword.bind(this)]]
+    });
   }
 
   ngOnInit() {
+  }
+
+
+  submitLoginForm() {
+    this.submitted = true;
+    if (this.loginForm.valid) {
+      // Form válido
+      console.log('form certo!');
+    } else {
+      // Form inválido
+      console.log('form contem erros!');
+    }
+  }
+
+  submitRegisterForm() {
+    this.submitted = true;
+    if (this.registerForm.valid) {
+      // Form válido
+      console.log('form certo!');
+    } else {
+      // Form inválido
+      console.log('form contem erros!');
+    }
   }
 
   async onFileChange(event:any) {
@@ -23,6 +59,17 @@ export class LoginRegisterComponent implements OnInit {
       const url = await uploadTask.ref.getDownloadURL();
       console.log(url);
     }
+  }
+  
+  matchPassword(control: AbstractControl): { [key: string]: boolean } | null {
+    const password = this.registerForm.get('password')?.value;
+    const repeatPassword = control.value;
+
+    if (password !== repeatPassword) {
+      return { 'passwordMismatch': true };
+    }
+
+    return null;
   }
   
 }
