@@ -1,6 +1,7 @@
 package com.food2you.foodserver.restaurant
 
 import com.food2you.foodserver.costumer.requests.LoginRequest
+import com.food2you.foodserver.costumer.response.LoginResponse
 import com.food2you.foodserver.menus.requests.NewMenu
 import com.food2you.foodserver.orders.OrderService
 import com.food2you.foodserver.product.Product
@@ -17,6 +18,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses
 import jakarta.validation.Valid
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity.status
+import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.web.bind.annotation.*
 
 @RestController
@@ -34,9 +36,8 @@ data class RestaurantResource(
         ApiResponse(responseCode = "404", description = "Email not found")
     )
     @PostMapping("/login")
-    fun loginRestaurant(@RequestBody @Valid @Schema(example = "{\"email\": \"emailRestaurante@email.com\",\n \"password\": \"MyPassword123\"}") restaurant : RestaurantLoginRequest) {
-        status(HttpStatus.OK).body(restaurantService.restaurantLogin(restaurant))
-    }
+    fun loginRestaurant(@RequestBody @Valid @Schema(example = "{\"email\": \"emailRestaurante@email.com\",\n \"password\": \"MyPassword123\"}") restaurant : RestaurantLoginRequest) = status(HttpStatus.OK).body( restaurantService.restaurantLogin(restaurant))
+
 
     @Operation(
         summary = "Create a new Restaurant",
@@ -92,6 +93,7 @@ data class RestaurantResource(
         ),
         ApiResponse(responseCode = "404", description = "Restaurant not Found")
     )
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/{restaurantId}/products")
     fun addProductToRestaurant(@RequestBody @Valid @Schema(example = "{\"name\": \"Burger\", \"price\": 9.99, \"qtt\": 1, \"description\": \"Delicious burger\"}") product: Product, @PathVariable restaurantId: Long) = status(HttpStatus.CREATED).body(restaurantService.addProduct(product, restaurantId))
 
@@ -205,6 +207,7 @@ data class RestaurantResource(
         ApiResponse(responseCode = "404", description = "Product not Found")
 
     )
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{restaurantId}/products/{productId}")
     fun deleteProduct(@PathVariable @Valid productId : Long, @PathVariable restaurantId: String) = status(HttpStatus.OK).body(restaurantService.deleteProduct(productId))
 

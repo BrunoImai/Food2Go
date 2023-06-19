@@ -1,5 +1,6 @@
 package com.food2you.foodserver.security
 
+import com.food2you.foodserver.costumer.Costumer
 import com.food2you.foodserver.restaurant.Restaurant
 import com.food2you.foodserver.security.tokens.CostumerToken
 import com.food2you.foodserver.security.tokens.RestaurantToken
@@ -10,6 +11,7 @@ import io.jsonwebtoken.jackson.io.JacksonSerializer
 import io.jsonwebtoken.security.Keys
 import jakarta.servlet.http.HttpServletRequest
 import org.aspectj.weaver.NameMangler.PREFIX
+import org.slf4j.LoggerFactory
 import org.springframework.http.HttpHeaders
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.Authentication
@@ -32,10 +34,20 @@ data class JWT (
     private val prefix: String = "Bearer",
     private val issuer: String = "Food2GoServer",
     private val secret: String = "Senhateste",
-    private val restaurant: String = "restaurant",
+    private val restaurantField: String = "restaurant",
     private val days: Int = 2
 
+
 ) {
+
+
+    fun createHMACKeyFromString(keyString: String): SecretKey {
+        val messageDigest = MessageDigest.getInstance("SHA-256")
+        val keyBytes = messageDigest.digest(keyString.toByteArray(StandardCharsets.UTF_8))
+        return SecretKeySpec(keyBytes, "HmacSHA256")
+    }
+
+    private val logger = LoggerFactory.getLogger(Costumer::class.java)
     private fun toDate(date: LocalDate): Date {
         return Date.from(date.atStartOfDay(ZoneOffset.UTC).toInstant())
     }
@@ -50,11 +62,6 @@ data class JWT (
         )
 
 
-        fun createHMACKeyFromString(keyString: String): SecretKey {
-            val messageDigest = MessageDigest.getInstance("SHA-256")
-            val keyBytes = messageDigest.digest(keyString.toByteArray(StandardCharsets.UTF_8))
-            return SecretKeySpec(keyBytes, "HmacSHA256")
-        }
 
         return Jwts.builder()
             .signWith(createHMACKeyFromString(secret))
@@ -63,26 +70,28 @@ data class JWT (
             .setExpiration(toDate(now.plusDays(days.toLong())))
             .setIssuer(issuer)
             .setSubject(restaurant.id.toString())
-            .addClaims(mutableMapOf("restaurantId" to restaurant.id, "restaurantToken" to restaurantToken))
+            .addClaims(mutableMapOf("restaurantId" to restaurant.id, restaurantField to restaurantToken))
             .compact()
     }
 
     fun extract(req: HttpServletRequest): Authentication? {
         val header = req.getHeader(HttpHeaders.AUTHORIZATION)
-        if (header == null || !header.startsWith(PREFIX)) return null
+        if (header == null || !header.startsWith(prefix)) return null
 
-        val token = header.replace(PREFIX, "").trim()
+        val token = header.replace(prefix, "").trim()
 
         val claims = Jwts.parserBuilder()
-            .setSigningKey(secret.toByteArray())
-            .deserializeJsonWith(JacksonDeserializer(mapOf(restaurant to RestaurantToken::class.java)))
+            .setSigningKey(createHMACKeyFromString(secret))
+            .deserializeJsonWith(JacksonDeserializer(mapOf(restaurantField to RestaurantToken::class.java)))
             .build()
             .parseClaimsJws(token)
             .body
 
         if (issuer != claims.issuer) return null
 
-        val restaurant = claims[restaurant, RestaurantToken::class.java] ?: return null
+        logger.info(claims.toString())
+
+        val restaurant = claims.get(restaurantField, RestaurantToken::class.java) ?: return null
         val authorities = restaurant.roles.map { SimpleGrantedAuthority("ROLE_$it") }
         return UsernamePasswordAuthenticationToken(restaurant, restaurant.id, authorities)
     }

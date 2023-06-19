@@ -180,6 +180,19 @@ internal class RestaurantServiceTest {
     }
 
     @Test
+    fun `Get all menus restaurant Id - Success`() {
+        val menu1 = menuStubs(1)
+        val menu2 = menuStubs(1)
+        val menus = mutableListOf(menu1, menu2)
+        every { menuRepositoryMock.findAllByRestaurant(1) } returns menus
+
+        val result = service.getAllMenus(1)
+
+        result shouldContainExactly menus
+
+    }
+
+    @Test
     fun `Get products by Id - Product not exists`() {
         every { productRepositoryMock.findByIdOrNull(1) } returns null
 

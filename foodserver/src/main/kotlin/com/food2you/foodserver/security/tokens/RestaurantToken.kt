@@ -4,5 +4,7 @@ data class RestaurantToken(
     val id: Long,
     val email: String,
     val nome: String,
-    val roles: MutableSet<String>
-)
+    val roles: Set<String>
+) {
+    constructor() : this(0, "", "", setOf())
+}

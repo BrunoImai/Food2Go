@@ -27,12 +27,9 @@ class SecurityConfig(private val jwtTokenFilter: JwtTokenFilter) {
             }.and()
             .authorizeHttpRequests { requests ->
                 requests
-                    .requestMatchers(HttpMethod.GET).permitAll()
-                    .requestMatchers(HttpMethod.POST).permitAll()
-                    .requestMatchers(HttpMethod.DELETE).permitAll()
-                    .requestMatchers(HttpMethod.PUT).permitAll()
-                    .requestMatchers(HttpMethod.GET, "/error/**").permitAll()
+                    .requestMatchers(HttpMethod.POST, "/restaurant/login", "/restaurant").permitAll()
                     .requestMatchers("/error/**").permitAll()
+                    .requestMatchers(HttpMethod.GET).permitAll()
 //                    .requestMatchers(HttpMethod.POST, "/costumers/**").permitAll()
 //                    .requestMatchers(HttpMethod.PUT, "/costumers/**").permitAll()
 //                    .requestMatchers(HttpMethod.POST, "/restaurant/**").permitAll()
@@ -45,15 +42,16 @@ class SecurityConfig(private val jwtTokenFilter: JwtTokenFilter) {
     }
 
     @Bean
-    fun corsFilter(): CorsFilter {
-        val config = CorsConfiguration()
-        config.addAllowedHeader("*")
-        config.addAllowedOrigin("*")
-        config.addAllowedMethod("*")
+    fun corsFilter() =
+        CorsConfiguration().apply {
+            addAllowedHeader("*")
+            addAllowedOrigin("*")
+            addAllowedMethod("*")
+        }.let {
+            UrlBasedCorsConfigurationSource().apply {
+                registerCorsConfiguration("/**", it)
+            }
+        }.let { CorsFilter(it) }
 
-        val source = UrlBasedCorsConfigurationSource()
-        source.registerCorsConfiguration("/**", config)
-        return CorsFilter(source)
-    }
 
 }
