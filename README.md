@@ -14,6 +14,11 @@ O projeto foi criado para a disciplina de Experiência Criativa: Projetando Sist
 <p display="inline-block">
   <img width="50" src="https://upload.wikimedia.org/wikipedia/commons/c/cf/Angular_full_color_logo.svg" alt="angular-logo"/>
   <img width="48" src="https://upload.wikimedia.org/wikipedia/commons/7/74/Kotlin_Icon.png" alt="kotlin-logo"/>
+  <img width="48" src="https://seeklogo.com/images/S/swagger-logo-A49F73BAF4-seeklogo.com.png" alt="swagger-logo"/>
+  <img width="48" src="https://1.bp.blogspot.com/-trIS3Iz94SE/YIr3iwBC23I/AAAAAAAAtVQ/oieBThHJU3wPJkGOATDSvi6RySwlowM5ACLcBGAsYHQ/s452/spring-logo.png" alt="springboot-logo"/>
+  <img width="48" src="https://media.licdn.com/dms/image/D4D12AQHW9aRSWIOMxQ/article-cover_image-shrink_720_1280/0/1657421703592?e=1692835200&v=beta&t=i0c8lx6NZc5PWYm8fBUhKgZcXfxlK17gcI5NXN5Lk4U" alt="jwt-logo"/>
+  <img width="48" src="https://cdn.icon-icons.com/icons2/2699/PNG/512/firebase_logo_icon_171157.png" alt="firebase-logo"/>
+  <img width="48" src="https://cdn.iconscout.com/icon/free/png-512/free-bootstrap-7-1175254.png?f=avif&w=256" alt="bootstrap-logo"/>
 </p>
                                                                                                   
 ### Ferramentas de desenvolvimento
@@ -30,7 +35,7 @@ O projeto foi criado para a disciplina de Experiência Criativa: Projetando Sist
 
 [Documentação do Projeto - Google Docs](https://docs.google.com/document/d/1QQRAMXgfqgR3PzJbQc9Z-iUcWaEgwTYXWwY6mgMdw_Q/edit?usp=sharing)
 
-[Documentação Wiki - GitHub)[]
+[Documentação Wiki - GitHub](https://github.com/BrunoImai/Food2Go/wiki)
 
 [About issues - GitHub Docs](https://docs.github.com/en/issues/tracking-your-work-with-issues/about-issues)
 
