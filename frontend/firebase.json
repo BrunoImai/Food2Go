@@ -1,14 +1,17 @@
 {
   "hosting": {
-    "source": "../frontend",
-    "public": "public",
+    "public": "dist",
     "ignore": [
       "firebase.json",
       "**/.*",
       "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/dist/index.html"
+      }
     ]
-  },
-  "storage": {
-    "rules": "storage.rules"
   }
 }
+

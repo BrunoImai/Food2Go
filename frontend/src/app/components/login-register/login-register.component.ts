@@ -11,6 +11,7 @@ export class LoginRegisterComponent implements OnInit {
   loginForm!:FormGroup;
   submitted:boolean = false;
   registerForm!:FormGroup;
+  imageUrl: string | null = null;
 
 
   constructor(private fireStorage: AngularFireStorage, private formBuilder: FormBuilder) {
@@ -81,6 +82,7 @@ export class LoginRegisterComponent implements OnInit {
       const path = `img/${file.name}`;
       const uploadTask = await this.fireStorage.upload(path, file);
       const url = await uploadTask.ref.getDownloadURL();
+      this.imageUrl = url;
       console.log(url);
     }
   }

@@ -13,16 +13,16 @@
           <h2 class="text-center mb-4 text-primary">Entrar</h2>
           <form [formGroup]="loginForm" (ngSubmit)="submitLoginForm()">
             <div class="mb-3">
-              <label for="exampleInputEmail1" class="form-label">Email</label>
-              <input type="email" class="form-control border" id="exampleInputEmail1" aria-describedby="emailHelp" formControlName="email">
+              <label for="inputEmail" class="form-label">Email</label>
+              <input type="email" class="form-control border" id="inputEmail" aria-describedby="emailHelp" formControlName="email">
               <div *ngIf="submitted && loginForm.get('email')?.invalid">
                 <div *ngIf="loginForm.get('email')?.hasError('required')" class="text-danger">Email é necessário</div>
                 <div *ngIf="loginForm.get('email')?.hasError('email')" class="text-danger">Formato de email inválido</div>
               </div>
             </div>
             <div class="mb-3">
-              <label for="exampleInputPassword1" class="form-label">Senha</label>
-              <input type="password" class="form-control border" id="exampleInputPassword1" formControlName="password">
+              <label for="inputPassword" class="form-label">Senha</label>
+              <input type="password" class="form-control border" id="inputPassword" formControlName="password">
               <div *ngIf="submitted && loginForm.get('password')?.invalid" class="text-danger">Senha é necessária</div>
             </div>
             <p class="small"><a class="" href="forget-password.html">Esqueceu sua senha?</a></p>
@@ -41,20 +41,24 @@
           <h2 class="text-center mb-4 text-primary">Cadastre seu restaurante</h2>
           <form [formGroup]="registerForm" (ngSubmit)="submitRegisterForm()">
             <div class="mb-3">
-              <label for="inputNomeRestaurante" class="form-label">Nome do restaurante</label>
-              <input type="text" class="form-control border" id="inputNomeRestaurante" formControlName="nomeRestaurante">
+              <label for="inputNameRegister" class="form-label">Nome do restaurante</label>
+              <input type="text" class="form-control border" id="inputNameRegister" formControlName="nameRegister">
               <div *ngIf="submitted && registerForm.get('nameRegister')?.invalid" class="text-danger">Nome do restaurante é obrigatório</div>
             </div>
             <div class="mb-3">
-              <label for="inputEmailRestaurante" class="form-label">Email do restaurante</label>
-              <input type="email" class="form-control border" id="inputEmailRestaurante" formControlName="emailRestaurante">
+              <label for="inputEmailRegister" class="form-label">Email do restaurante</label>
+              <input type="email" class="form-control border" id="inputEmailRegister" formControlName="emailRegister">
               <div *ngIf="submitted && registerForm.get('emailRegister')?.invalid" class="text-danger">Email do restaurante inválido</div>
             </div>
             <div class="mb-3">
               <label for="inputImagemRestaurante" class="form-label">Imagem do restaurante</label>
               <br>
               <input type="file" (change)="onFileChange($event)">
+              <div *ngIf="imageUrl">
+                <img [src]="imageUrl" alt="Imagem do restaurante" class="rounded-circle fixed-size-image">
+              </div>
             </div>
+            
             <div class="mb-3">
               <label for="inputPassword" class="form-label">Senha</label>
               <input type="password" class="form-control border" id="inputPassword" formControlName="password">
@@ -62,7 +66,7 @@
             </div>
             <div class="mb-3">
               <label for="inputRepeatPassword" class="form-label">Repita a senha</label>
-              <input type="password" class="form-control" id="inputRepeatPassword" formControlName="repeatPassword">
+              <input type="password" class="form-control" id="inputRepeatPassword" formControlName="confirmPassword">
               <div *ngIf="submitted && registerForm.get('repeatPassword')?.hasError('passwordMismatch')" class="text-danger">As senhas não coincidem</div>
             </div>            
             <div class="d-grid">
