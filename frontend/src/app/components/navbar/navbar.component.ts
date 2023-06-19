@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
@@ -8,11 +9,23 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class NavbarComponent implements OnInit {
 
-  constructor(private authService: AuthService) { }
+  constructor(private authService: AuthService, private router: Router) { }
 
   ngOnInit() {
+    if(localStorage.getItem('user') != null){
+      this.isAuthenticated = true;
+    }
+    else{
+      this.isAuthenticated = false;
+    }
   }
 
-  isAuthenticated = this.authService.isAuthenticated;
+  isAuthenticated: boolean = false;
+ 
   
+
+  exit(){
+    localStorage.clear();
+    window.location.href = 'home';
+  }
 }

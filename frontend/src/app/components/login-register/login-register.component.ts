@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/forms';
+import { Router } from '@angular/router';
+import { Login } from 'src/app/models/login';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-login-register',
@@ -9,12 +12,13 @@ import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/fo
 })
 export class LoginRegisterComponent implements OnInit {
   loginForm!:FormGroup;
-  submitted:boolean = false;
+  submittedLogin:boolean = false;
+  submittedRegister:boolean = false;
   registerForm!:FormGroup;
   imageUrl: string | null = null;
 
 
-  constructor(private fireStorage: AngularFireStorage, private formBuilder: FormBuilder) {
+  constructor(private fireStorage: AngularFireStorage, private formBuilder: FormBuilder, private login: AuthService, private router: Router) {
     this.loginForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required]
@@ -55,10 +59,19 @@ export class LoginRegisterComponent implements OnInit {
   }
 
   submitLoginForm() {
-    this.submitted = true;
+    const formValue = this.loginForm.value;
+    this.submittedLogin = true;
+    const credentials: Login = {
+      email: formValue.email,
+      password: formValue.password,
+    };
+
     if (this.loginForm.valid) {
-      // Form válido
-      console.log('form certo!');
+      this.login.authLogin(credentials).subscribe((result) => {
+        window.location.href = 'home';
+        console.log(result);
+        localStorage.setItem('user', result);
+      });      
     } else {
       // Form inválido
       console.log('form contem erros!');
@@ -66,10 +79,10 @@ export class LoginRegisterComponent implements OnInit {
   }
 
   submitRegisterForm() {
-    this.submitted = true;
+    this.submittedRegister = true;
     if (this.registerForm.valid) {
       // Form válido
-      console.log('form certo!');
+      console.log(this.registerForm.value);
     } else {
       // Form inválido
       console.log('form contem erros!');

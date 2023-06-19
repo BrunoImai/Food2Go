@@ -7,9 +7,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomeComponent implements OnInit {
 
-  constructor() { }
+  constructor() {
+
+   }
+   isAuthenticated: boolean = false;
 
   ngOnInit() {
+    if(localStorage.getItem('user') != null){
+      this.isAuthenticated = true;
+    }
+    else{
+      this.isAuthenticated = false;
+    }
   }
 
 }

@@ -4,7 +4,9 @@
       <h2>Organize seus pedidos<br>
         sem caixa nem fila</h2>
         <h3>Com preparo para viagem!</h3>
-        <a routerLink="/login-register"><button type="button">Acessar</button></a>
+        <a routerLink="/login-register" *ngIf="!isAuthenticated"><button type="button">Acessar</button></a>
+        <a routerLink="/order-dashboard/home-dashboard" *ngIf="isAuthenticated"><button type="button">Acessar Painel</button></a>
+
     </div>
   </div>
 </section>

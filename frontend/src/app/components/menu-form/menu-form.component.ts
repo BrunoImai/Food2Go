@@ -10,6 +10,7 @@ import { FormBuilder, NgForm, Validators } from '@angular/forms';
 })
 export class MenuFormComponent implements OnInit {
   addProductMessage: string | undefined;
+  isAuthenticated: boolean = false;
   constructor(private formBuilder:FormBuilder, private menu: MenuService) {}
   productForm = this.formBuilder.group({
     name: ['', Validators.required],
@@ -17,12 +18,22 @@ export class MenuFormComponent implements OnInit {
     qtt: [null, Validators.required],
     description: ['', Validators.required],
     menusIncluded: [[]],
-    restaurant: [2],
+    restaurant: [1],
     combosIncluded: [[]]
   });
   
   
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    // const credentials = JSON.parse(localStorage.getItem('user') || '{}');
+    console.log(localStorage.getItem('user'))
+    console.log("carregou")
+    if(localStorage.getItem('user') == "ADMIN"){
+      this.isAuthenticated = true;
+    }
+    else{
+      this.isAuthenticated = false;
+    }
+  }
 
   saveForm(){
     console.log('Form data: ', this.productForm.value);

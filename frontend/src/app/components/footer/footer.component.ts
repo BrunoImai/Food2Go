@@ -13,6 +13,5 @@ export class FooterComponent implements OnInit {
   ngOnInit() {
   }
   
-  isAuthenticated = this.authService.isAuthenticated;
 
 }

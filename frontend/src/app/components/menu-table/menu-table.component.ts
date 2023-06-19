@@ -19,7 +19,6 @@ export class MenuTableComponent {
   constructor(public dialog: MatDialog, private menuService: MenuService) {}
 
   ngOnInit() {
-  console.log("chamou")
     this.menuService.getProducts().subscribe((res: any) => {
       console.log(res)
       this.dataSource.data = res
