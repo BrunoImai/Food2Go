@@ -27,7 +27,7 @@
             </div>
             <p class="small"><a class="" href="forget-password.html">Esqueceu sua senha?</a></p>
             <div class="d-grid">
-              <button class="btn btn-primary" type="submit">Entrar</button>
+              <button class="btn btn-primary" type="submitLog">Entrar</button>
             </div>
           </form>
           
@@ -61,7 +61,7 @@
             
             <div class="mb-3">
               <label for="inputPassword" class="form-label">Senha</label>
-              <input type="password" class="form-control border" id="inputPassword" formControlName="password">
+              <input type="password" class="form-control border" id="inputPasswordRegister" formControlName="passwordRegister">
               <div *ngIf="submittedRegister && registerForm.get('passwordRegister')?.invalid" class="text-danger">Senha é obrigatória</div>
             </div>
             <div class="mb-3">
@@ -70,7 +70,7 @@
               <div *ngIf="submittedRegister && registerForm.get('repeatPassword')?.hasError('passwordMismatch')" class="text-danger">As senhas não coincidem</div>
             </div>            
             <div class="d-grid">
-              <button class="btn btn-primary" type="submit">Cadastrar</button>
+              <button class="btn btn-primary" type="submitReg">Cadastrar</button>
             </div>
           </form>
           

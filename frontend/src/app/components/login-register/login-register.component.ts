@@ -27,7 +27,7 @@ export class LoginRegisterComponent implements OnInit {
     this.registerForm = this.formBuilder.group({
       nameRegister: ['', Validators.required],
       emailRegister: ['', [Validators.required, Validators.email]],
-      password: ['', Validators.required],
+      passwordRegister: ['', Validators.required],
       confirmPassword: ['', Validators.required]
     }, { validators: this.passwordMatchValidator });
   }
@@ -81,17 +81,18 @@ export class LoginRegisterComponent implements OnInit {
   }
 
   submitRegisterForm() {
-    const formValue = this.loginForm.value;
+    const formValue = this.registerForm.value;
     this.submittedRegister = true;
-    const credentials: Register = {
+    const credentialsRegister: Register = {
       name: formValue.nameRegister,
       // imgUrl: formValue.imageUrl || '',
       email: formValue.emailRegister,
       password: formValue.passwordRegister,
     };
+    console.log(credentialsRegister);
     if (this.registerForm.valid) {
-      this.login.authLogin(credentials).subscribe((result) => {
-        window.location.href = 'login-register';
+      this.login.authRegister(credentialsRegister).subscribe((result) => {
+        // window.location.href = 'login-register';
         console.log(result);
         localStorage.setItem('token', JSON.stringify(result));
         console.log(localStorage.getItem('token'));
