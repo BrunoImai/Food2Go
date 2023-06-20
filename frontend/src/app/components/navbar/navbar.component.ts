@@ -12,7 +12,7 @@ export class NavbarComponent implements OnInit {
   constructor(private authService: AuthService, private router: Router) { }
 
   ngOnInit() {
-    if(localStorage.getItem('user') != null){
+    if(localStorage.getItem('token') != null){
       this.isAuthenticated = true;
     }
     else{

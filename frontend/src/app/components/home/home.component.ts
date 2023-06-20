@@ -13,7 +13,7 @@ export class HomeComponent implements OnInit {
    isAuthenticated: boolean = false;
 
   ngOnInit() {
-    if(localStorage.getItem('user') != null){
+    if(localStorage.getItem('token') != null){
       this.isAuthenticated = true;
     }
     else{

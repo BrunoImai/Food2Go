@@ -34,7 +34,7 @@ Content-Type: application/json
 
 ###
 POST http://localhost:8080/foodserver/api/restaurant/53/products
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2ODcxMzI4MDAsImV4cCI6MTY4NzMwNTYwMCwiaXNzIjoiRm9vZDJHb1NlcnZlciIsInN1YiI6IjUzIiwicmVzdGF1cmFudElkIjo1MywicmVzdGF1cmFudCI6eyJpZCI6NTMsImVtYWlsIjoiYmF0YXRhQGVtYWlsIiwibm9tZSI6IkJhdGF0YSBxdWVudGUiLCJyb2xlcyI6WyJBRE1JTiJdfX0.XuixcHAH9J1llJcN4LQUHYbKTwIHC9vjJPT2DCPs0uI
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2ODcxMzI4MDAsImV4cCI6MTY4NzMwNTYwMCwiaXNzIjoiRm9vZDJHb1NlcnZlciIsInN1YiI6IjEiLCJyZXN0YXVyYW50SWQiOjEsInJlc3RhdXJhbnQiOnsiaWQiOjEsImVtYWlsIjoiYmF0YXRhQGVtYWlsIiwibm9tZSI6IkJhdGF0YSBxdWVudGUiLCJyb2xlcyI6W119fQ.RNoWY8OQva9MMinxZvilT5lqkJ2Q4oQIiG2zqp5EffU
 Content-Type: application/json
 
 {
@@ -71,8 +71,8 @@ Content-Type: application/json
   "products": [
     {
       "id": 1,
-      "name": "pao com bolinho",
-      "price": 14.90,
+      "name": "batata",
+      "price": 12,
       "qtt": 1,
       "description": "string",
       "restaurant": 2,

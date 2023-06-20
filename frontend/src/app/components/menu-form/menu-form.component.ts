@@ -27,7 +27,7 @@ export class MenuFormComponent implements OnInit {
     // const credentials = JSON.parse(localStorage.getItem('user') || '{}');
     console.log(localStorage.getItem('user'))
     console.log("carregou")
-    if(localStorage.getItem('user') == "ADMIN"){
+    if(localStorage.getItem('token') == "ADMIN"){
       this.isAuthenticated = true;
     }
     else{

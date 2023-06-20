@@ -13,7 +13,7 @@ constructor(private http:HttpClient) {  }
 
   getOrders(): Observable<any>
   {
-    return this.http.get(`${this.url}/restaurant/1/ordsers`);
+    return this.http.get(`${this.url}/restaurant/1/orders`);
   }
 
   getCustomers(): Observable<any>

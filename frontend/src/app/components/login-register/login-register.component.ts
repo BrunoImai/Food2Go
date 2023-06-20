@@ -70,7 +70,8 @@ export class LoginRegisterComponent implements OnInit {
       this.login.authLogin(credentials).subscribe((result) => {
         window.location.href = 'home';
         console.log(result);
-        localStorage.setItem('user', result);
+        localStorage.setItem('token', JSON.stringify(result));
+        console.log(localStorage.getItem('token'));
       });      
     } else {
       // Form inválido

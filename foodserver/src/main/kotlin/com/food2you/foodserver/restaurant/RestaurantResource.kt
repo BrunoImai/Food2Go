@@ -40,11 +40,8 @@ data class RestaurantResource(
         ApiResponse(responseCode = "404", description = "Email not found")
     )
     @PostMapping("/login")
-    fun loginRestaurant(@RequestBody @Valid @Schema(example = "{\"email\": \"emailRestaurante@email.com\",\n \"password\": \"MyPassword123\"}") restaurant : RestaurantLoginRequest)  {
-        val result  = restaurantService.restaurantLogin(restaurant)
-        logger.info(result.toString())
-        status(HttpStatus.OK).body(result)
-    }
+    fun loginRestaurant(@RequestBody @Valid @Schema(example = "{\"email\": \"emailRestaurante@email.com\",\n \"password\": \"MyPassword123\"}") restaurant : RestaurantLoginRequest) = status(HttpStatus.OK).body(restaurantService.restaurantLogin(restaurant))
+
 
 
     @Operation(

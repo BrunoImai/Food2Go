@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Product } from '../models/product';
 import { BehaviorSubject } from 'rxjs';
@@ -14,7 +14,9 @@ export class MenuService {
 
 constructor(private http:HttpClient) {  }
   private dataSource: BehaviorSubject<Product[]> = new BehaviorSubject<Product[]>([]);
+  private ls: any = JSON.parse(localStorage.getItem('token')!);
 
+  
   getProducts(): Observable<any>
   {
     return this.http.get(`${this.url}/restaurant/1/products`);
@@ -27,16 +29,35 @@ constructor(private http:HttpClient) {  }
 
   addProduct(product : Product): Observable<any>
   {
-    return this.http.post(`${this.url}/restaurant/1/products`, product);
+    console.log(this.ls.token)
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json',
+        'Authorization': 'Bearer ' + this.ls.token
+      })
+    };
+    return this.http.post(`${this.url}/restaurant/1/products`, product, httpOptions);
   }
 
   updateProduct(product : Product): Observable<any>
   {
-    return this.http.put(`${this.url}/restaurant/1/products/${product.id}`, product);
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json',
+        'Authorization': 'Bearer ' + this.ls.token
+      })
+    };
+    return this.http.put(`${this.url}/restaurant/1/products/${product.id}`, product, httpOptions);
   }
 
   deleteProduct(id: number): Observable<any>{
-    return this.http.delete(`${this.url}/restaurant/1/products/${id}`);
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json',
+        'Authorization': 'Bearer ' + this.ls.token
+      })
+    };
+    return this.http.delete(`${this.url}/restaurant/1/products/${id}`, httpOptions);
   }
 
   getDataSource() {
