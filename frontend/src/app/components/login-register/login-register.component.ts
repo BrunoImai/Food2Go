@@ -3,6 +3,7 @@ import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Login } from 'src/app/models/login';
+import { Register } from 'src/app/models/register';
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
@@ -80,9 +81,21 @@ export class LoginRegisterComponent implements OnInit {
   }
 
   submitRegisterForm() {
+    const formValue = this.loginForm.value;
     this.submittedRegister = true;
+    const credentials: Register = {
+      name: formValue.nameRegister,
+      // imgUrl: formValue.imageUrl || '',
+      email: formValue.emailRegister,
+      password: formValue.passwordRegister,
+    };
     if (this.registerForm.valid) {
-      // Form válido
+      this.login.authLogin(credentials).subscribe((result) => {
+        window.location.href = 'login-register';
+        console.log(result);
+        localStorage.setItem('token', JSON.stringify(result));
+        console.log(localStorage.getItem('token'));
+      });  
       console.log(this.registerForm.value);
     } else {
       // Form inválido

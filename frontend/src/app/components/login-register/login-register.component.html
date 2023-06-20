@@ -62,7 +62,7 @@
             <div class="mb-3">
               <label for="inputPassword" class="form-label">Senha</label>
               <input type="password" class="form-control border" id="inputPassword" formControlName="password">
-              <div *ngIf="submittedRegister && registerForm.get('password')?.invalid" class="text-danger">Senha é obrigatória</div>
+              <div *ngIf="submittedRegister && registerForm.get('passwordRegister')?.invalid" class="text-danger">Senha é obrigatória</div>
             </div>
             <div class="mb-3">
               <label for="inputRepeatPassword" class="form-label">Repita a senha</label>

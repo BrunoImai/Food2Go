@@ -27,6 +27,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSortModule } from '@angular/material/sort';
+import { MatMenu, MatMenuModule } from '@angular/material/menu';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';	
@@ -69,6 +70,7 @@ import { environment } from 'src/environments/environment';
     ReactiveFormsModule,
     MatPaginatorModule,
     MatDialogModule,
+    MatMenuModule,
     MatCheckboxModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireStorageModule,

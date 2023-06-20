@@ -12,9 +12,22 @@ nav a
 {
     text-decoration: none;
     color: #0275d8;
-    font-size: 35px;
+    
+    font-size: 25px;
     font-weight: 500;
 }	
+
+nav img
+{
+    margin: 10px;
+    align-items: center;
+    object-fit: cover;
+    object-position: center center;
+    width: 40px;
+    height: 40px;
+}
+
+
 nav ul
 {
     font-weight: bold;
@@ -37,11 +50,12 @@ nav ul li a:hover
     transition: all ease 0.5s;
 }
 
-.exit {
-    margin-left: 20px;
-    font-size: 20px !important;
-    font-weight: 500;
-    color: black;
-    padding-top: 18px;
-    cursor: pointer;
-}
+.centralized-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .menu-button  {
+    margin-top: -2px;
+  }

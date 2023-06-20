@@ -16,14 +16,29 @@
             <a class="nav-link" routerLink="login-register">Registrar</a>
           </li>
           <li class="nav-item" *ngIf="isAuthenticated">
-            <a class="nav-link" routerLink="order-dashboard">Painel de pedidos</a>
+            <a class="nav-link" routerLink="/order-dashboard/home-dashboard">Painel de pedidos</a>
           </li> 
         </ul>
-        <span class="navbar-text" *ngIf="isAuthenticated">
-          <a class="nav-link" routerLink="order-dashboard">NomeRestaurante</a>
+
+        <div *ngIf="isAuthenticated" class="centralized-container">
           <img src="https://via.placeholder.com/40" alt="NomeRestaurante" class="rounded-circle">
-          <a class="exit" (click)="exit()" >Sair</a>
-        </span>
+          <span class="navbar-text">
+            <a routerLink="/order-dashboard/home-dashboard">{{resName}}</a>
+          </span>
+          <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="icon-button with a menu" class="menu-button">
+            <mat-icon>more_vert</mat-icon>
+          </button>
+          <mat-menu #menu="matMenu" class="navbar-menu">
+            <button mat-menu-item>
+              <mat-icon>edit</mat-icon>
+              <span>Editar restaurante</span>
+            </button>
+            <button mat-menu-item (click)="exit()">
+              <mat-icon>exit_to_app</mat-icon>
+              <span>Sair</span>
+            </button>
+          </mat-menu>
+        </div>
       </div>
     </div>
   </nav>

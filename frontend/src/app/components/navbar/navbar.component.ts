@@ -10,10 +10,14 @@ import { AuthService } from 'src/app/services/auth.service';
 export class NavbarComponent implements OnInit {
 
   constructor(private authService: AuthService, private router: Router) { }
+  resName: string | null = null;
+  ls!: any;
 
   ngOnInit() {
     if(localStorage.getItem('token') != null){
+      this.ls = JSON.parse(localStorage.getItem('token')!);
       this.isAuthenticated = true;
+      this.resName = this.ls.restaurant.name;
     }
     else{
       this.isAuthenticated = false;

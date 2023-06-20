@@ -17,4 +17,8 @@ export class AuthService {
     return this.http.post(`${this.url}/restaurant/login`, login);
   }
 
+  authRegister(register : any): Observable<any>{
+    return this.http.post(`${this.url}/restaurant`, register);
+  }
+
 }
