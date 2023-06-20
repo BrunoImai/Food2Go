@@ -1,6 +1,5 @@
 package com.food2you.foodserver.restaurant
 
-import com.food2you.foodserver.costumer.Costumer
 import com.food2you.foodserver.costumer.requests.LoginRequest
 import com.food2you.foodserver.costumer.response.LoginResponse
 import com.food2you.foodserver.menus.requests.NewMenu
@@ -17,7 +16,6 @@ import io.swagger.v3.oas.annotations.media.Schema
 import io.swagger.v3.oas.annotations.responses.ApiResponse
 import io.swagger.v3.oas.annotations.responses.ApiResponses
 import jakarta.validation.Valid
-import org.hibernate.validator.internal.util.logging.LoggerFactory
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity.status
 import org.springframework.security.access.prepost.PreAuthorize
@@ -29,8 +27,6 @@ data class RestaurantResource(
     private val restaurantService: RestaurantService,
     private val orderService: OrderService
 ) {
-
-    private val logger = org.slf4j.LoggerFactory.getLogger(Costumer::class.java)
     @Operation(
         summary = "Make a login request",
     )
@@ -40,7 +36,7 @@ data class RestaurantResource(
         ApiResponse(responseCode = "404", description = "Email not found")
     )
     @PostMapping("/login")
-    fun loginRestaurant(@RequestBody @Valid @Schema(example = "{\"email\": \"emailRestaurante@email.com\",\n \"password\": \"MyPassword123\"}") restaurant : RestaurantLoginRequest) = status(HttpStatus.OK).body(restaurantService.restaurantLogin(restaurant))
+    fun loginRestaurant(@RequestBody @Valid @Schema(example = "{\"email\": \"emailRestaurante@email.com\",\n \"password\": \"MyPassword123\"}") restaurant : RestaurantLoginRequest) = status(HttpStatus.OK).body( restaurantService.restaurantLogin(restaurant))
 
 
 
@@ -68,7 +64,6 @@ data class RestaurantResource(
         ApiResponse(responseCode = "200", description = "Menu created"),
         ApiResponse(responseCode = "400", description = "Incorrect Body"),
     )
-    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/{restaurantId}/menu")
     fun createMenu(@RequestBody @Valid @Schema(example = "{\"name\": \"Special Menu\"}") menu: NewMenu, @PathVariable restaurantId: Long) = status(HttpStatus.CREATED).body(restaurantService.createMenu(menu,restaurantId))
 
@@ -121,7 +116,6 @@ data class RestaurantResource(
         ApiResponse(responseCode = "400", description = "Incorrect Body"),
         ApiResponse(responseCode = "404", description = "Product or Menu not Found")
     )
-    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/{restaurantId}/{menuId}/{productId}")
     fun addProductToMenu(@PathVariable productId: Long, @PathVariable menuId: Long) = status(HttpStatus.CREATED).body(restaurantService.addProductToMenu (productId, menuId))
 
@@ -233,7 +227,6 @@ data class RestaurantResource(
         ApiResponse(responseCode = "400", description = "Incorrect Body"),
         ApiResponse(responseCode = "404", description = "Product not Found")
     )
-    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/{restaurantId}/products/{productId}")
     fun updateProduct(@PathVariable @Valid productId : Long, @RequestBody @Valid @Schema(example = "{\"name\": \"Burger\", \"price\": 9.99, \"qtt\": 1, \"description\": \"Delicious burger\"}") product: Product) = status(HttpStatus.OK).body(restaurantService.updateProduct(productId, product))
 }
