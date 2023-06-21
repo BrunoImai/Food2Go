@@ -1,3 +1,23 @@
-<p>
-  edit-profile works!
-</p>
+
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>Edit Profile</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <form>
+      <mat-form-field>
+        <input matInput placeholder="Name" [(ngModel)]="ls.restaurant.name" name="name">
+      </mat-form-field>
+      <br>
+      <mat-form-field>
+        <input matInput placeholder="Email" [(ngModel)]="ls.restaurant.email" name="email">
+      </mat-form-field>
+      <br>
+      <mat-checkbox name="isAdmin">Admin</mat-checkbox>
+      <br>
+      <input type="file" (change)="onFileChange($event)">
+      <br>
+      <button mat-raised-button color="primary" (click)="saveProfile()">Save</button>
+    </form>
+  </mat-card-content>
+</mat-card>

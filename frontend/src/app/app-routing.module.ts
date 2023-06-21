@@ -7,6 +7,7 @@ import { OrderTableComponent } from './components/order-table/order-table.compon
 import { MenuComponent } from './components/menu/menu.component';
 import { HomeDashboardComponent } from './components/home-dashboard/home-dashboard.component';
 import { MenuFormComponent } from './components/menu-form/menu-form.component';
+import { EditProfileComponent } from './components/edit-profile/edit-profile.component';
 
 
 
@@ -23,8 +24,7 @@ const routes: Routes = [
     { path: 'menu-form', component: MenuFormComponent},
   ]},
   { path: 'home/order-dashboard', component: OrderDashboardComponent},
-  
-
+  { path: 'edit-restaurant', component: EditProfileComponent}
 ];
 
 @NgModule({

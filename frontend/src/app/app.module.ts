@@ -34,6 +34,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFireStorageModule } from '@angular/fire/compat/storage';
 import { environment } from 'src/environments/environment';
+import { EditProfileComponent } from './components/edit-profile/edit-profile.component';
 
 
 @NgModule({
@@ -48,6 +49,7 @@ import { environment } from 'src/environments/environment';
       MenuFormComponent,
       MenuTableComponent,
       HomeDashboardComponent,
+      EditProfileComponent,
    ],
   imports: [
     BrowserModule,
