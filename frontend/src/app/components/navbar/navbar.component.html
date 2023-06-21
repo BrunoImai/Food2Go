@@ -29,10 +29,69 @@
             <mat-icon>more_vert</mat-icon>
           </button>
           <mat-menu #menu="matMenu" class="navbar-menu">
-            <button mat-menu-item>
+            <button mat-menu-item data-bs-toggle="modal" data-bs-target="#editRestaurantModal">
               <mat-icon>edit</mat-icon>
               <span>Editar restaurante</span>
             </button>
+            <div class="modal fade" id="editRestaurantModal" tabindex="-1" aria-labelledby="editRestaurantModalLabel" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="editRestaurantModalLabel">Editar perfil do restaurante</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    <div class="form-container">
+                      <form>
+                        <mat-card class="preview-card">
+                          <mat-card-header>
+                            <mat-card-title>Visualização do restaurante:</mat-card-title>
+                          </mat-card-header>
+                          <mat-card-content>
+                            <div class="preview-restaurant">
+                              <div class="image-container">
+                                <img src="https://via.placeholder.com/40" alt="NomeRestaurante" class="rounded-circle preview-img">
+                              </div>
+                              <div class="name-container">
+                                <a>{{resName}}</a>
+                              </div>
+                            </div>
+                          </mat-card-content>
+                        </mat-card>
+                        <div class="form-row">
+                          <label>Nome:</label>
+                          <mat-form-field>
+                            <input matInput placeholder="Name" [(ngModel)]="ls.restaurant.name" name="name">
+                          </mat-form-field>
+                        </div>
+                        <div class="form-row">
+                          <label>Email:</label>
+                          <mat-form-field>
+                            <input matInput placeholder="Email" [(ngModel)]="ls.restaurant.email" name="email">
+                          </mat-form-field>
+                        </div>
+                        <div class="form-row">
+                          <label>Permissão:</label>
+                          <mat-checkbox name="isAdmin">Administrador</mat-checkbox>
+                        </div>
+                        <div class="form-row">
+                          <label>Selecionar Imagem:</label>
+                          <div>
+                            <input type="file" #fileInput style="display:none" (change)="onFileChange($event)">
+                            <button mat-raised-button color="primary" (click)="fileInput.click()">Selecionar</button>
+                          </div>
+                          <span>{{ selectedFileName }}</span>
+                        </div>
+                      </form>                      
+                    </div>                    
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                    <button type="button" class="btn btn-primary" (click)="saveProfile()">Salvar edições</button>
+                  </div>
+                </div>
+              </div>
+            </div>            
             <button mat-menu-item (click)="exit()">
               <mat-icon>exit_to_app</mat-icon>
               <span>Sair</span>

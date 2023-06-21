@@ -28,7 +28,8 @@ export class LoginRegisterComponent implements OnInit {
       nameRegister: ['', Validators.required],
       emailRegister: ['', [Validators.required, Validators.email]],
       passwordRegister: ['', Validators.required],
-      confirmPassword: ['', Validators.required]
+      confirmPassword: ['', Validators.required],
+      // imageUrl: ['']
     }, { validators: this.passwordMatchValidator });
   }
 
@@ -85,7 +86,7 @@ export class LoginRegisterComponent implements OnInit {
     this.submittedRegister = true;
     const credentialsRegister: Register = {
       name: formValue.nameRegister,
-      // imgUrl: formValue.imageUrl || '',
+      // imgUrl: formValue.imageUrl || '', this.registerForm.get('imageUrl')?.setValue(url);
       email: formValue.emailRegister,
       password: formValue.passwordRegister,
     };
