@@ -56,6 +56,51 @@ nav ul li a:hover
     justify-content: center;
   }
 
-  .menu-button  {
-    margin-top: -2px;
-  }
+.menu-button  {
+margin-top: -2px;
+}
+
+.form-container {
+    display: flex;
+    justify-content: center;
+}
+
+
+.form-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+  
+.preview-restaurant {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+  
+.image-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 10px;
+}
+  
+.name-container {
+    display: flex;
+    align-items: center;
+}
+  
+.preview-img {
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.form-row label {
+    margin-right: 10px;
+}
+
+.preview-card {
+    margin-bottom: 20px;
+}
