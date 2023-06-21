@@ -7,6 +7,7 @@ import com.food2you.foodserver.orders.OrderService
 import com.food2you.foodserver.product.Product
 import com.food2you.foodserver.restaurant.requests.NewRestaurant
 import com.food2you.foodserver.restaurant.requests.RestaurantLoginRequest
+import com.food2you.foodserver.restaurant.requests.UpdatedRestaurant
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.Parameter
 import io.swagger.v3.oas.annotations.enums.ParameterStyle
@@ -36,7 +37,7 @@ data class RestaurantResource(
         ApiResponse(responseCode = "404", description = "Email not found")
     )
     @PostMapping("/login")
-    fun loginRestaurant(@RequestBody @Valid @Schema(example = "{\"email\": \"emailRestaurante@email.com\",\n \"password\": \"MyPassword123\"}") restaurant : RestaurantLoginRequest) = status(HttpStatus.OK).body( restaurantService.restaurantLogin(restaurant))
+    fun loginRestaurant(@RequestBody @Valid @Schema(example = "{\"email\": \"emailRestaurante@email.com\",\n \"password\": \"MyPassword123\" ") restaurant : RestaurantLoginRequest) = status(HttpStatus.OK).body( restaurantService.restaurantLogin(restaurant))
 
 
 
@@ -49,7 +50,7 @@ data class RestaurantResource(
     )
 
     @PostMapping
-    fun createRestaurant(@RequestBody @Valid @Schema(example = "{\"name\": \"MyRestaurant\",\n \"email\": \"emailRestaurant@email.com\",\n \"password\": \"MyPassword123\"}") restaurant : NewRestaurant) = status(HttpStatus.CREATED).body(restaurantService.createRestaurant(restaurant))
+    fun createRestaurant(@RequestBody @Valid @Schema(example = "{\"name\": \"MyRestaurant\",\n \"email\": \"emailRestaurant@email.com\",\n \"password\": \"MyPassword123\",\n \"roles\": \"[ADMIN]\", \"restaurantImage\": \"imagemDeLogo.png\"}") restaurant : NewRestaurant) = status(HttpStatus.CREATED).body(restaurantService.createRestaurant(restaurant))
 
     @Operation(
         summary = "Create a new Menu",
@@ -96,7 +97,7 @@ data class RestaurantResource(
     )
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/{restaurantId}/products")
-    fun addProductToRestaurant(@RequestBody @Valid @Schema(example = "{\"name\": \"Burger\", \"price\": 9.99, \"qtt\": 1, \"description\": \"Delicious burger\"}") product: Product, @PathVariable restaurantId: Long) = status(HttpStatus.CREATED).body(restaurantService.addProduct(product, restaurantId))
+    fun addProductToRestaurant(@RequestBody @Valid @Schema(example = "{\"name\": \"Burger\", \"price\": 9.99, \"qtt\": 1, \"description\": \"Delicious burger\", \"description\": \"Delicious burger\"}") product: Product, @PathVariable restaurantId: Long) = status(HttpStatus.CREATED).body(restaurantService.addProduct(product, restaurantId))
 
     @Operation(
         summary = "Add a product to Menu",
@@ -190,8 +191,26 @@ data class RestaurantResource(
         ApiResponse(responseCode = "200", description = "Menu founded"),
         ApiResponse(responseCode = "400", description = "Incorrect Body"),
     )
-    @GetMapping("/{restaurantId}")
+    @GetMapping("/{restaurantId}/menus")
     fun getAllMenus(@PathVariable @Valid restaurantId: Long) = status(HttpStatus.OK).body(restaurantService.getAllMenus(restaurantId))
+
+    @Operation(
+        summary = "Return restaurant with the Identifier",
+        parameters = [
+            Parameter(
+                name = "restaurantId",
+                description = "Restaurant Identifier",
+            ),
+        ]
+    )
+    @ApiResponses(
+        ApiResponse(responseCode = "200", description = "Restaurant founded"),
+        ApiResponse(responseCode = "400", description = "Incorrect Body"),
+    )
+    @GetMapping("/{restaurantId}")
+    fun getRestaurant(@PathVariable @Valid restaurantId: Long) = status(HttpStatus.OK).body(restaurantService.getRestaurantById(restaurantId))
+
+
 
     @Operation(
         summary = "Excludes a specific product",
@@ -212,13 +231,18 @@ data class RestaurantResource(
     @DeleteMapping("/{restaurantId}/products/{productId}")
     fun deleteProduct(@PathVariable @Valid productId : Long, @PathVariable restaurantId: String) = status(HttpStatus.OK).body(restaurantService.deleteProduct(productId))
 
+    @PreAuthorize("hasRole('ADMIN')")
+    @DeleteMapping("/{restaurantId}")
+    fun deleteRestaurant(@PathVariable restaurantId: Long) = status(HttpStatus.OK).body(restaurantService.deleteRestaurant(restaurantId))
+
+
 
     @Operation(
         summary = "Update data for a particular product",
         parameters = [
             Parameter(
                 name = "productId",
-                description = "Product dentifier to be updated",
+                description = "Product identifier to be updated",
             ),
         ]
     )
@@ -227,6 +251,25 @@ data class RestaurantResource(
         ApiResponse(responseCode = "400", description = "Incorrect Body"),
         ApiResponse(responseCode = "404", description = "Product not Found")
     )
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/{restaurantId}/products/{productId}")
     fun updateProduct(@PathVariable @Valid productId : Long, @RequestBody @Valid @Schema(example = "{\"name\": \"Burger\", \"price\": 9.99, \"qtt\": 1, \"description\": \"Delicious burger\"}") product: Product) = status(HttpStatus.OK).body(restaurantService.updateProduct(productId, product))
+
+    @Operation(
+        summary = "Update data for a particular restaurant",
+        parameters = [
+            Parameter(
+                name = "restaurantId",
+                description = "Restaurant identifier to be updated",
+            ),
+        ]
+    )
+    @ApiResponses(
+        ApiResponse(responseCode = "200", description = "Product updated"),
+        ApiResponse(responseCode = "400", description = "Incorrect Body"),
+        ApiResponse(responseCode = "404", description = "Product not Found")
+    )
+    @PreAuthorize("hasRole('ADMIN')")
+    @PutMapping("/{restaurantId}")
+    fun updateRestaurant(@PathVariable @Valid restaurantId : Long, @RequestBody @Valid @Schema(example = "{\"name\": \"Burger\", \"price\": 9.99, \"qtt\": 1, \"description\": \"Delicious burger\"}") restaurant: UpdatedRestaurant) = status(HttpStatus.OK).body(restaurantService.updateRestaurant(restaurantId, restaurant))
 }

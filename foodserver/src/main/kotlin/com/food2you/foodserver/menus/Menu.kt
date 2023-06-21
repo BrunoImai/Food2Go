@@ -3,7 +3,7 @@ package com.food2you.foodserver.menus
 import com.food2you.foodserver.product.Product
 import jakarta.persistence.*
 import jakarta.validation.constraints.NotBlank
-
+import com.fasterxml.jackson.annotation.JsonIgnore
 @Entity
 @Table(name = "menu")
 class Menu(
@@ -17,6 +17,7 @@ class Menu(
     @NotBlank
     var restaurant : Long,
 
+    @JsonIgnore
     @ManyToMany
     @JoinTable(name = "menu_products", joinColumns = [JoinColumn(name = "menu_id")], inverseJoinColumns = [JoinColumn(name = "product_id")])
     var products: MutableSet<Product>?

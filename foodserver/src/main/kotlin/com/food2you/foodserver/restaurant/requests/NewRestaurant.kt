@@ -13,6 +13,11 @@ data class NewRestaurant (
     val email: String,
 
     @NotBlank
-    val password: String
+    val password: String,
 
+    @NotBlank
+    val roles: MutableSet<String>,
+
+    @NotBlank
+    val restaurantImage: String
 )

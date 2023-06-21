@@ -1,4 +1,8 @@
 package com.food2you.foodserver.orders.request
 
-class OrderRequest {
-}
+import jakarta.validation.constraints.NotBlank
+
+data class OrderRequest(
+    var name: String,
+    var products : MutableList<Long>
+)

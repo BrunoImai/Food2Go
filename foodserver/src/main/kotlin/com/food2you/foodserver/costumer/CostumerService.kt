@@ -4,7 +4,9 @@ import com.food2you.foodserver.costumer.requests.LoginRequest
 import com.food2you.foodserver.costumer.response.LoginResponse
 import com.food2you.foodserver.orders.Order
 import com.food2you.foodserver.orders.OrderRepository
+import com.food2you.foodserver.orders.request.OrderRequest
 import com.food2you.foodserver.orders.response.OrderResponse
+import com.food2you.foodserver.product.ProductRepository
 import com.food2you.foodserver.restaurant.RestaurantRepository
 import com.food2you.foodserver.security.JWT
 import org.slf4j.LoggerFactory
@@ -15,7 +17,7 @@ import org.springframework.stereotype.Service
 class CostumerService(
     val jwt: JWT,
     val costumerRepository: CostumerRepository,
-    val orderRepository: OrderRepository, private val restaurantRepository: RestaurantRepository
+    val orderRepository: OrderRepository, private val restaurantRepository: RestaurantRepository, private val productRepository: ProductRepository
 ) {
     private val logger = LoggerFactory.getLogger(Costumer::class.java)
 
@@ -73,10 +75,21 @@ class CostumerService(
         return costumer
     }
 
-    fun createOrder(customerId: Long, order: Order, restaurantId : Long): Order {
-        val custumer = getCustomerById(customerId)
-        order.costumer = custumer
+    fun createOrder(customerId: Long, restaurantId : Long, orderRequest: OrderRequest): Order {
+        val costumer = getCustomerById(customerId)
+        val products = productRepository.findAllById(orderRequest.products)
+        val order = Order(
+            id = null,
+            name = orderRequest.name,
+            costumer = costumer,
+            restaurant = restaurantId,
+            products = products
+        )
+        order.costumer = costumer
         order.restaurant = restaurantId
+
+
+
         return orderRepository.save(order)
     }
 

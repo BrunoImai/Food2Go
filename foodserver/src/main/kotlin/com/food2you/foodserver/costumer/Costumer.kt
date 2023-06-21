@@ -5,6 +5,7 @@ import jakarta.persistence.*
 import jakarta.validation.constraints.Email
 import jakarta.validation.constraints.NotBlank
 import jakarta.validation.constraints.NotNull
+import org.codehaus.jackson.annotate.JsonIgnore
 import org.hibernate.validator.constraints.UniqueElements
 
 @Entity
@@ -24,6 +25,7 @@ data class Costumer(
 
     val password: String,
 
+    @JsonIgnore
     @OneToMany(mappedBy = "costumer", cascade = [CascadeType.ALL], orphanRemoval = true)
     val orders: MutableList<Order>,
 

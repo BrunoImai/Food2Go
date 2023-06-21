@@ -4,8 +4,7 @@ import com.food2you.foodserver.costumer.Costumer
 import com.food2you.foodserver.product.Product
 import jakarta.persistence.*
 import jakarta.validation.constraints.NotBlank
-
-
+import com.fasterxml.jackson.annotation.JsonIgnore
 
 @Entity
 @Table(name="Orders")
@@ -18,6 +17,7 @@ class  Order   (
     @NotBlank
     var name: String,
 
+    @JsonIgnore
     @ManyToOne
     var costumer : Costumer?,
 

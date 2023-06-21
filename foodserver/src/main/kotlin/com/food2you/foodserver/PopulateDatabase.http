@@ -1,53 +1,5 @@
-POST http://localhost:8080/foodserver/api/restaurant
-Content-Type: application/json
-
-{
-  "name": "Batata quente",
-  "email": "batata@email",
-  "password": "senha12345678"
-}
-
-###
-POST http://localhost:8080/foodserver/api/restaurant/1/product
-Content-Type: application/json
-
-{
-  "name": "x queijo",
-  "price": 16.90,
-  "description": "pao carne queijo",
-  "menusIncluded": null,
-  "combosIncluded": null
-}
-
-###
-POST http://localhost:8080/foodserver/api/restaurant/1/product
-Content-Type: application/json
-
-{
-  "name": "x linguiça",
-  "price": 14.90,
-
-  "description": "pao linguiça queijo",
-  "menusIncluded": null,
-"combosIncluded": null
-}
-
-###
-POST http://localhost:8080/foodserver/api/restaurant/53/products
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2ODcxMzI4MDAsImV4cCI6MTY4NzMwNTYwMCwiaXNzIjoiRm9vZDJHb1NlcnZlciIsInN1YiI6IjEiLCJyZXN0YXVyYW50SWQiOjEsInJlc3RhdXJhbnQiOnsiaWQiOjEsImVtYWlsIjoiYmF0YXRhQGVtYWlsIiwibm9tZSI6IkJhdGF0YSBxdWVudGUiLCJyb2xlcyI6W119fQ.RNoWY8OQva9MMinxZvilT5lqkJ2Q4oQIiG2zqp5EffU
-Content-Type: application/json
-
-{
-  "name": "pao com bolinho",
-  "price": 14.90,
-  "quantity": 50,
-  "description": "pao quibe queijo tomate",
-  "menusIncluded": null,
-"combosIncluded": null
-}
-###
+### CREATE A NEW COSTUMER
 POST http://localhost:8080/foodserver/api/costumers
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2ODcxMzI4MDAsImV4cCI6MTY4NzMwNTYwMCwiaXNzIjoiRm9vZDJHb1NlcnZlciIsInN1YiI6IjUzIiwicmVzdGF1cmFudElkIjo1MywicmVzdGF1cmFudCI6eyJpZCI6NTMsImVtYWlsIjoiYmF0YXRhQGVtYWlsIiwibm9tZSI6IkJhdGF0YSBxdWVudGUiLCJyb2xlcyI6WyJBRE1JTiJdfX0.XuixcHAH9J1llJcN4LQUHYbKTwIHC9vjJPT2DCPs0uI
 Content-Type: application/json
 
 {
@@ -59,52 +11,66 @@ Content-Type: application/json
   "roles": []
 }
 
-###
-POST http://localhost:8080/foodserver/api/costumers/order
+
+### CREATE A NEW RESTAURANT
+POST http://localhost:8080/foodserver/api/restaurant
 Content-Type: application/json
 
 {
-  "id": 1,
-  "name": "Entregue",
-  "costumer": 1,
-  "restaurant": 1,
-  "products": [
-    {
-      "id": 1,
-      "name": "batata",
-      "price": 12,
-      "qtt": 1,
-      "description": "string",
-      "restaurant": 2,
-      "menusIncluded": [],
-      "combosIncluded": []
-    }
-  ]
+  "name": "Restaurante Admin",
+  "email": "batata@email",
+  "password": "senha12345678",
+  "roles": ["ADMIN"],
+  "restaurantImage" : "umaImagem.jpg"
 }
 
+###ADD PRODUCT 1
+POST http://localhost:8080/foodserver/api/restaurant/1/products
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2ODczMDU2MDAsImV4cCI6MTY4NzQ3ODQwMCwiaXNzIjoiRm9vZDJHb1NlcnZlciIsInN1YiI6IjEiLCJyZXN0YXVyYW50SWQiOjEsInJlc3RhdXJhbnQiOnsiaWQiOjEsImVtYWlsIjoiYmF0YXRhQGVtYWlsIiwibm9tZSI6IlJlc3RhdXJhbnRlIEFkbWluIiwicm9sZXMiOlsiQURNSU4iXX19.zMoW-TYqRw0T12WbWIEDIpqwTpQoNlDgtBhf4UUjuGE
 
-###
-GET http://localhost:8080/foodserver/api/restaurant/1/products
-Accept: application/json
+{
+  "name": "x queijo",
+  "price": 16.90,
+  "description": "pao carne queijo",
+  "productImage": "umaImagem.jpg"
+}
 
-###
-PUT http://localhost:8080/foodserver/api/costumers/1
+###ADD PRODUCT 2
+POST http://localhost:8080/foodserver/api/restaurant/1/products
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2ODczMDU2MDAsImV4cCI6MTY4NzQ3ODQwMCwiaXNzIjoiRm9vZDJHb1NlcnZlciIsInN1YiI6IjEiLCJyZXN0YXVyYW50SWQiOjEsInJlc3RhdXJhbnQiOnsiaWQiOjEsImVtYWlsIjoiYmF0YXRhQGVtYWlsIiwibm9tZSI6IlJlc3RhdXJhbnRlIEFkbWluIiwicm9sZXMiOlsiQURNSU4iXX19.zMoW-TYqRw0T12WbWIEDIpqwTpQoNlDgtBhf4UUjuGE
+
+{
+  "name": "x linguiça",
+  "price": 14.90,
+  "description": "pao linguiça queijo",
+  "productImage": "umaImagem.jpg"
+}
+
+###ADD PRODUCT 3
+POST http://localhost:8080/foodserver/api/restaurant/1/products
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2ODczMDU2MDAsImV4cCI6MTY4NzQ3ODQwMCwiaXNzIjoiRm9vZDJHb1NlcnZlciIsInN1YiI6IjEiLCJyZXN0YXVyYW50SWQiOjEsInJlc3RhdXJhbnQiOnsiaWQiOjEsImVtYWlsIjoiYmF0YXRhQGVtYWlsIiwibm9tZSI6IlJlc3RhdXJhbnRlIEFkbWluIiwicm9sZXMiOlsiQURNSU4iXX19.zMoW-TYqRw0T12WbWIEDIpqwTpQoNlDgtBhf4UUjuGE
+
+{
+  "name": "pao com bolinho",
+  "price": 14.90,
+  "quantity": 50,
+  "description": "pao quibe queijo tomate",
+  "productImage": "umaImagem.jpg"
+}
+
+###CREATE ORDER
+POST http://localhost:8080/foodserver/api/costumers/order/1/1
 Content-Type: application/json
 
 {
-  "name": "Bruno Imai",
-  "mobilePhone": "459999999",
-  "email": "bruno.imai@pucpr.edu.br",
-  "password": "123",
-  "orders": [],
-  "roles": []
+  "name": "EM ANDAMENTO",
+  "products": [1,2,3]
 }
 
-###
-DELETE http://localhost:8080/foodserver/api/restaurant/1/102
-
-
-###
+### LOGIN
 POST http://localhost:8080/foodserver/api/restaurant/login
 Content-Type: application/json
 

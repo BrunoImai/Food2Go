@@ -9,6 +9,6 @@ data class RestaurantLoginResponse(
     val token: String,
 
     @NonNull
-    val restaurant: Restaurant
+    val restaurant: RestaurantResponse
 
 )

@@ -3,6 +3,7 @@ package com.food2you.foodserver.costumer
 import com.food2you.foodserver.costumer.requests.LoginRequest
 import com.food2you.foodserver.orders.Order
 import com.food2you.foodserver.orders.OrderService
+import com.food2you.foodserver.orders.request.OrderRequest
 import jakarta.validation.Valid
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -25,9 +26,9 @@ class CostumerResource(
     fun create(@RequestBody @Valid costumer: Costumer) =
         status(HttpStatus.CREATED).body(costumerService.createUser(costumer))
 
-    @PostMapping("/order")
-    fun create(@RequestBody @Valid order: Order, @Valid costumerId : Long, @Valid restaurantId : Long) {
-        status(HttpStatus.CREATED).body(costumerService.createOrder(costumerId, order, restaurantId))
+    @PostMapping("/order/{costumerId}/{restaurantId}")
+    fun create(@RequestBody @Valid order: OrderRequest, @Valid @PathVariable costumerId : Long, @Valid @PathVariable restaurantId : Long) {
+        status(HttpStatus.CREATED).body(costumerService.createOrder(costumerId, restaurantId, order))
     }
 
     @DeleteMapping("/{costumerId}")

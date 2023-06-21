@@ -7,7 +7,7 @@ import com.food2you.foodserver.restaurant.Restaurant
 import jakarta.persistence.*
 import jakarta.validation.constraints.NotBlank
 import jakarta.validation.constraints.NotNull
-
+import com.fasterxml.jackson.annotation.JsonIgnore
 @Entity
 @Table(name="product")
 open class Product(
@@ -29,9 +29,14 @@ open class Product(
     @NotNull
     var restaurant: Long,
 
+    @NotNull
+    var productImage: String,
+
+    @JsonIgnore
     @ManyToMany(mappedBy = "products")
     var menusIncluded : MutableSet<Menu>?,
 
+    @JsonIgnore
     @ManyToMany(mappedBy = "products")
     var combosIncluded : MutableSet<Combo>?
 )
