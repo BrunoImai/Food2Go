@@ -4,13 +4,19 @@ export interface Product {
     price: number;
     qtt: number;
     description: string; 
-    menusIncluded?: any[]; // Adjust the type as needed
-    combosIncluded?: any[];
+    menusIncluded?: any[]; 
     isEdit?: boolean;
+    productImage?: string;
 }
 
 
 export const ProductColumns = [
+    {
+      key: 'productImage',
+      type: 'image',
+      label: 'Imagem',
+      required: false,
+    },
     {
       key: 'name',
       type: 'text',

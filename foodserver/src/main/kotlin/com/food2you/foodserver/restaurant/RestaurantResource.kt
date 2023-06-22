@@ -271,5 +271,5 @@ data class RestaurantResource(
     )
     @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/{restaurantId}")
-    fun updateRestaurant(@PathVariable @Valid restaurantId : Long, @RequestBody @Valid @Schema(example = "{\"name\": \"Burger\", \"price\": 9.99, \"qtt\": 1, \"description\": \"Delicious burger\"}") restaurant: UpdatedRestaurant) = status(HttpStatus.OK).body(restaurantService.updateRestaurant(restaurantId, restaurant))
+    fun updateRestaurant(@PathVariable @Valid restaurantId : Long, @RequestBody @Valid @Schema(example = "{\"name\": \"MyNewRestaurantName\", \"email\": MyNewEmail, \"roles\": [ADMIN], \"restaurantImage\": \"newImgLink.jpg\"}") restaurant: UpdatedRestaurant) = status(HttpStatus.OK).body(restaurantService.updateRestaurant(restaurantId, restaurant))
 }

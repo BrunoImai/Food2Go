@@ -1,11 +1,8 @@
 package com.food2you.foodserver.restaurant.response
-
 import jakarta.validation.constraints.NotBlank
 
-data class RestaurantResponse (
-    @NotBlank
-    val id: Long,
 
+data class RestaurantUpdateResponse(
     @NotBlank
     val name: String,
 

@@ -15,11 +15,20 @@ export class MenuTableComponent {
   columnsSchema: any = ProductColumns
   dataSource = new MatTableDataSource<Product>()
   valid: any = {}
+  ls!: any;
+  isAuthenticated: boolean = false;
 
   constructor(public dialog: MatDialog, private menuService: MenuService) {}
 
   ngOnInit() {
-    this.menuService.getProducts().subscribe((res: any) => {
+    if(localStorage.getItem('token') != null){
+      this.ls = JSON.parse(localStorage.getItem('token')!);
+      this.isAuthenticated = true;
+    }
+    else{
+      this.isAuthenticated = false;
+    }
+    this.menuService.getProducts(this.ls.restaurant.id).subscribe((res: any) => {
       console.log(res)
       this.dataSource.data = res
     })
@@ -30,12 +39,12 @@ export class MenuTableComponent {
       row.isEdit = true; 
     } else {
       if (row.id === 0) {
-        this.menuService.addProduct(row).subscribe((newProduct: Product) => {
+        this.menuService.addProduct(this.ls.restaurant.id, row).subscribe((newProduct: Product) => {
           row.id = newProduct.id;
           row.isEdit = false;
         });
       } else {
-        this.menuService.updateProduct(row).subscribe(() => {
+        this.menuService.updateProduct(this.ls.restaurant.id, row).subscribe(() => {
           row.isEdit = false;
         });
       }

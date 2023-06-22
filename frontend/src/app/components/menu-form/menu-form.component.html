@@ -1,4 +1,4 @@
-<div *ngIf="!isAuthenticated">
+<div *ngIf="isAuthenticated">
   <mat-card>
     <mat-card-header>
       <mat-card-title class="form-title">Adicione produtos ao cardápio:</mat-card-title>
@@ -28,9 +28,37 @@
                 <textarea  formControlName="description" matInput placeholder="Descrição"></textarea>
               </mat-form-field>
             </div>
-          </div>
-          <button (click)="submit()" mat-raised-button color="primary">Enviar</button>
+            <div class="col-md-6 imgInsert">
+                <div class="pb-1">
+                <label class="imgLabel">Selecionar Imagem:  </label>
+                  <input type="file" #fileInput style="display:none" (change)="onFileChange($event)" formControlName="productUrl">
+                    <button mat-raised-button color="primary" (click)="fileInput.click()">Selecionar</button>
+                </div>
+                <div class="preview-container">
+                  <mat-card-header>
+                    <mat-card-title>Visualização do cliente:</mat-card-title>
+                  </mat-card-header>
+                    <mat-card class="preview-card">
+                      
+                      <mat-card-content>
+                        <div class="preview-restaurant">
+                          <div *ngIf="productUrl" class="image-container">
+                            <img [src]="productUrl" alt="Imagem do restaurante" class="rounded-circle preview-img">
+                          </div>
+                          <div class="name-container" *ngIf="!previewProduct">
+                            <a>Nome do produto</a>
+                          </div>
+                          <div class="name-container" *ngIf="previewProduct">
+                            <a>{{previewProduct}}</a>
+                          </div>
+                        </div>
+                      </mat-card-content>
+                    </mat-card>
+                </div>
+              </div>
+          </div>      
       </form>
+      <button (click)="submit()" mat-raised-button color="primary">Enviar</button>
     </mat-card-content>
   </mat-card>
 </div>

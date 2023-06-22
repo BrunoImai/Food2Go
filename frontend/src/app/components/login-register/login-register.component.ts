@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { Login } from 'src/app/models/login';
 import { Register } from 'src/app/models/register';
@@ -17,9 +18,14 @@ export class LoginRegisterComponent implements OnInit {
   submittedRegister:boolean = false;
   registerForm!:FormGroup;
   imageUrl: string | null = null;
+  role: [string] | null = null;
+  ls!: any;
+  isAuthenticated: boolean = false;
 
 
-  constructor(private fireStorage: AngularFireStorage, private formBuilder: FormBuilder, private login: AuthService, private router: Router) {
+  constructor(private fireStorage: AngularFireStorage, private formBuilder: FormBuilder, private login: AuthService, private router: Router, private _snackBar: MatSnackBar) {
+    
+    
     this.loginForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required]
@@ -29,7 +35,8 @@ export class LoginRegisterComponent implements OnInit {
       emailRegister: ['', [Validators.required, Validators.email]],
       passwordRegister: ['', Validators.required],
       confirmPassword: ['', Validators.required],
-      // imageUrl: ['']
+      imageUrl: [null],
+      role: [2]
     }, { validators: this.passwordMatchValidator });
   }
 
@@ -47,6 +54,13 @@ export class LoginRegisterComponent implements OnInit {
   }
 
   ngOnInit() {
+    if(localStorage.getItem('token') != null){
+      this.ls = JSON.parse(localStorage.getItem('token')!);
+      this.isAuthenticated = true;
+    }
+    else{
+      this.isAuthenticated = false;
+    }
   }
 
   matchPassword(control: AbstractControl): { [key: string]: boolean } | null {
@@ -60,6 +74,10 @@ export class LoginRegisterComponent implements OnInit {
     return null;
   }
 
+  openSnackBar(message: string, action: string) {
+    this._snackBar.open(message, action, { duration: 2000 });
+  }
+
   submitLoginForm() {
     const formValue = this.loginForm.value;
     this.submittedLogin = true;
@@ -70,33 +88,42 @@ export class LoginRegisterComponent implements OnInit {
 
     if (this.loginForm.valid) {
       this.login.authLogin(credentials).subscribe((result) => {
-        window.location.href = 'home';
+        this.openSnackBar('Login realizado com sucesso!', 'Fechar');
         console.log(result);
         localStorage.setItem('token', JSON.stringify(result));
         console.log(localStorage.getItem('token'));
+        setTimeout(() => {
+          window.location.href = 'home';
+        }, 1500); 
+      }, (error) => {
+        this.openSnackBar('Email ou senha incorretos!', 'Fechar');
       });      
     } else {
-      // Form inválido
-      console.log('form contem erros!');
+      this.openSnackBar('Formato de email incorreto ou campos vazios!', 'Fechar');
     }
   }
 
   submitRegisterForm() {
     const formValue = this.registerForm.value;
     this.submittedRegister = true;
+    if (formValue.role === '1') {
+      this.role = ['ADMIN'];
+    } else if (formValue.role === '2') {
+      this.role = ['EMPLOYEE'];
+    } else {
+      this.role = ['EMPLOYEE']; 
+    }
     const credentialsRegister: Register = {
       name: formValue.nameRegister,
-      // imgUrl: formValue.imageUrl || '', this.registerForm.get('imageUrl')?.setValue(url);
+      restaurantImage: this.imageUrl || '',
+      roles: this.role,
       email: formValue.emailRegister,
       password: formValue.passwordRegister,
     };
     console.log(credentialsRegister);
     if (this.registerForm.valid) {
       this.login.authRegister(credentialsRegister).subscribe((result) => {
-        // window.location.href = 'login-register';
-        console.log(result);
-        localStorage.setItem('token', JSON.stringify(result));
-        console.log(localStorage.getItem('token'));
+        window.location.href = 'login-register';
       });  
       console.log(this.registerForm.value);
     } else {

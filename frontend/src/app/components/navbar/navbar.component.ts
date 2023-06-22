@@ -3,6 +3,8 @@ import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { Router } from '@angular/router';
 import { FormBuilder, NgForm, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/services/auth.service';
+import { Restaurant } from 'src/app/models/restaurant';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-navbar',
@@ -11,24 +13,25 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class NavbarComponent implements OnInit {
 
-  constructor(private authService: AuthService, private router: Router, private fireStorage:AngularFireStorage, private formBuilder: FormBuilder) { }
-  resName: string | null = null;
+  constructor(private authService: AuthService, private router: Router, private fireStorage:AngularFireStorage, private formBuilder: FormBuilder, private _snackBar: MatSnackBar) { }
   ls!: any;
   imageUrl: string | null = null;
   isAuthenticated: boolean = false;
   selectedFileName: string | null = null;
+  previewName: string | null = null;
+  submittedEdit: boolean = false;
+  role: [string] | null = null;
   restaurantForm = this.formBuilder.group({
     name: ['', Validators.required],
     email: ['', Validators.required],
-    imageUrl: [null, Validators.required],
-    isAdmin: [false] 
+    restaurantImage: [''],
+    role: ['1'] 
   });
 
   ngOnInit() {
     if(localStorage.getItem('token') != null){
       this.ls = JSON.parse(localStorage.getItem('token')!);
       this.isAuthenticated = true;
-      this.resName = this.ls.restaurant.name;
     }
     else{
       this.isAuthenticated = false;
@@ -46,12 +49,45 @@ export class NavbarComponent implements OnInit {
       console.log(url);
     }
   }
+
+  openSnackBar(message: string, action: string) {
+    this._snackBar.open(message, action, { duration: 2000 });
+  }
   
   
  
   saveProfile() {
-    // Perform logic to save the profile details
-    console.log(this.restaurantForm.value);
+    const formValue = this.restaurantForm.value;
+    this.submittedEdit = true;
+    if (formValue.role === '1') {
+      this.role = ['ADMIN'];
+    } else if (formValue.role === '2') {
+      this.role = ['EMPLOYEE'];
+    } else {
+      this.role = ['EMPLOYEE']; 
+    }
+    const credentialsEdit: Restaurant = {
+      name: formValue.name || '', 
+      restaurantImage: this.imageUrl !== null || undefined ? this.imageUrl : this.ls.restaurant.restaurantImage,
+      roles: this.role,
+      email: formValue.email || '', 
+    };
+    this.previewName = credentialsEdit.name;
+    console.log(credentialsEdit);
+    if (this.restaurantForm.valid) {
+      this.authService.editRestaurant(this.ls.restaurant.id, credentialsEdit).subscribe((result) => {
+        window.location.href = '/home';
+        console.log(result);
+        localStorage.clear();
+        this.openSnackBar('Edição realizada com sucesso!', 'Fechar');
+
+        localStorage.setItem('token', JSON.stringify(result));
+        console.log(localStorage.getItem('token'));
+      });  
+    } else {
+      // Form inválido
+      console.log('form contem erros!');
+    }
   }
 
   exit(){

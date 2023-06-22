@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Product } from 'src/app/models/product';
 import { MenuService } from 'src/app/services/menu.service';
 import { FormBuilder, NgForm, Validators } from '@angular/forms';
+import { AngularFireStorage } from '@angular/fire/compat/storage';
 
 @Component({
   selector: 'app-menu-form',
@@ -11,7 +12,11 @@ import { FormBuilder, NgForm, Validators } from '@angular/forms';
 export class MenuFormComponent implements OnInit {
   addProductMessage: string | undefined;
   isAuthenticated: boolean = false;
-  constructor(private formBuilder:FormBuilder, private menu: MenuService) {}
+  productUrl: string | null = null;
+  previewProduct: string | null = null;
+  ls!: any;
+  
+  constructor(private formBuilder:FormBuilder, private menu: MenuService, private fireStorage: AngularFireStorage) {}
   productForm = this.formBuilder.group({
     name: ['', Validators.required],
     price: [null, Validators.required],
@@ -19,21 +24,31 @@ export class MenuFormComponent implements OnInit {
     description: ['', Validators.required],
     menusIncluded: [[]],
     restaurant: [1],
-    combosIncluded: [[]]
+    productUrl: [null]
   });
+
+  async onFileChange(event:any) {
+    const file = event.target.files[0];
+    if(file){
+      const path = `img/${file.name}`;
+      const uploadTask = await this.fireStorage.upload(path, file);
+      const url = await uploadTask.ref.getDownloadURL();
+      this.productUrl = url;
+      console.log(url);
+    }
+  }
   
   
-  ngOnInit(): void {
-    // const credentials = JSON.parse(localStorage.getItem('user') || '{}');
-    console.log(localStorage.getItem('user'))
-    console.log("carregou")
-    if(localStorage.getItem('token') == "ADMIN"){
+  ngOnInit() : void{
+    if(localStorage.getItem('token') != null){
+      this.ls = JSON.parse(localStorage.getItem('token')!);
       this.isAuthenticated = true;
     }
     else{
       this.isAuthenticated = false;
     }
   }
+
 
   saveForm(){
     console.log('Form data: ', this.productForm.value);
@@ -48,11 +63,11 @@ export class MenuFormComponent implements OnInit {
         price: formValue.price || 0,
         qtt: formValue.qtt || 0,
         description: formValue.description || '',
+        productImage: this.productUrl || '',
         menusIncluded: formValue.menusIncluded || [],
-        combosIncluded: formValue.combosIncluded || []
       };
   
-      this.menu.addProduct(product).subscribe((result) => {
+      this.menu.addProduct(this.ls.restaurant.id, product).subscribe((result) => {
         window.location.reload();
         console.warn(result);
         if (result) {

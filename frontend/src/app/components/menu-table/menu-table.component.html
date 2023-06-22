@@ -1,45 +1,29 @@
-<article class="table-header">
-</article>
+<article class="table-header"></article>
 <table mat-table [dataSource]="dataSource">
   <ng-container [matColumnDef]="col.key" *ngFor="let col of columnsSchema">
-  <th mat-header-cell *matHeaderCellDef [ngSwitch]="col.key">
-  <span *ngSwitchDefault>{{ col.label }}</span>
-</th>
+    <th mat-header-cell *matHeaderCellDef>{{ col.label }}</th>
     <td mat-cell *matCellDef="let element">
-      <div [ngSwitch]="col.type" *ngIf="!element.isEdit">
-        <ng-container *ngSwitchCase="'isSelected'">
-        <mat-checkbox
-        (change)="element.isSelected = $event.checked"
-        [checked]="element.isSelected">
-      </mat-checkbox>
+      <ng-container [ngSwitch]="col.type">
+        <ng-container *ngSwitchCase="'isEdit'">
+          <div class="btn-edit">
+            <button mat-button (click)="element.isEdit = !element.isEdit">
+              Edit
+            </button>
+            <button mat-button class="button-remove" (click)="removeRow(element.id)">
+              Delete
+            </button>
+          </div>
         </ng-container>
-        <div class="btn-edit" *ngSwitchCase="'isEdit'">
-          <button mat-button (click)="element.isEdit = !element.isEdit">
-            Edit
-          </button>
-           <button
-            mat-button
-            class="button-remove"
-            (click)="removeRow(element.id)"
-          >
-            Delete
-          </button> 
-        </div>
-        <span *ngSwitchDefault>
-          {{ element[col.key] }}
-        </span>
-      </div>
-      <div [ngSwitch]="col.type" *ngIf="element.isEdit">
-        <div *ngSwitchCase="'isSelected'"></div>
-        <div class="btn-edit" *ngSwitchCase="'isEdit'">
-          <button mat-button (click)="editRow(element)">
-            Done
-          </button>
-        </div>
-        <mat-form-field class="form-input" *ngSwitchDefault>
-          <input [type]="col.type" matInput [(ngModel)]="element[col.key]" />
-        </mat-form-field>
-      </div>
+        <ng-container *ngSwitchCase="'image'">
+          <img *ngIf="element[col.key]" [src]="element[col.key]" alt="Product Image" class="image-column">
+        </ng-container>
+        <ng-container *ngSwitchDefault>
+          <span *ngIf="!element.isEdit">{{ element[col.key] }}</span>
+          <mat-form-field class="form-input" *ngIf="element.isEdit">
+            <input [type]="col.type" matInput [(ngModel)]="element[col.key]" />
+          </mat-form-field>
+        </ng-container>
+      </ng-container>
     </td>
   </ng-container>
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

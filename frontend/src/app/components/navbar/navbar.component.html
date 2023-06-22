@@ -21,9 +21,9 @@
         </ul>
 
         <div *ngIf="isAuthenticated" class="centralized-container">
-          <img src="https://via.placeholder.com/40" alt="NomeRestaurante" class="rounded-circle">
+          <img src={{ls.restaurant.restaurantImage}} alt="NomeRestaurante" class="rounded-circle">
           <span class="navbar-text">
-            <a routerLink="/order-dashboard/home-dashboard">{{resName}}</a>
+            <a routerLink="/order-dashboard/home-dashboard">{{ls.restaurant.name}}</a>
           </span>
           <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="icon-button with a menu" class="menu-button">
             <mat-icon>more_vert</mat-icon>
@@ -42,18 +42,24 @@
                   </div>
                   <div class="modal-body">
                     <div class="form-container">
-                      <form>
+                      <form [formGroup]="restaurantForm">
                         <mat-card class="preview-card">
                           <mat-card-header>
                             <mat-card-title>Visualização do restaurante:</mat-card-title>
                           </mat-card-header>
                           <mat-card-content>
                             <div class="preview-restaurant">
-                              <div class="image-container">
-                                <img src="https://via.placeholder.com/40" alt="NomeRestaurante" class="rounded-circle preview-img">
+                              <div class="image-container" *ngIf="!imageUrl">
+                                <img src={{ls.restaurant.restaurantImage}} alt="RestaurantImage" class="rounded-circle preview-img">
                               </div>
-                              <div class="name-container">
-                                <a>{{resName}}</a>
+                              <div *ngIf="imageUrl" class="image-container">
+                                <img [src]="imageUrl" alt="Imagem do restaurante" class="rounded-circle preview-img">
+                              </div>
+                              <div class="name-container" *ngIf="!previewName">
+                                <a>{{ls.restaurant.name}}</a>
+                              </div>
+                              <div class="name-container" *ngIf="previewName">
+                                <a>{{previewName}}</a>
                               </div>
                             </div>
                           </mat-card-content>
@@ -61,33 +67,38 @@
                         <div class="form-row">
                           <label>Nome:</label>
                           <mat-form-field>
-                            <input matInput placeholder="Name" [(ngModel)]="ls.restaurant.name" name="name">
+                            <input matInput placeholder="Name" [(ngModel)]="ls.restaurant.name" name="name" formControlName="name">
                           </mat-form-field>
                         </div>
                         <div class="form-row">
                           <label>Email:</label>
                           <mat-form-field>
-                            <input matInput placeholder="Email" [(ngModel)]="ls.restaurant.email" name="email">
+                            <input matInput placeholder="Email" [(ngModel)]="ls.restaurant.email" name="email" formControlName="email">
                           </mat-form-field>
                         </div>
                         <div class="form-row">
                           <label>Permissão:</label>
-                          <mat-checkbox name="isAdmin">Administrador</mat-checkbox>
+                          <mat-radio-group aria-label="Select an option" color="primary" formControlName="role">
+                            <mat-radio-button value="1">Admin</mat-radio-button>
+                            <mat-radio-button value="2">Funcionário</mat-radio-button>
+                          </mat-radio-group>
                         </div>
                         <div class="form-row">
                           <label>Selecionar Imagem:</label>
                           <div>
-                            <input type="file" #fileInput style="display:none" (change)="onFileChange($event)">
+                            <input type="file" #fileInput style="display:none" (change)="onFileChange($event)" formControlName="restaurantImage">
                             <button mat-raised-button color="primary" (click)="fileInput.click()">Selecionar</button>
                           </div>
-                          <span>{{ selectedFileName }}</span>
+                          <div *ngIf="imageUrl" class="editImg">
+                            <img [src]="imageUrl" alt="Imagem do restaurante" class="rounded-circle fixed-size-image">
+                          </div>
                         </div>
                       </form>                      
                     </div>                    
                   </div>
                   <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
-                    <button type="button" class="btn btn-primary" (click)="saveProfile()">Salvar edições</button>
+                    <button type="submit" class="btn btn-primary" (click)="saveProfile()">Salvar edições</button>
                   </div>
                 </div>
               </div>

@@ -17,9 +17,9 @@ constructor(private http:HttpClient) {  }
   private ls: any = JSON.parse(localStorage.getItem('token')!);
 
   
-  getProducts(): Observable<any>
+  getProducts(restaurantId: number): Observable<any>
   {
-    return this.http.get(`${this.url}/restaurant/1/products`);
+    return this.http.get(`${this.url}/restaurant/${restaurantId}/products`);
   }
 
   getProductById(restaurantId: number, orderId: number): Observable<any>
@@ -27,7 +27,7 @@ constructor(private http:HttpClient) {  }
     return this.http.get(`${this.url}/${restaurantId}/${orderId}/products`);
   }
 
-  addProduct(product : Product): Observable<any>
+  addProduct(restaurantId: number, product : Product): Observable<any>
   {
     console.log(this.ls.token)
     const httpOptions = {
@@ -36,10 +36,10 @@ constructor(private http:HttpClient) {  }
         'Authorization': 'Bearer ' + this.ls.token
       })
     };
-    return this.http.post(`${this.url}/restaurant/1/products`, product, httpOptions);
+    return this.http.post(`${this.url}/restaurant/${restaurantId}/products`, product, httpOptions);
   }
 
-  updateProduct(product : Product): Observable<any>
+  updateProduct(restaurantId: number, product : Product): Observable<any>
   {
     const httpOptions = {
       headers: new HttpHeaders({
@@ -47,7 +47,7 @@ constructor(private http:HttpClient) {  }
         'Authorization': 'Bearer ' + this.ls.token
       })
     };
-    return this.http.put(`${this.url}/restaurant/1/products/${product.id}`, product, httpOptions);
+    return this.http.put(`${this.url}/restaurant/${restaurantId}/products/${product.id}`, product, httpOptions);
   }
 
   deleteProduct(id: number): Observable<any>{

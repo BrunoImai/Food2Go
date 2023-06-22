@@ -1,80 +1,98 @@
-<ul class="nav nav-pills nav-justified mb-4 pb-4" id="pills-tab" role="tablist">
-  <li class="nav-item" role="presentation">
-    <button class="rounded-0 nav-link active" id="pills-login-tab" data-bs-toggle="pill" data-bs-target="#pills-login" type="button" role="tab" aria-controls="pills-login" aria-selected="true">Entrar</button>
-  </li>
-  <li class="nav-item" role="presentation">
-    <button class="rounded-0 nav-link" id="pills-register-tab" data-bs-toggle="pill" data-bs-target="#pills-register" type="button" role="tab" aria-controls="pills-register" aria-selected="false">Cadastrar</button>
-  </li>
-</ul>
-<div class="tab-content" id="pills-tabContent">
-  <div class="tab-pane fade show active justify-content-center" id="pills-login" role="tabpanel" aria-labelledby="pills-login-tab" tabindex="0">
-    <div class="vh-100 d-flex justify-content-center align-items-center">
-      <div class="col-md-4 p-5 shadow-sm border rounded-3">
-          <h2 class="text-center mb-4 text-primary">Entrar</h2>
-          <form [formGroup]="loginForm" (ngSubmit)="submitLoginForm()">
-            <div class="mb-3">
-              <label for="inputEmail" class="form-label">Email</label>
-              <input type="email" class="form-control border" id="inputEmail" aria-describedby="emailHelp" formControlName="email">
-              <div *ngIf="submittedLogin && loginForm.get('email')?.invalid">
-                <div *ngIf="loginForm.get('email')?.hasError('required')" class="text-danger">Email é necessário</div>
-                <div *ngIf="loginForm.get('email')?.hasError('email')" class="text-danger">Formato de email inválido</div>
+<div *ngIf="!isAuthenticated">
+  <ul class="nav nav-pills nav-justified mb-4 pb-4" id="pills-tab" role="tablist">
+    <li class="nav-item" role="presentation">
+      <button class="rounded-0 nav-link active" id="pills-login-tab" data-bs-toggle="pill" data-bs-target="#pills-login" type="button" role="tab" aria-controls="pills-login" aria-selected="true">Entrar</button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="rounded-0 nav-link" id="pills-register-tab" data-bs-toggle="pill" data-bs-target="#pills-register" type="button" role="tab" aria-controls="pills-register" aria-selected="false">Cadastrar</button>
+    </li>
+  </ul>
+  <div class="tab-content" id="pills-tabContent">
+    <div class="tab-pane fade show active justify-content-center" id="pills-login" role="tabpanel" aria-labelledby="pills-login-tab" tabindex="0">
+      <div class="vh-100 d-flex justify-content-center align-items-center">
+        <div class="col-md-4 p-5 shadow-sm border rounded-3">
+            <h2 class="text-center mb-4 text-primary">Entrar</h2>
+            <form [formGroup]="loginForm" (ngSubmit)="submitLoginForm()">
+              <div class="mb-3">
+                <label for="inputEmail" class="form-label">Email</label>
+                <input type="email" class="form-control border" id="inputEmail" aria-describedby="emailHelp" formControlName="email">
+                <div *ngIf="submittedLogin && loginForm.get('email')?.invalid">
+                  <div *ngIf="loginForm.get('email')?.hasError('required')" class="text-danger">Email é necessário</div>
+                  <div *ngIf="loginForm.get('email')?.hasError('email')" class="text-danger">Formato de email inválido</div>
+                </div>
               </div>
-            </div>
-            <div class="mb-3">
-              <label for="inputPassword" class="form-label">Senha</label>
-              <input type="password" class="form-control border" id="inputPassword" formControlName="password">
-              <div *ngIf="submittedLogin && loginForm.get('password')?.invalid" class="text-danger">Senha é necessária</div>
-            </div>
-            <p class="small"><a class="" href="forget-password.html">Esqueceu sua senha?</a></p>
-            <div class="d-grid">
-              <button class="btn btn-primary" type="submitLog">Entrar</button>
-            </div>
-          </form>
-          
+              <div class="mb-3">
+                <label for="inputPassword" class="form-label">Senha</label>
+                <input type="password" class="form-control border" id="inputPassword" formControlName="password">
+                <div *ngIf="submittedLogin && loginForm.get('password')?.invalid" class="text-danger">Senha é necessária</div>
+              </div>
+              <p class="small"><a class="" href="forget-password.html">Esqueceu sua senha?</a></p>
+              <div class="d-grid">
+                <button class="btn btn-primary" type="submitLog">Entrar</button>
+              </div>
+            </form>
+        </div>
+      </div>
+
+    </div>
+    <div class="tab-pane fade" id="pills-register" role="tabpanel" aria-labelledby="pills-register-tab" tabindex="0">
+      <div class="vh-150 d-flex mb-5 mt-5 justify-content-center align-items-center">
+        <div class="col-md-6 mt-5 pt-5 p-5 shadow-sm border rounded-3">
+            <h2 class="text-center mb-4 text-primary">Cadastre seu restaurante</h2>
+            <form [formGroup]="registerForm" (ngSubmit)="submitRegisterForm()">
+              <div class="mb-3">
+                <label for="inputNameRegister" class="form-label">Nome do restaurante</label>
+                <input type="text" class="form-control border" id="inputNameRegister" formControlName="nameRegister">
+                <div *ngIf="submittedRegister && registerForm.get('nameRegister')?.invalid" class="text-danger">Nome do restaurante é obrigatório</div>
+              </div>
+              <div class="mb-3">
+                <label for="inputEmailRegister" class="form-label">Email do restaurante</label>
+                <input type="email" class="form-control border" id="inputEmailRegister" formControlName="emailRegister">
+                <div *ngIf="submittedRegister && registerForm.get('emailRegister')?.invalid" class="text-danger">Email do restaurante inválido</div>
+              </div>
+              <div class="mb-3">
+                <label for="inputImagemRestaurante" class="form-label">Imagem do restaurante</label>
+                <br>
+                <input type="file" (change)="onFileChange($event)">
+                <div *ngIf="imageUrl">
+                  <img [src]="imageUrl" alt="Imagem do restaurante" class="rounded-circle fixed-size-image">
+                </div>
+              </div>
+              <div class="mb-3">
+                <label>Permissão:</label>
+                <mat-radio-group aria-label="Select an option" color="primary" formControlName="role">
+                  <mat-radio-button value="1">Admin</mat-radio-button>
+                  <mat-radio-button value="2">Funcionário</mat-radio-button>
+                </mat-radio-group>
+              </div>
+              <div class="mb-3">
+                <label for="inputPassword" class="form-label">Senha</label>
+                <input type="password" class="form-control border" id="inputPasswordRegister" formControlName="passwordRegister">
+                <div *ngIf="submittedRegister && registerForm.get('passwordRegister')?.invalid" class="text-danger">Senha é obrigatória</div>
+              </div>
+              <div class="mb-3">
+                <label for="inputRepeatPassword" class="form-label">Repita a senha</label>
+                <input type="password" class="form-control" id="inputRepeatPassword" formControlName="confirmPassword">
+                <div *ngIf="submittedRegister && registerForm.get('repeatPassword')?.hasError('passwordMismatch')" class="text-danger">As senhas não coincidem</div>
+              </div>            
+              <div class="d-grid">
+                <button class="btn btn-primary" type="submitReg">Cadastrar</button>
+              </div>
+            </form>
+        </div>
       </div>
     </div>
-
   </div>
-  <div class="tab-pane fade" id="pills-register" role="tabpanel" aria-labelledby="pills-register-tab" tabindex="0">
-    <div class="vh-150 d-flex mb-5 mt-5 justify-content-center align-items-center">
-      <div class="col-md-6 mt-5 pt-5 p-5 shadow-sm border rounded-3">
-          <h2 class="text-center mb-4 text-primary">Cadastre seu restaurante</h2>
-          <form [formGroup]="registerForm" (ngSubmit)="submitRegisterForm()">
-            <div class="mb-3">
-              <label for="inputNameRegister" class="form-label">Nome do restaurante</label>
-              <input type="text" class="form-control border" id="inputNameRegister" formControlName="nameRegister">
-              <div *ngIf="submittedRegister && registerForm.get('nameRegister')?.invalid" class="text-danger">Nome do restaurante é obrigatório</div>
-            </div>
-            <div class="mb-3">
-              <label for="inputEmailRegister" class="form-label">Email do restaurante</label>
-              <input type="email" class="form-control border" id="inputEmailRegister" formControlName="emailRegister">
-              <div *ngIf="submittedRegister && registerForm.get('emailRegister')?.invalid" class="text-danger">Email do restaurante inválido</div>
-            </div>
-            <div class="mb-3">
-              <label for="inputImagemRestaurante" class="form-label">Imagem do restaurante</label>
-              <br>
-              <input type="file" (change)="onFileChange($event)">
-              <div *ngIf="imageUrl">
-                <img [src]="imageUrl" alt="Imagem do restaurante" class="rounded-circle fixed-size-image">
-              </div>
-            </div>
-            
-            <div class="mb-3">
-              <label for="inputPassword" class="form-label">Senha</label>
-              <input type="password" class="form-control border" id="inputPasswordRegister" formControlName="passwordRegister">
-              <div *ngIf="submittedRegister && registerForm.get('passwordRegister')?.invalid" class="text-danger">Senha é obrigatória</div>
-            </div>
-            <div class="mb-3">
-              <label for="inputRepeatPassword" class="form-label">Repita a senha</label>
-              <input type="password" class="form-control" id="inputRepeatPassword" formControlName="confirmPassword">
-              <div *ngIf="submittedRegister && registerForm.get('repeatPassword')?.hasError('passwordMismatch')" class="text-danger">As senhas não coincidem</div>
-            </div>            
-            <div class="d-grid">
-              <button class="btn btn-primary" type="submitReg">Cadastrar</button>
-            </div>
-          </form>
+</div>
+<div *ngIf="isAuthenticated">
+  <section class="banner">
+    <div class="content">
+      <div class="col-1">
+        <h2>Parece que você se perdeu!</h2>
+          <h3>Retorne para a página principal</h3>
+          <a routerLink="/home" *ngIf="isAuthenticated"><button type="button">Voltar</button></a>
+  
       </div>
     </div>
-  </div>
-
+  </section>
 </div>

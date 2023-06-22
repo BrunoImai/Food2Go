@@ -1,7 +1,6 @@
-export interface Register {
+export interface Restaurant {
     name: string;
     restaurantImage: string;
     email: string;
     roles: [string];
-    password: string;
 }

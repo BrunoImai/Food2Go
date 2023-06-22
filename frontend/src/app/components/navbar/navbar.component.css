@@ -83,6 +83,7 @@ margin-top: -2px;
     justify-content: center;
     align-items: center;
     margin-right: 10px;
+    object-fit: cover;
 }
   
 .name-container {
@@ -104,3 +105,13 @@ margin-top: -2px;
 .preview-card {
     margin-bottom: 20px;
 }
+
+.fixed-size-image {
+    padding: 10px;
+    align-items: center;
+    object-fit: cover;
+    object-position: center center;
+    width: 100px;
+    height: 100px;
+  }
+  

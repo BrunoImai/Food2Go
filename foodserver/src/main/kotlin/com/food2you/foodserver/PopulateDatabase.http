@@ -78,3 +78,8 @@ Content-Type: application/json
   "email": "batata@email",
   "password": "senha12345678"
 }
+
+### DELETE RESTAURANT ID 1
+DELETE http://localhost:8080/foodserver/api/restaurant/1
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2ODczMDU2MDAsImV4cCI6MTY4NzQ3ODQwMCwiaXNzIjoiRm9vZDJHb1NlcnZlciIsInN1YiI6IjEiLCJyZXN0YXVyYW50SWQiOjEsInJlc3RhdXJhbnQiOnsiaWQiOjEsImVtYWlsIjoiYmF0YXRhQGVtYWlsIiwibm9tZSI6IlJlc3RhdXJhbnRlIEFkbWluIiwicm9sZXMiOlsiQURNSU4iXX19.zMoW-TYqRw0T12WbWIEDIpqwTpQoNlDgtBhf4UUjuGE
+

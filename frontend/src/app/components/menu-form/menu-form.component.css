@@ -17,3 +17,59 @@
 .mat-label{
     color: #002b5c !important;
 }
+.imgLabel{
+    color: #002b5c !important;
+    padding-right: 10px;
+}
+.imgInsert{
+    padding-bottom: 10px;
+}
+
+.preview-container {
+    color:#002b5c;
+}
+
+
+.preview-restaurant {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+  
+.image-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 10px;
+    object-fit: cover;
+}
+  
+.name-container {
+    display: flex;
+    align-items: center;
+}
+  
+.preview-img {
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.form-row label {
+    margin-right: 10px;
+}
+
+.preview-card {
+    margin-bottom: 20px;
+}
+
+.fixed-size-image {
+    padding: 10px;
+    align-items: center;
+    object-fit: cover;
+    object-position: center center;
+    width: 100px;
+    height: 100px;
+  }
+  

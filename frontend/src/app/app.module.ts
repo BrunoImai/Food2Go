@@ -28,11 +28,13 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSortModule } from '@angular/material/sort';
 import { MatMenu, MatMenuModule } from '@angular/material/menu';
+import { MatRadioModule } from '@angular/material/radio';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';	
 import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFireStorageModule } from '@angular/fire/compat/storage';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { environment } from 'src/environments/environment';
 import { EditProfileComponent } from './components/edit-profile/edit-profile.component';
 
@@ -74,6 +76,8 @@ import { EditProfileComponent } from './components/edit-profile/edit-profile.com
     MatDialogModule,
     MatMenuModule,
     MatCheckboxModule,
+    MatRadioModule,
+    MatSnackBarModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireStorageModule,
       ],

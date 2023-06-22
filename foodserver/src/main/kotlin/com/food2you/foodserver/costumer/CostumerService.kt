@@ -12,6 +12,7 @@ import com.food2you.foodserver.security.JWT
 import org.slf4j.LoggerFactory
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
+import kotlin.math.cos
 
 @Service
 class CostumerService(
@@ -75,7 +76,7 @@ class CostumerService(
         return costumer
     }
 
-    fun createOrder(customerId: Long, restaurantId : Long, orderRequest: OrderRequest): Order {
+    fun createOrder(customerId: Long, restaurantId : Long, orderRequest: OrderRequest): OrderResponse {
         val costumer = getCustomerById(customerId)
         val products = productRepository.findAllById(orderRequest.products)
         val order = Order(
@@ -87,17 +88,23 @@ class CostumerService(
         )
         order.costumer = costumer
         order.restaurant = restaurantId
+        orderRepository.save(order)
+
+        val orderResponse = OrderResponse(
+                status = orderRequest.name,
+                costumerName = costumer!!.name,
+                customerMobilePhone = costumer.mobilePhone,
+                products = products
+        )
 
 
-
-        return orderRepository.save(order)
+        return orderResponse
     }
 
     fun findAllOrders(costumerId: Long) : List<OrderResponse> {
         val orders = orderRepository.findAllByCostumer(costumerId)
         val ordersResponse = orders.map {
             OrderResponse(
-                id = it.id!!,
                 status = it.name,
                 costumerName = it.costumer!!.name,
                 products = it.products,

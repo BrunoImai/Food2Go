@@ -1,6 +1,5 @@
 package com.food2you.foodserver.restaurant
 
-import com.food2you.foodserver.combo.Combo
 import com.food2you.foodserver.costumer.Costumer
 import com.food2you.foodserver.menus.Menu
 import com.food2you.foodserver.menus.MenuRepository
@@ -14,6 +13,7 @@ import com.food2you.foodserver.restaurant.requests.RestaurantLoginRequest
 import com.food2you.foodserver.restaurant.requests.UpdatedRestaurant
 import com.food2you.foodserver.restaurant.response.RestaurantLoginResponse
 import com.food2you.foodserver.restaurant.response.RestaurantResponse
+import com.food2you.foodserver.restaurant.response.RestaurantUpdateResponse
 import com.food2you.foodserver.security.JWT
 import org.slf4j.LoggerFactory
 import org.springframework.data.repository.findByIdOrNull
@@ -34,6 +34,9 @@ data class RestaurantService (
     private val logger = LoggerFactory.getLogger(Costumer::class.java)
 
     fun createRestaurant(newRestaurant: NewRestaurant): Restaurant {
+
+        if (restaurantRepository.findRestaurantByEmail(newRestaurant.email) != null) throw IllegalArgumentException("There is already an account with that email")
+
         val restaurant = Restaurant(
             id = null,
             name = newRestaurant.name,
@@ -43,7 +46,6 @@ data class RestaurantService (
             orders = mutableListOf<Order>(),
             menus = mutableListOf<Menu>(),
             products = mutableListOf<Product>(),
-            combos = mutableListOf<Combo>(),
             roles = newRestaurant.roles,
             restaurantImage = newRestaurant.restaurantImage
         )
@@ -60,40 +62,55 @@ data class RestaurantService (
     fun deleteRestaurant(restaurantId: Long) : Restaurant {
         val deletedRestaurant = restaurantRepository.findByIdOrNull(restaurantId)
             ?: throw NotFoundException("Restaurant with id: $restaurantId Not Found")
-        productRepository.deleteById(restaurantId)
+        restaurantRepository.deleteById(restaurantId)
         return deletedRestaurant
     }
 
-    fun updateRestaurant(restaurantId: Long, updatedRestaurant: UpdatedRestaurant): Restaurant {
-        val deletedRestaurant = restaurantRepository.findByIdOrNull(restaurantId ) ?: throw NotFoundException("Restaurant with id: $restaurantId Not Found")
+    fun updateRestaurant(restaurantId: Long, updatedRestaurant: UpdatedRestaurant): RestaurantLoginResponse {
+        val deletedRestaurant = restaurantRepository.findByIdOrNull(restaurantId)
+                ?: throw NotFoundException("Restaurant with id: $restaurantId Not Found")
 
         val restaurant = Restaurant(
-            id = null,
-            name = updatedRestaurant.name,
-            email = updatedRestaurant.email,
-            password = deletedRestaurant.password,
-            status = deletedRestaurant.status,
-            orders = deletedRestaurant.orders,
-            menus = deletedRestaurant.menus,
-            products = deletedRestaurant.products,
-            combos = deletedRestaurant.combos,
-            roles = updatedRestaurant.roles,
-            restaurantImage = updatedRestaurant.restaurantImage
+                id = null,
+                name = updatedRestaurant.name,
+                email = updatedRestaurant.email,
+                password = deletedRestaurant.password,
+                status = deletedRestaurant.status,
+                orders = ArrayList(deletedRestaurant.orders),
+                menus = ArrayList(deletedRestaurant.menus), // Create a new ArrayList and copy the elements
+                products = ArrayList(deletedRestaurant.products),
+                roles = updatedRestaurant.roles,
+                restaurantImage = updatedRestaurant.restaurantImage
         )
+
         deleteRestaurant(restaurantId)
 
-        return restaurantRepository.save(restaurant)
+        restaurantRepository.save(restaurant)
+
+        val restaurantResponse = RestaurantResponse(
+                id = restaurantRepository.findRestaurantByEmail(restaurant.email)!!.id!!,
+                name = restaurant.name,
+                email = restaurant.email,
+                roles = restaurant.roles,
+                restaurantImage = restaurant.restaurantImage
+        )
+
+        return RestaurantLoginResponse(
+                token = jwt.createToken(restaurant),
+                restaurant = restaurantResponse
+        )
     }
+
 
     fun restaurantLogin(credentials: RestaurantLoginRequest) : RestaurantLoginResponse? {
         val restaurant = restaurantRepository.findRestaurantByEmail(credentials.email) ?: throw ResponseStatusException(HttpStatus.NOT_FOUND, "Restaurant not found with email: ${credentials.email}")
         if (restaurant.password != credentials.password) throw IllegalArgumentException("Invalid password")
 
         val restaurantResponse = RestaurantResponse(
+            id = restaurant.id!!,
             name = restaurant.name,
-
+            email = restaurant.email,
             roles = restaurant.roles,
-
             restaurantImage = restaurant.restaurantImage
         )
 
