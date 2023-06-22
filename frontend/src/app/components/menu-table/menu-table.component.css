@@ -43,3 +43,13 @@ table {
   .form-input {
     padding-right: 5px;
   }
+
+  .image-column {
+  align-items: center;
+  object-fit: cover;
+  object-position: center center;
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  padding: 5px;
+}
