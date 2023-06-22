@@ -79,14 +79,13 @@ export class NavbarComponent implements OnInit {
         window.location.href = '/home';
         console.log(result);
         localStorage.clear();
-        this.openSnackBar('Edição realizada com sucesso!', 'Fechar');
+        this.openSnackBar('Edição realizada com sucesso!', '✅');
 
         localStorage.setItem('token', JSON.stringify(result));
         console.log(localStorage.getItem('token'));
       });  
     } else {
-      // Form inválido
-      console.log('form contem erros!');
+      this.openSnackBar('Formulário contem erros!', '❌');
     }
   }
 

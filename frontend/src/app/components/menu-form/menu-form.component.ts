@@ -3,6 +3,7 @@ import { Product } from 'src/app/models/product';
 import { MenuService } from 'src/app/services/menu.service';
 import { FormBuilder, NgForm, Validators } from '@angular/forms';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-menu-form',
@@ -16,7 +17,7 @@ export class MenuFormComponent implements OnInit {
   previewProduct: string | null = null;
   ls!: any;
   
-  constructor(private formBuilder:FormBuilder, private menu: MenuService, private fireStorage: AngularFireStorage) {}
+  constructor(private formBuilder:FormBuilder, private menu: MenuService, private fireStorage: AngularFireStorage, private _snackBar: MatSnackBar) {}
   productForm = this.formBuilder.group({
     name: ['', Validators.required],
     price: [null, Validators.required],
@@ -37,7 +38,9 @@ export class MenuFormComponent implements OnInit {
       console.log(url);
     }
   }
-  
+  openSnackBar(message: string, action: string) {
+    this._snackBar.open(message, action, { duration: 2000 });
+  }
   
   ngOnInit() : void{
     if(localStorage.getItem('token') != null){
@@ -68,16 +71,18 @@ export class MenuFormComponent implements OnInit {
       };
   
       this.menu.addProduct(this.ls.restaurant.id, product).subscribe((result) => {
-        window.location.reload();
+        this.openSnackBar('Adicionado com sucesso', '✅');
         console.warn(result);
-        if (result) {
-          this.addProductMessage = 'Product is added successfully';
-  
+        if (result) {  
           setTimeout(() => {
-            this.addProductMessage = undefined;
-          }, 3000);
+            window.location.reload();
+          }, 2000);
         }
+      },(error)=> {
+        this.openSnackBar('Erro', '❗');
       });
+    }else{
+      this.openSnackBar('Favor verifique os campos vazios', '❌');
     }
   }
 }

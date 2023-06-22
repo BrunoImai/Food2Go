@@ -15,7 +15,12 @@
           </div>
         </ng-container>
         <ng-container *ngSwitchCase="'image'">
-          <img *ngIf="element[col.key]" [src]="element[col.key]" alt="Product Image" class="image-column">
+          <ng-container *ngIf="element[col.key]">
+            <img [src]="element[col.key]" alt="Product Image" class="image-column round-image">
+          </ng-container>
+          <ng-container *ngIf="!element[col.key]">
+            <img src="https://t4.ftcdn.net/jpg/05/40/25/55/360_F_540255546_zGa9VretlImyBUCiNcAYtH0WHn5Z4erW.png" alt="Default Image" class="image-column round-image">
+          </ng-container>
         </ng-container>
         <ng-container *ngSwitchDefault>
           <span *ngIf="!element.isEdit">{{ element[col.key] }}</span>

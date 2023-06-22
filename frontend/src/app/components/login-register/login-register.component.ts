@@ -88,7 +88,7 @@ export class LoginRegisterComponent implements OnInit {
 
     if (this.loginForm.valid) {
       this.login.authLogin(credentials).subscribe((result) => {
-        this.openSnackBar('Login realizado com sucesso!', 'Fechar');
+        this.openSnackBar('Login realizado com sucesso!', '✅');
         console.log(result);
         localStorage.setItem('token', JSON.stringify(result));
         console.log(localStorage.getItem('token'));
@@ -96,10 +96,10 @@ export class LoginRegisterComponent implements OnInit {
           window.location.href = 'home';
         }, 1500); 
       }, (error) => {
-        this.openSnackBar('Email ou senha incorretos!', 'Fechar');
+        this.openSnackBar('Email ou senha incorretos!', '❌');
       });      
     } else {
-      this.openSnackBar('Formato de email incorreto ou campos vazios!', 'Fechar');
+      this.openSnackBar('Formato de email incorreto ou campos vazios!', '❌');
     }
   }
 
