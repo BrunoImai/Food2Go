@@ -25,7 +25,7 @@ Content-Type: application/json
 }
 
 ###ADD PRODUCT 1
-POST http://localhost:8080/foodserver/api/restaurant/1/products
+POST http://localhost:8080/foodserver/api/restaurant/3/products
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2ODczMDU2MDAsImV4cCI6MTY4NzQ3ODQwMCwiaXNzIjoiRm9vZDJHb1NlcnZlciIsInN1YiI6IjEiLCJyZXN0YXVyYW50SWQiOjEsInJlc3RhdXJhbnQiOnsiaWQiOjEsImVtYWlsIjoiYmF0YXRhQGVtYWlsIiwibm9tZSI6IlJlc3RhdXJhbnRlIEFkbWluIiwicm9sZXMiOlsiQURNSU4iXX19.zMoW-TYqRw0T12WbWIEDIpqwTpQoNlDgtBhf4UUjuGE
 
@@ -37,7 +37,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2ODczMDU2MDAsImV4cCI6MTY4N
 }
 
 ###ADD PRODUCT 2
-POST http://localhost:8080/foodserver/api/restaurant/1/products
+POST http://localhost:8080/foodserver/api/restaurant/3/products
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2ODczMDU2MDAsImV4cCI6MTY4NzQ3ODQwMCwiaXNzIjoiRm9vZDJHb1NlcnZlciIsInN1YiI6IjEiLCJyZXN0YXVyYW50SWQiOjEsInJlc3RhdXJhbnQiOnsiaWQiOjEsImVtYWlsIjoiYmF0YXRhQGVtYWlsIiwibm9tZSI6IlJlc3RhdXJhbnRlIEFkbWluIiwicm9sZXMiOlsiQURNSU4iXX19.zMoW-TYqRw0T12WbWIEDIpqwTpQoNlDgtBhf4UUjuGE
 
@@ -49,7 +49,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2ODczMDU2MDAsImV4cCI6MTY4N
 }
 
 ###ADD PRODUCT 3
-POST http://localhost:8080/foodserver/api/restaurant/1/products
+POST http://localhost:8080/foodserver/api/restaurant/3/products
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2ODczMDU2MDAsImV4cCI6MTY4NzQ3ODQwMCwiaXNzIjoiRm9vZDJHb1NlcnZlciIsInN1YiI6IjEiLCJyZXN0YXVyYW50SWQiOjEsInJlc3RhdXJhbnQiOnsiaWQiOjEsImVtYWlsIjoiYmF0YXRhQGVtYWlsIiwibm9tZSI6IlJlc3RhdXJhbnRlIEFkbWluIiwicm9sZXMiOlsiQURNSU4iXX19.zMoW-TYqRw0T12WbWIEDIpqwTpQoNlDgtBhf4UUjuGE
 
@@ -62,7 +62,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2ODczMDU2MDAsImV4cCI6MTY4N
 }
 
 ###CREATE ORDER
-POST http://localhost:8080/foodserver/api/costumers/order/1/1
+POST http://localhost:8080/foodserver/api/costumers/order/1/2
 Content-Type: application/json
 
 {

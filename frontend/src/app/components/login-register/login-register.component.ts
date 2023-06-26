@@ -123,11 +123,14 @@ export class LoginRegisterComponent implements OnInit {
     console.log(credentialsRegister);
     if (this.registerForm.valid) {
       this.login.authRegister(credentialsRegister).subscribe((result) => {
-        window.location.href = 'login-register';
+        this.openSnackBar('Conta criada com sucesso!', '✅');
+        setTimeout(() => {
+          window.location.href = 'home';
+        }, 1500); 
       });  
       console.log(this.registerForm.value);
     } else {
-      // Form inválido
+      this.openSnackBar('Formato de email incorreto ou campos vazios!', '❌');
       console.log('form contem erros!');
     }
   }

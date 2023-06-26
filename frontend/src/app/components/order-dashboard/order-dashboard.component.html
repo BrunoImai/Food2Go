@@ -15,9 +15,9 @@
     <mat-sidenav #sidenav="matSidenav" class="mat-elevation-z8">
         <img
           class="avatar mat-elevation-z8"
-          src="https://cdn3.f-cdn.com//files/download/148197353/Photo_1625137656071.png?fit=crop"
+          src={{ls.restaurant.restaurantImage}}
         />  
-      <h4 class="name">{{resName}}</h4>
+      <h4 class="name">{{ls.restaurant.name}}</h4>
       <mat-divider></mat-divider>
 
       <button mat-button class="menu-button" routerLink="home-dashboard">

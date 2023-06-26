@@ -20,13 +20,15 @@ import { Customer } from 'src/app/models/customer';
 
 
 export class OrderTableComponent implements AfterViewInit {
-  nameColumns: string[] = ['id', 'name', 'costumer', 'products'];
-  displayColumns: string[] = ['ID', 'Status', 'Nome do cliente', 'Produtos']
+  nameColumns: string[] = ['id', 'name'];
+  displayColumns: string[] = ['ID', 'Status']
   columnsToDisplayWithExpand = [...this.nameColumns, 'expand'];
   public dataSource: any = [];
   expandedOrder!: Order | null;
   order!: Order;
   customer!: Customer;
+  ls!: any;
+  isAuthenticated: boolean = false;
 
 
   constructor(private orderService: OrderService) {}
@@ -35,7 +37,14 @@ export class OrderTableComponent implements AfterViewInit {
   sort: MatSort = new MatSort;
 
   ngAfterViewInit() {
-    this.orderService.getOrders().subscribe((data: any)=>{
+    if(localStorage.getItem('token') != null){
+      this.ls = JSON.parse(localStorage.getItem('token')!);
+      this.isAuthenticated = true;
+    }
+    else{
+      this.isAuthenticated = false;
+    }
+    this.orderService.getOrders(this.ls.restaurant.id).subscribe((data: any)=>{
       this.dataSource = data;
 
     });

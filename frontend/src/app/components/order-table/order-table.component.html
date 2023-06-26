@@ -6,9 +6,7 @@
     <ng-container *ngIf="column !== 'products'">
       <td mat-cell *matCellDef="let order"> {{order[column]}} </td>
     </ng-container>
-    <ng-container *ngIf="column == 'products'">
-      <td mat-cell *matCellDef="let order"> {{order[column][0].name}} </td>
-      </ng-container>
+
   </ng-container>
   <ng-container matColumnDef="expand">
     <th mat-header-cell *matHeaderCellDef aria-label="row actions">&nbsp;</th>
@@ -28,7 +26,6 @@
         <div class="order-list">
           <div class="order-id"> id do pedido: {{order.id}} </div>
           <div class="order-status"> status do pedido: {{order.name}} </div>
-          <div class="order-customer"> nome do cliente: {{order.costumer.name}} </div>
         </div>
         <div class="order-products">
           <span class="order-products-spacing"> - Produtos: </span>

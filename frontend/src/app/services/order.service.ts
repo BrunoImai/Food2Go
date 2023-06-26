@@ -11,11 +11,11 @@ export class OrderService {
 
 constructor(private http:HttpClient) {  }
 
-  getOrders(): Observable<any>
+  getOrders(restaurantId: number): Observable<any>
   {
-    return this.http.get(`${this.url}/restaurant/1/orders`);
+    return this.http.get(`${this.url}/restaurant/${restaurantId}/orders`);
   }
-
+  
   getCustomers(): Observable<any>
   {
     return this.http.get(`${this.url}/costumers`);

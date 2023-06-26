@@ -3,8 +3,9 @@
       <div class="col-md-3">
           <div class="p-3 bg-white shadow-sm d-flex justify-content-around align-items-center rounded">
               <div>
-                  <h3 class="fs-2">720</h3>
-                  <p class="fs-5">Clientes</p>
+                  <h3 class="fs-2">{{this.stock}}
+                  </h3>
+                  <p class="fs-5">Itens no estoque</p>
               </div>
               <i class="fas fa-gift fs-1 primary-text border rounded-full secondary-bg p-3"></i>
           </div>
@@ -12,7 +13,7 @@
       <div class="col-md-3">
           <div class="p-3 bg-white shadow-sm d-flex justify-content-around align-items-center rounded">
               <div>
-                  <h3 class="fs-2">4920</h3>
+                  <h3 class="fs-2">{{this.orders}}</h3>
                   <p class="fs-5">Vendas</p>
               </div>
               <i
@@ -22,7 +23,7 @@
       <div class="col-md-3">
           <div class="p-3 bg-white shadow-sm d-flex justify-content-around align-items-center rounded">
               <div>
-                  <h3 class="fs-2">30</h3>
+                  <h3 class="fs-2">{{this.products}}</h3>
                   <p class="fs-5">Itens</p>
               </div>
               <i class="fas fa-truck fs-1 primary-text border rounded-full secondary-bg p-3"></i>
@@ -31,10 +32,13 @@
       <div class="col-md-3">
           <div class="p-3 bg-white shadow-sm d-flex justify-content-around align-items-center rounded">
               <div>
-                  <h3 class="fs-2">3405</h3>
+                  <h3 class="fs-2">{{this.total}}</h3>
                   <p class="fs-5">Lucro bruto</p>
               </div>
               <i class="fas fa-chart-line fs-1 primary-text border rounded-full secondary-bg p-3"></i>
           </div>
       </div>
   </div>
+  <app-menu-table></app-menu-table>
+  <div class="pb-3"></div>
+  <app-order-table></app-order-table>

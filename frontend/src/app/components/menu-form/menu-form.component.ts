@@ -16,6 +16,7 @@ export class MenuFormComponent implements OnInit {
   productUrl: string | null = null;
   previewProduct: string | null = null;
   ls!: any;
+  isAdmin: boolean = false;
   
   constructor(private formBuilder:FormBuilder, private menu: MenuService, private fireStorage: AngularFireStorage, private _snackBar: MatSnackBar) {}
   productForm = this.formBuilder.group({
@@ -45,6 +46,7 @@ export class MenuFormComponent implements OnInit {
   ngOnInit() : void{
     if(localStorage.getItem('token') != null){
       this.ls = JSON.parse(localStorage.getItem('token')!);
+      this.isAdmin = this.ls.restaurant.roles && this.ls.restaurant.roles.includes('ADMIN') ? true : false;
       this.isAuthenticated = true;
     }
     else{
@@ -69,6 +71,8 @@ export class MenuFormComponent implements OnInit {
         productImage: this.productUrl || '',
         menusIncluded: formValue.menusIncluded || [],
       };
+
+      
   
       this.menu.addProduct(this.ls.restaurant.id, product).subscribe((result) => {
         this.openSnackBar('Adicionado com sucesso', '✅');
